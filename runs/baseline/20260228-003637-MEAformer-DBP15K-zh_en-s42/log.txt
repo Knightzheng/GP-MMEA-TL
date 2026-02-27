@@ -1,0 +1,28 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split zh_en --data_rate 0.3 --epoch 1 --lr 0.0005 --hidden_units 300,300,300 --save_model 0 --batch_size 3500 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_bootstrap --exp_id v1_zh_en_0.3 --workers 4 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 300 --img_dim 300 --name_dim 300 --char_dim 300 --hidden_size 300 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls --enable_sota
+The syntax of the command is incorrect.
+The syntax of the command is incorrect.
+INFO - 02/28/26 00:36:40 - 0:00:00 - ============ Initialized logger ============
+INFO - 02/28/26 00:36:40 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0228-BYSJ_MEAformer_bootstrap\MEAformer_DBP15K_zh_en_v1_zh_en_0.3
+
+INFO - 02/28/26 00:36:40 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split zh_en --data_rate '0.3' --epoch 1 --lr '0.0005' --hidden_units '300,300,300' --save_model 0 --batch_size 3500 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_bootstrap --exp_id 'v1_zh_en_0.3' --workers 4 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 300 --img_dim 300 --name_dim 300 --char_dim 300 --hidden_size 300 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls --enable_sota
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+loading raw data...
+Traceback (most recent call last):
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 532, in <module>
+    runner = Runner(cfgs, writer, logger, rank)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 44, in __init__
+    self.data_init()
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 108, in data_init
+    self.KGs, self.non_train, self.train_set, self.eval_set, self.test_set, self.test_ill_ = load_data(self.logger, self.args)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\data.py", line 43, in load_data
+    KGs, non_train, train_ill, test_ill, eval_ill, test_ill_ = load_eva_data(logger, args)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\data.py", line 54, in load_eva_data
+    ent2id_dict, ills, triples, r_hs, r_ts, ids = read_raw_data(file_dir, lang_list)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\data.py", line 327, in read_raw_data
+    ills = read_file([file_dir + "/ill_ent_ids"])
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\data.py", line 311, in read_file
+    tups.append(tuple([int(x) for x in params]))
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\data.py", line 311, in <listcomp>
+    tups.append(tuple([int(x) for x in params]))

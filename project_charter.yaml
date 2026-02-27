@@ -1,0 +1,38 @@
+project:
+  name: "TMMEA-DA Graduation Project"
+  owner: "zyf"
+  task: "Multimodal Entity Alignment with Cross-domain Transfer"
+
+research:
+  rq:
+    - "What causes transfer degradation across language/graph domains?"
+    - "Can domain adaptation + source selection reduce negative transfer?"
+    - "How robust is the method under modality missing/noise?"
+  hypotheses:
+    - id: H1
+      text: "Domain alignment loss improves target-domain Hits@1 and MRR."
+    - id: H2
+      text: "Multi-source transfer is more stable than single-source transfer."
+    - id: H3
+      text: "Missing-aware fusion degrades less at high missing rates."
+
+environment:
+  os: "Windows 11"
+  manager: "conda"
+  env_name: "bysj-main"
+  python: "3.10"
+  torch_cuda: "cu126"
+
+datasets:
+  - name: "DBP15K"
+    settings: ["zh_en", "ja_en", "fr_en"]
+    train_ratio: 0.3
+  - name: "FB15K-DB15K"
+  - name: "FB15K-YAGO15K"
+
+evaluation:
+  primary: ["Hits@1", "Hits@10", "MRR"]
+  secondary: ["MR", "Time", "VRAM"]
+  stability:
+    seeds: [3407, 42, 2026, 7, 123]
+    report: "mean_std"

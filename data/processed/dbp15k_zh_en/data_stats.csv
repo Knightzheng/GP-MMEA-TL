@@ -1,0 +1,2 @@
+dataset,triples_1,triples_2,train_links,test_links,total_triples,total_links
+dbp15k_zh_en,70414,95142,10500,0,165556,10500

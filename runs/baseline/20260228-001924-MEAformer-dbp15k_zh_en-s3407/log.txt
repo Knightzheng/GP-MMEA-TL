@@ -1,0 +1,5 @@
+[2026-02-28T00:19:24] run_id=20260228-001924-MEAformer-dbp15k_zh_en-s3407
+config=configs\tmmeada\default.yaml
+argv=scripts\train_baseline.py --config configs\tmmeada\default.yaml --stage baseline --model MEAformer --dataset dbp15k_zh_en --seed 3407
+best_epoch=20 hits@1=0.3103 hits@10=0.4857 mrr=0.3674
+[2026-02-28T00:19:24] finished

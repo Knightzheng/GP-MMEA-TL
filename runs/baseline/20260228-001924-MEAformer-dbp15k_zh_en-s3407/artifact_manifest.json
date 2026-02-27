@@ -1,0 +1,11 @@
+{
+  "data_checksums": [],
+  "model_files": [],
+  "logs": [
+    "log.txt",
+    "metrics.csv",
+    "config.yaml",
+    "run_card.md"
+  ],
+  "notes": "Fill checksums after data download/preprocess."
+}

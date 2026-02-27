@@ -1,0 +1,13 @@
+{
+  "synced_at": "2026-02-28T03:46:02",
+  "source": "D:\\code\\codes\\cursor\\BYSJ_zyf\\data\\raw\\MEAformer_data\\mmkg",
+  "target": "D:\\code\\codes\\cursor\\BYSJ_zyf\\data\\mmkg",
+  "checksums": {
+    "pkls\\zh_en_GA_id_img_feature_dict.pkl": "5eebb9d4e0bc30e439aa3914aa45985cecda0876b55a3bf0999bcda01f29cf42",
+    "pkls\\ja_en_GA_id_img_feature_dict.pkl": "3ec21617291a9354ca25e2e954475aef2cca256ad3e3ddb1184cbf0afea4dfe1",
+    "pkls\\fr_en_GA_id_img_feature_dict.pkl": "d624ec7a1b13600d94b4c97cb66b5c76a203f060ab66350738d69c44e20cc3d2",
+    "pkls\\FBDB15K_id_img_feature_dict.pkl": "84e410af9d97fe878f5becc9e12caa20309b8b8381b9ae314eafeec1642c23c0",
+    "pkls\\FBYG15K_id_img_feature_dict.pkl": "8bf920d86744fbb1fb2c64d9f35aaa0518c37ff956de812be6fc1548c961fa59",
+    "embedding\\glove.6B.300d.txt": "e784bc076d7a3443363621a0c04611d4c57c45bdec7cd05f2a59739db0e0d2a5"
+  }
+}

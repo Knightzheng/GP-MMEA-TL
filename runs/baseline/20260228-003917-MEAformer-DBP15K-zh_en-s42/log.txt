@@ -1,0 +1,54 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split zh_en --data_rate 0.3 --epoch 1 --lr 0.0005 --hidden_units 128,128,128 --save_model 0 --batch_size 256 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_rtx3060 --exp_id v1_zh_en_0.3_memfit --workers 2 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 128 --img_dim 128 --name_dim 128 --char_dim 128 --hidden_size 128 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls --w_attr --w_img
+The syntax of the command is incorrect.
+The syntax of the command is incorrect.
+INFO - 02/28/26 00:39:20 - 0:00:00 - ============ Initialized logger ============
+INFO - 02/28/26 00:39:20 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0228-BYSJ_MEAformer_rtx3060\MEAformer_DBP15K_zh_en_v1_zh_en_0.3_memfit
+
+INFO - 02/28/26 00:39:20 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split zh_en --data_rate '0.3' --epoch 1 --lr '0.0005' --hidden_units '128,128,128' --save_model 0 --batch_size 256 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_rtx3060 --exp_id 'v1_zh_en_0.3_memfit' --workers 2 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 128 --img_dim 128 --name_dim 128 --char_dim 128 --hidden_size 128 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls --w_attr --w_img
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 02/28/26 00:39:20 - 0:00:00 - 88.45% entities have images
+INFO - 02/28/26 00:39:20 - 0:00:00 - image feature shape:(38960, 300)
+INFO - 02/28/26 00:39:20 - 0:00:00 - #left entity : 19388, #right entity: 19572
+INFO - 02/28/26 00:39:20 - 0:00:00 - #left entity not in train set: 14888, #right entity not in train set: 15072
+INFO - 02/28/26 00:39:20 - 0:00:01 - relation feature shape:(38960, 1000)
+INFO - 02/28/26 00:39:21 - 0:00:01 - attribute feature shape:(38960, 1000)
+INFO - 02/28/26 00:39:21 - 0:00:01 - -----dataset summary-----
+INFO - 02/28/26 00:39:21 - 0:00:01 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\DBP15K\zh_en
+INFO - 02/28/26 00:39:21 - 0:00:01 - triple num:	 165556
+INFO - 02/28/26 00:39:21 - 0:00:01 - entity num:	 38960
+INFO - 02/28/26 00:39:21 - 0:00:01 - relation num:	 2133
+INFO - 02/28/26 00:39:21 - 0:00:01 - train ill num:	 4500 	 test ill num:	 10500
+INFO - 02/28/26 00:39:21 - 0:00:01 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:110: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:35.)
+  self.eval_left = torch.LongTensor(self.eval_set[:, 0].squeeze()).cuda()
+INFO - 02/28/26 00:39:21 - 0:00:01 - Random init...
+INFO - 02/28/26 00:39:21 - 0:00:01 - total params num: 5504150
+INFO - 02/28/26 00:39:21 - 0:00:02 - warmup_steps: 2
+INFO - 02/28/26 00:39:21 - 0:00:02 - total_steps: 18
+INFO - 02/28/26 00:39:21 - 0:00:02 - weight_decay: 0.0001
+loading raw data...
+getting a sparse tensor r_adj...
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:04<?, ?it/s]
+Traceback (most recent call last):
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 536, in <module>
+    runner.run()
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 222, in run
+    self.train(_tqdm)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 280, in train
+    loss, output = self.model(batch)
+  File "D:\Anaconda_envs\envs\bysj-meaformer\lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "D:\Anaconda_envs\envs\bysj-meaformer\lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\model\MEAformer.py", line 60, in forward
+    gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, joint_emb_hid = self.generate_hidden_emb(hidden_states)
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\model\MEAformer.py", line 109, in generate_hidden_emb
+    att_emb = F.normalize(hidden[:, 2, :].squeeze(1))
+IndexError: index 2 is out of bounds for dimension 1 with size 2
+[DONE] return_code=1

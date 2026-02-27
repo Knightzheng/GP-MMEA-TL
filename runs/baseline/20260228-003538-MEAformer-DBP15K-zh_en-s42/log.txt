@@ -1,0 +1,10 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split zh_en --data_rate 0.3 --epoch 1 --lr 0.0005 --hidden_units 300,300,300 --save_model 0 --batch_size 3500 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_bootstrap --exp_id v1_zh_en_0.3 --workers 4 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 300 --img_dim 300 --name_dim 300 --char_dim 300 --hidden_size 300 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls --enable_sota
+Traceback (most recent call last):
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 19, in <module>
+    from src.data import load_data, Collator_base, EADataset
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\data.py", line 16, in <module>
+    from .utils import get_topk_indices, get_adjr
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py", line 23, in <module>
+    import scipy
+ModuleNotFoundError: No module named 'scipy'
+[DONE] return_code=1

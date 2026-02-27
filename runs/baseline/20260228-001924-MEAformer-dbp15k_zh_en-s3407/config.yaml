@@ -1,0 +1,33 @@
+project:
+  name: TMMEA-DA
+  stage: baseline
+data:
+  dataset: dbp15k_zh_en
+  train_ratio: 0.3
+  missing_strategy: mask_missing_embedding
+train:
+  epochs: 20
+  batch_size: 1024
+  lr: 0.001
+  weight_decay: 0.0001
+  early_stop_patience: 10
+model:
+  name: MEAformer
+  hidden_dim: 256
+  dropout: 0.1
+  domain_align_weight: 0.1
+  source_select_weight: 0.1
+  consistency_weight: 0.05
+eval:
+  metrics:
+  - hits@1
+  - hits@10
+  - mrr
+  - mr
+  eval_every: 1
+runtime:
+  model: MEAformer
+  dataset: dbp15k_zh_en
+  seed: 3407
+  run_id: 20260228-001924-MEAformer-dbp15k_zh_en-s3407
+  timestamp: '2026-02-28T00:19:24'

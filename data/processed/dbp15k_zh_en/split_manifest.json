@@ -1,0 +1,14 @@
+{
+  "dataset": "dbp15k_zh_en",
+  "split": "0_3",
+  "seed": 3407,
+  "train_ratio": 0.3,
+  "generated_at": "2026-02-28T00:23:44",
+  "source": {
+    "name": "JAPE DBP15K",
+    "archive": "data\\raw\\JAPE-master-src\\JAPE-master\\data\\dbp15k.tar.gz",
+    "archive_sha256": "0ba26f55da9b49a67bdb8d9586c6b1882c9b673a7088e3091eb32feac017a2d7",
+    "url": "https://github.com/nju-websoft/JAPE/archive/refs/heads/master.tar.gz",
+    "license": "MIT (repository); underlying DBpedia-derived resources should be cited in thesis"
+  }
+}

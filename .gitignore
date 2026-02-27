@@ -1,0 +1,24 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local environment / logs
+.env
+.venv/
+*.log
+
+# Temporary run configs
+runs/multiseed_tmp/
+
+# Large raw datasets and extracted corpora (not pushed to GitHub)
+data/raw/
+data/mmkg/
+
+# Keep lightweight metadata under data/
+!data/README.md
+!data/official_data_manifest.json
+
+# If baseline repo was cloned, do not keep nested git metadata
+baselines/MEAformer/.git
