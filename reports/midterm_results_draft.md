@@ -28,6 +28,7 @@
 
 - 已在 MEAformer 中新增可开关域对齐损失（`use_domain_align/domain_align_weight`）。
 - 当前已完成 DBP15K 三语种（`zh_en`, `ja_en`, `fr_en`）各 `5 seeds` 的 1-epoch 冒烟验证，共 15 次 run。
+- 当前已完成 DBP15K 三语种 + 跨图谱（`FBDB15K`, `FBYG15K`）各 `5 seeds`，共 25 次 run。
 - 阶段汇总（mean ± std）：
   - `zh_en`: l2r MRR `0.6492 ± 0.0035`, r2l MRR `0.6490 ± 0.0025`
   - `ja_en`: l2r MRR `0.6114 ± 0.0050`, r2l MRR `0.6090 ± 0.0037`
@@ -35,6 +36,7 @@
 - 与当前基线（同为 1-epoch、5-seed）相比：
   - `zh_en`、`ja_en` 仍明显落后；
   - `fr_en` 差距较小；
+  - `FBDB15K`、`FBYG15K` 几乎与基线一致；
   - 说明仅加入“单一域对齐项”不足以稳定提升性能。
 - 对应记录：
   - `reports/tmmeada_mvp_smoke.md`
@@ -45,6 +47,8 @@
   - `reports/tmmeada_vs_baseline_zh_en.md`
   - `reports/tmmeada_vs_baseline_dbp15k.csv`
   - `reports/tmmeada_vs_baseline_dbp15k.md`
+  - `reports/tmmeada_vs_baseline_all.csv`
+  - `reports/tmmeada_vs_baseline_all.md`
   - `runs/tmmeada/20260228-044730-TMMEA-DA-MEAformer-DBP15K-zh_en-s42/`
   - `runs/tmmeada/20260228-050047-TMMEA-DA-MEAformer-DBP15K-zh_en-s3407/`
   - `runs/tmmeada/20260228-125417-TMMEA-DA-MEAformer-DBP15K-zh_en-s2026/`

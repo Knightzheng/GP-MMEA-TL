@@ -235,3 +235,23 @@
   - reports/tmmeada_mvp_smoke.md
 - Added project root README with task definition/dataset/run/metrics/baselines/modifications:
   - README.md
+### 2026-02-28 Night Cross-Graph TMMEA-DA
+- Added cross-graph TMMEA-DA configs:
+  - configs/tmmeada/meaformer_fbdb15k_domain_align_mvp.yaml
+  - configs/tmmeada/meaformer_fbyg15k_domain_align_mvp.yaml
+- Updated scripts/run_tmmeada_multiseed.py tmp config naming to include data_choice.
+- Completed TMMEA-DA cross-graph runs (5 seeds each):
+  - FBDB15K: s42/s3407/s2026/s7/s123
+  - FBYG15K: s42/s3407/s2026/s7/s123
+- Refreshed full method summaries:
+  - reports/tmmeada_results_summary.csv (25 runs)
+  - reports/tmmeada_results_mean_std.csv (DBP15K + FBDB15K + FBYG15K)
+- Added full-dataset baseline-vs-method comparison:
+  - scripts/make_tmmeada_baseline_compare_all.py
+  - reports/tmmeada_vs_baseline_all.csv
+  - reports/tmmeada_vs_baseline_all.md
+- Updated docs:
+  - README.md
+  - reports/tmmeada_dbp15k_multilang.md
+  - reports/midterm_results_draft.md
+  - reports/midterm_experiment_section.md

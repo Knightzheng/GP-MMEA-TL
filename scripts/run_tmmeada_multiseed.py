@@ -36,6 +36,7 @@ def main():
 
     cfg = load_yaml(base_cfg)
     split = str(cfg["meaformer"]["data_split"])
+    data_choice = str(cfg["meaformer"]["data_choice"])
     seeds = [int(x.strip()) for x in args.seeds.split(",") if x.strip()]
     tmp_dir = Path("runs/multiseed_tmp/tmmeada")
     tmp_dir.mkdir(parents=True, exist_ok=True)
@@ -46,7 +47,7 @@ def main():
         run_cfg["meaformer"]["exp_id"] = f"{cfg['meaformer']['exp_id']}_s{seed}"
         run_cfg["meaformer"]["exp_name"] = f"{cfg['meaformer']['exp_name']}_multiseed"
 
-        tmp_cfg = tmp_dir / f"tmmeada_{split}_s{seed}.yaml"
+        tmp_cfg = tmp_dir / f"tmmeada_{data_choice}_{split}_s{seed}.yaml"
         dump_yaml(tmp_cfg, run_cfg)
         cmd = [args.runner_python, args.runner_script, "--config", str(tmp_cfg)]
         run_cmd(cmd, cwd=Path.cwd())

@@ -1,16 +1,20 @@
-# TMMEA-DA MVP: DBP15K 三语种结果（1-epoch, 5 seeds）
+# TMMEA-DA MVP: 全数据集结果（1-epoch, 5 seeds）
 
 ## 1. 实验设置
 - 方法：TMMEA-DA（当前为 Domain Align MVP）
 - 主干：MEAformer
-- 数据：DBP15K（`zh_en`, `ja_en`, `fr_en`）
+- 数据：
+  - DBP15K（`zh_en`, `ja_en`, `fr_en`）
+  - 跨图谱（`FBDB15K`, `FBYG15K`）
 - 训练：每语种 5 个 seeds（`42`, `3407`, `2026`, `7`, `123`）
 - 训练轮次：`1`（冒烟验证口径）
 
 ## 2. 方法结果（mean ± std）
 
-| lang_pair | num_runs | l2r Hits@1 | l2r Hits@10 | l2r MRR | r2l Hits@1 | r2l Hits@10 | r2l MRR |
+| dataset | num_runs | l2r Hits@1 | l2r Hits@10 | l2r MRR | r2l Hits@1 | r2l Hits@10 | r2l MRR |
 |---|---:|---:|---:|---:|---:|---:|---:|
+| FBDB15K | 5 | 0.0986 ± 0.0020 | 0.3244 ± 0.0048 | 0.1730 ± 0.0023 | 0.1058 ± 0.0028 | 0.3326 ± 0.0052 | 0.1810 ± 0.0027 |
+| FBYG15K | 5 | 0.0857 ± 0.0017 | 0.2756 ± 0.0099 | 0.1498 ± 0.0036 | 0.0894 ± 0.0025 | 0.2759 ± 0.0102 | 0.1524 ± 0.0046 |
 | zh_en | 5 | 0.5523 ± 0.0055 | 0.8412 ± 0.0017 | 0.6492 ± 0.0035 | 0.5531 ± 0.0025 | 0.8402 ± 0.0021 | 0.6490 ± 0.0025 |
 | ja_en | 5 | 0.5072 ± 0.0071 | 0.8149 ± 0.0049 | 0.6114 ± 0.0050 | 0.5039 ± 0.0046 | 0.8153 ± 0.0043 | 0.6090 ± 0.0037 |
 | fr_en | 5 | 0.5367 ± 0.0015 | 0.8403 ± 0.0040 | 0.6376 ± 0.0015 | 0.5366 ± 0.0028 | 0.8401 ± 0.0040 | 0.6370 ± 0.0017 |
@@ -19,11 +23,12 @@
 
 ## 3. 与基线对比（同口径）
 - 对比文件：
-  - `reports/tmmeada_vs_baseline_dbp15k.csv`
-  - `reports/tmmeada_vs_baseline_dbp15k.md`
+  - `reports/tmmeada_vs_baseline_all.csv`
+  - `reports/tmmeada_vs_baseline_all.md`
 - 结论（当前 MVP）：
   - `zh_en` 与 `ja_en` 均明显低于基线（约 -0.07~-0.09 的 MRR 差值）。
   - `fr_en` 与基线差距较小（MRR 约 -0.005）。
+  - `FBDB15K` 与 `FBYG15K` 与当前基线几乎一致（差值接近 0）。
 
 ## 4. 解释与下一步
 - 当前版本仅引入了单一域对齐项（MSE on positive pairs），属于最小可运行 MVP；

@@ -39,7 +39,7 @@
 当前汇总文件：
 - baseline 汇总：`reports/meaformer_results_mean_std.csv`
 - TMMEA-DA 汇总：`reports/tmmeada_results_mean_std.csv`
-- baseline vs TMMEA-DA 对比：`reports/tmmeada_vs_baseline_dbp15k.md`
+- baseline vs TMMEA-DA 对比（全数据集）：`reports/tmmeada_vs_baseline_all.md`
 
 ## 4. 已复现 Baselines
 
@@ -70,6 +70,8 @@
   - `configs/tmmeada/meaformer_zh_en_domain_align_mvp.yaml`
   - `configs/tmmeada/meaformer_ja_en_domain_align_mvp.yaml`
   - `configs/tmmeada/meaformer_fr_en_domain_align_mvp.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_domain_align_mvp.yaml`
+  - `configs/tmmeada/meaformer_fbyg15k_domain_align_mvp.yaml`
 
 ## 6. 运行方式
 
@@ -83,15 +85,20 @@ conda run -n bysj-main python scripts\run_meaformer.py --config configs\tmmeada\
 conda run -n bysj-main python scripts\run_tmmeada_multiseed.py --base-config configs\tmmeada\meaformer_ja_en_domain_align_mvp.yaml --seeds "42,3407,2026,7,123"
 ```
 
-### 6.3 结果收集与聚合
+### 6.3 TMMEA-DA 多 seed（示例：FBDB15K）
+```powershell
+conda run -n bysj-main python scripts\run_tmmeada_multiseed.py --base-config configs\tmmeada\meaformer_fbdb15k_domain_align_mvp.yaml --seeds "42,3407,2026,7,123"
+```
+
+### 6.4 结果收集与聚合
 ```powershell
 conda run -n bysj-main python scripts\collect_meaformer_results.py --runs-dir runs\tmmeada --out reports\tmmeada_results_summary.csv
 conda run -n bysj-main python scripts\aggregate_meaformer_results.py --in-csv reports\tmmeada_results_summary.csv --out-csv reports\tmmeada_results_mean_std.csv
 ```
 
-### 6.4 与 baseline 对比（DBP15K 三语种）
+### 6.5 与 baseline 对比（全数据集）
 ```powershell
-conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_dbp15k.py
+conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 ```
 
 ## 7. 过程留痕与报告材料
@@ -99,7 +106,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_dbp15k.py
 - 总过程日志：`PROCESS_LOG.md`
 - 中期实验草稿：`reports/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm_experiment_section.md`
-- 方法多语种汇总：`reports/tmmeada_dbp15k_multilang.md`
+- 方法全数据集汇总：`reports/tmmeada_dbp15k_multilang.md`
 
 ## 8. 当前阶段结论（简要）
 
