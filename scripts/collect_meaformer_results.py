@@ -66,11 +66,16 @@ def main():
     parser = argparse.ArgumentParser(description="Collect MEAformer run metrics into a CSV summary.")
     parser.add_argument("--runs-dir", default="runs/baseline")
     parser.add_argument("--out", default="reports/meaformer_results_summary.csv")
+    parser.add_argument("--name-contains", default="", help="optional substring filter for run directory name")
     args = parser.parse_args()
 
     runs_dir = Path(args.runs_dir)
     rows = []
-    for run_dir in sorted(runs_dir.glob("*MEAformer*")):
+    for run_dir in sorted(runs_dir.iterdir()):
+        if not run_dir.is_dir():
+            continue
+        if args.name_contains and args.name_contains not in run_dir.name:
+            continue
         log_path = run_dir / "log.txt"
         if not log_path.exists():
             continue

@@ -110,6 +110,11 @@ class cfg():
         parser.add_argument("--neg_cross_kg", type=int, default=0, help="whether to force the negative samples in the opposite KG")
         parser.add_argument("--use_domain_align", type=int, default=0, choices=[0, 1], help="enable simple domain alignment loss on joint embeddings")
         parser.add_argument("--domain_align_weight", type=float, default=0.0, help="weight for domain alignment loss")
+        parser.add_argument("--use_source_select", type=int, default=0, choices=[0, 1], help="enable source-selection loss across modalities")
+        parser.add_argument("--source_select_weight", type=float, default=0.0, help="weight for source-selection auxiliary loss")
+        parser.add_argument("--source_select_temp", type=float, default=1.0, help="temperature used for source-selection softmax")
+        parser.add_argument("--use_missing_gate", type=int, default=0, choices=[0, 1], help="enable missing-aware image alignment loss")
+        parser.add_argument("--missing_align_weight", type=float, default=0.0, help="weight for missing-aware image alignment loss")
 
         # --------- MSNEA -----------
         parser.add_argument("--dim", type=int, default=100, help="the hidden size of MSNEA")

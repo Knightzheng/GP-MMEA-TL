@@ -255,3 +255,27 @@
   - reports/tmmeada_dbp15k_multilang.md
   - reports/midterm_results_draft.md
   - reports/midterm_experiment_section.md
+### 2026-02-28 Late Night TMMEA-DA v1 module implementation
+- Added new args in baselines/MEAformer/config.py:
+  - use_source_select/source_select_weight/source_select_temp
+  - use_missing_gate/missing_align_weight
+- Updated data loader baselines/MEAformer/src/data.py:
+  - load_img now returns (img_embd, img_mask)
+  - KGs now include img_mask
+- Updated model baselines/MEAformer/model/MEAformer.py:
+  - added _to_cuda_batch
+  - added _source_select_loss
+  - added _missing_aware_img_align_loss
+  - integrated new losses into forward and loss_dic
+- Updated runner scripts/run_meaformer.py to pass new optional args
+- Added v1 smoke config:
+  - configs/tmmeada/meaformer_zh_en_tmmeada_v1_smoke.yaml
+- Ran v1 smoke run:
+  - runs/tmmeada/20260228-205727-TMMEA-DA-v1-DBP15K-zh_en-s42/
+  - l2r H@1=0.5488, H@10=0.8402, MRR=0.647
+  - r2l H@1=0.5522, H@10=0.8381, MRR=0.647
+- Added report note:
+  - reports/tmmeada_v1_smoke.md
+- Improved scripts/collect_meaformer_results.py:
+  - now scans all run dirs under --runs-dir (not only *MEAformer*)
+  - added optional --name-contains filter

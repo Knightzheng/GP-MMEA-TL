@@ -163,6 +163,16 @@ def main():
         cmd.extend(["--use_domain_align", str(m["use_domain_align"])])
     if "domain_align_weight" in m:
         cmd.extend(["--domain_align_weight", str(m["domain_align_weight"])])
+    if "use_source_select" in m:
+        cmd.extend(["--use_source_select", str(m["use_source_select"])])
+    if "source_select_weight" in m:
+        cmd.extend(["--source_select_weight", str(m["source_select_weight"])])
+    if "source_select_temp" in m:
+        cmd.extend(["--source_select_temp", str(m["source_select_temp"])])
+    if "use_missing_gate" in m:
+        cmd.extend(["--use_missing_gate", str(m["use_missing_gate"])])
+    if "missing_align_weight" in m:
+        cmd.extend(["--missing_align_weight", str(m["missing_align_weight"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):

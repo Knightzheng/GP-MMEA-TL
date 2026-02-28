@@ -22,6 +22,9 @@ class MEAformer(nn.Module):
         self.kgs = kgs
         self.args = args
         self.img_features = F.normalize(torch.FloatTensor(kgs["images_list"])).cuda()
+        self.img_mask = None
+        if "img_mask" in kgs and kgs["img_mask"] is not None:
+            self.img_mask = torch.FloatTensor(kgs["img_mask"]).cuda()
         self.input_idx = kgs["input_idx"].cuda()
         self.adj = kgs["adj"].cuda()
         self.rel_features = torch.Tensor(kgs["rel_features"]).cuda()
@@ -55,15 +58,17 @@ class MEAformer(nn.Module):
         self.last_num = 1000000000000
         # self.idx_one = np.ones(self.args.batch_size, dtype=np.int64)
 
+    def _to_cuda_batch(self, batch, device):
+        if not torch.is_tensor(batch):
+            return torch.as_tensor(batch, dtype=torch.long, device=device)
+        return batch.to(device=device, dtype=torch.long)
+
     def _domain_align_loss(self, joint_emb, batch):
         if not getattr(self.args, "use_domain_align", 0):
             return None
         if batch is None:
             return None
-        if not torch.is_tensor(batch):
-            batch = torch.as_tensor(batch, dtype=torch.long, device=joint_emb.device)
-        else:
-            batch = batch.to(device=joint_emb.device, dtype=torch.long)
+        batch = self._to_cuda_batch(batch, joint_emb.device)
         if batch.numel() == 0:
             return None
 
@@ -71,11 +76,37 @@ class MEAformer(nn.Module):
         right_emb = joint_emb[batch[:, 1]]
         return F.mse_loss(left_emb, right_emb)
 
+    def _missing_aware_img_align_loss(self, img_emb, batch):
+        if not getattr(self.args, "use_missing_gate", 0):
+            return None
+        if img_emb is None or self.img_mask is None or batch is None:
+            return None
+        batch = self._to_cuda_batch(batch, img_emb.device)
+        left = batch[:, 0]
+        right = batch[:, 1]
+        valid = (self.img_mask[left] > 0.5) & (self.img_mask[right] > 0.5)
+        if torch.sum(valid) == 0:
+            return torch.tensor(0.0, device=img_emb.device)
+        return F.mse_loss(img_emb[left[valid]], img_emb[right[valid]])
+
+    def _source_select_loss(self, modal_losses):
+        if not getattr(self.args, "use_source_select", 0):
+            return None, {}
+        active = [(k, v) for k, v in modal_losses.items() if v is not None]
+        if len(active) == 0:
+            return None, {}
+        values = torch.stack([v for _, v in active])
+        temp = max(float(getattr(self.args, "source_select_temp", 1.0)), 1e-6)
+        weights = torch.softmax(-values.detach() / temp, dim=0)
+        selected_loss = torch.sum(weights * values)
+        weight_dict = {f"src_w_{name}": weights[i].item() for i, (name, _) in enumerate(active)}
+        return selected_loss, weight_dict
+
     def forward(self, batch):
         gph_emb, img_emb, rel_emb, att_emb, name_emb, char_emb, joint_emb, hidden_states = self.joint_emb_generat(only_joint=False)
         gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, joint_emb_hid = self.generate_hidden_emb(hidden_states)
+        batch = self._to_cuda_batch(batch, joint_emb.device)
         if self.args.replay:
-            batch = torch.tensor(batch, dtype=torch.int64).cuda()
             all_ent_batch = torch.cat([batch[:, 0], batch[:, 1]])
             if not self.replay_ready:
                 loss_joi, l_neg, r_neg = self.criterion_cl_joint(joint_emb, batch)
@@ -110,19 +141,30 @@ class MEAformer(nn.Module):
         else:
             loss_joi = self.criterion_cl_joint(joint_emb, batch)
 
-        in_loss = self.inner_view_loss(gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, batch)
-        out_loss = self.inner_view_loss(gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, batch)
+        in_loss, in_info = self.inner_view_loss(gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, batch)
+        out_loss, out_info = self.inner_view_loss(gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, batch)
 
         loss_all = loss_joi + in_loss + out_loss
         domain_align_loss = self._domain_align_loss(joint_emb, batch)
         if domain_align_loss is not None and self.args.domain_align_weight > 0:
             loss_all = loss_all + self.args.domain_align_weight * domain_align_loss
+        missing_align_loss = self._missing_aware_img_align_loss(img_emb, batch)
+        if missing_align_loss is not None and self.args.missing_align_weight > 0:
+            loss_all = loss_all + self.args.missing_align_weight * missing_align_loss
+
+        source_select_loss = in_info["source_loss"] + out_info["source_loss"]
 
         loss_dic = {
             "joint_Intra_modal": loss_joi.item(),
             "Intra_modal": in_loss.item(),
             "domain_align": domain_align_loss.item() if domain_align_loss is not None else 0.0,
+            "missing_align": missing_align_loss.item() if missing_align_loss is not None else 0.0,
+            "source_select": source_select_loss.item() if torch.is_tensor(source_select_loss) else 0.0,
         }
+        for k, v in in_info.get("source_weights", {}).items():
+            loss_dic[f"in_{k}"] = v
+        for k, v in out_info.get("source_weights", {}).items():
+            loss_dic[f"out_{k}"] = v
         output = {"loss_dic": loss_dic, "emb": joint_emb}
         return loss_all, output
 
@@ -137,22 +179,37 @@ class MEAformer(nn.Module):
             joint_emb = torch.cat([gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb], dim=1)
         else:
             name_emb, char_emb = None, None
-            loss_name, loss_char = None, None
             joint_emb = torch.cat([gph_emb, rel_emb, att_emb, img_emb], dim=1)
 
         return gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, joint_emb
 
     def inner_view_loss(self, gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, train_ill):
-        # pdb.set_trace()
-        loss_GCN = self.criterion_cl(gph_emb, train_ill) if gph_emb is not None else 0
-        loss_rel = self.criterion_cl(rel_emb, train_ill) if rel_emb is not None else 0
-        loss_att = self.criterion_cl(att_emb, train_ill) if att_emb is not None else 0
-        loss_img = self.criterion_cl(img_emb, train_ill) if img_emb is not None else 0
-        loss_name = self.criterion_cl(name_emb, train_ill) if name_emb is not None else 0
-        loss_char = self.criterion_cl(char_emb, train_ill) if char_emb is not None else 0
+        modal_losses = {
+            "gcn": self.criterion_cl(gph_emb, train_ill) if gph_emb is not None else None,
+            "rel": self.criterion_cl(rel_emb, train_ill) if rel_emb is not None else None,
+            "att": self.criterion_cl(att_emb, train_ill) if att_emb is not None else None,
+            "img": self.criterion_cl(img_emb, train_ill) if img_emb is not None else None,
+            "name": self.criterion_cl(name_emb, train_ill) if name_emb is not None else None,
+            "char": self.criterion_cl(char_emb, train_ill) if char_emb is not None else None,
+        }
 
-        total_loss = self.multi_loss_layer([loss_GCN, loss_rel, loss_att, loss_img, loss_name, loss_char])
-        return total_loss
+        zero = torch.tensor(0.0, device=self.img_features.device)
+        total_loss = self.multi_loss_layer([
+            modal_losses["gcn"] if modal_losses["gcn"] is not None else zero,
+            modal_losses["rel"] if modal_losses["rel"] is not None else zero,
+            modal_losses["att"] if modal_losses["att"] is not None else zero,
+            modal_losses["img"] if modal_losses["img"] is not None else zero,
+            modal_losses["name"] if modal_losses["name"] is not None else zero,
+            modal_losses["char"] if modal_losses["char"] is not None else zero,
+        ])
+
+        source_loss, source_weights = self._source_select_loss(modal_losses)
+        if source_loss is None:
+            source_loss = zero
+        elif self.args.source_select_weight > 0:
+            total_loss = total_loss + self.args.source_select_weight * source_loss
+
+        return total_loss, {"source_loss": source_loss, "source_weights": source_weights}
 
     # --------- necessary ---------------
 

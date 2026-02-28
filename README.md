@@ -62,6 +62,10 @@
   - `--domain_align_weight`
 - 在训练损失中加入 Domain Align 项（MSE on positive pairs）
   - 文件：`baselines/MEAformer/model/MEAformer.py`
+- 在 v1 版本中新增：
+  - `source_select`：基于模态损失的软选择辅助项
+  - `missing_gate`：仅在图像可用对上计算的缺失感知图像对齐项
+  - 相关文件：`baselines/MEAformer/model/MEAformer.py`, `baselines/MEAformer/src/data.py`
 - 训练入口增强：
   - 支持按 stage 输出到 `runs/<stage>/...`
   - 支持方法参数透传
@@ -72,6 +76,7 @@
   - `configs/tmmeada/meaformer_fr_en_domain_align_mvp.yaml`
   - `configs/tmmeada/meaformer_fbdb15k_domain_align_mvp.yaml`
   - `configs/tmmeada/meaformer_fbyg15k_domain_align_mvp.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_smoke.yaml`
 
 ## 6. 运行方式
 
