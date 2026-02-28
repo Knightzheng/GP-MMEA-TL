@@ -189,3 +189,26 @@
 - Corrected stale note in reports/midterm_experiment_section.md:
   - replaced "placeholder image features" with current status (official MEAformer data synced)
   - updated next-step plan to focus on full-epoch reruns and TMMEA-DA 5-seed comparison
+### 2026-02-28 Afternoon TMMEA-DA continuation
+- Completed remaining TMMEA-DA zh_en seeds: 2026, 7, 123
+  - runs/tmmeada/20260228-125417-TMMEA-DA-MEAformer-DBP15K-zh_en-s2026/
+  - runs/tmmeada/20260228-130507-TMMEA-DA-MEAformer-DBP15K-zh_en-s7/
+  - runs/tmmeada/20260228-131550-TMMEA-DA-MEAformer-DBP15K-zh_en-s123/
+- Refreshed summaries sequentially to avoid stale aggregation:
+  - reports/tmmeada_results_summary.csv (5 runs)
+  - reports/tmmeada_results_mean_std.csv (zh_en, 5-seed)
+- Added baseline-vs-method comparison generator:
+  - scripts/make_tmmeada_baseline_compare.py
+  - outputs:
+    - reports/tmmeada_vs_baseline_zh_en.csv
+    - reports/tmmeada_vs_baseline_zh_en.md
+- Updated writeups for latest status:
+  - reports/tmmeada_mvp_smoke.md
+  - reports/midterm_results_draft.md
+  - reports/midterm_experiment_section.md
+- Key 5-seed TMMEA-DA zh_en results:
+  - l2r H@1=0.5523±0.0055, H@10=0.8412±0.0017, MRR=0.6492±0.0035
+  - r2l H@1=0.5531±0.0025, H@10=0.8402±0.0021, MRR=0.6490±0.0025
+- Cleanup:
+  - removed dry-run folder runs/tmmeada/20260228-044720-TMMEA-DA-MEAformer-DBP15K-zh_en-s42/
+  - reran tmmeada collect+aggregate sequentially to lock final 5-run stats

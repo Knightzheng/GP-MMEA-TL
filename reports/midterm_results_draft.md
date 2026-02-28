@@ -27,20 +27,26 @@
 ## 2.2 方法开发进展（TMMEA-DA MVP）
 
 - 已在 MEAformer 中新增可开关域对齐损失（`use_domain_align/domain_align_weight`）。
-- 当前已完成 `2 seeds`（`42`, `3407`）的 `DBP15K/zh_en` 1-epoch 冒烟验证。
-- 阶段汇总（zh_en, 2 seeds）：
-  - l2r Hits@1: `0.5480 ± 0.0009`
-  - l2r Hits@10: `0.8407 ± 0.0005`
-  - l2r MRR: `0.6470 ± 0.0000`
-  - r2l Hits@1: `0.5524 ± 0.0002`
-  - r2l Hits@10: `0.8389 ± 0.0017`
-  - r2l MRR: `0.6480 ± 0.0014`
+- 当前已完成 `5 seeds`（`42`, `3407`, `2026`, `7`, `123`）的 `DBP15K/zh_en` 1-epoch 冒烟验证。
+- 阶段汇总（zh_en, 5 seeds）：
+  - l2r Hits@1: `0.5523 ± 0.0055`
+  - l2r Hits@10: `0.8412 ± 0.0017`
+  - l2r MRR: `0.6492 ± 0.0035`
+  - r2l Hits@1: `0.5531 ± 0.0025`
+  - r2l Hits@10: `0.8402 ± 0.0021`
+  - r2l MRR: `0.6490 ± 0.0025`
+- 与当前基线（同为 1-epoch、5-seed）相比，MVP 版本仍有明显差距（详见 `reports/tmmeada_vs_baseline_zh_en.md`），说明仅加入“单一域对齐项”不足以带来性能提升。
 - 对应记录：
   - `reports/tmmeada_mvp_smoke.md`
   - `reports/tmmeada_results_summary.csv`
   - `reports/tmmeada_results_mean_std.csv`
+  - `reports/tmmeada_vs_baseline_zh_en.csv`
+  - `reports/tmmeada_vs_baseline_zh_en.md`
   - `runs/tmmeada/20260228-044730-TMMEA-DA-MEAformer-DBP15K-zh_en-s42/`
   - `runs/tmmeada/20260228-050047-TMMEA-DA-MEAformer-DBP15K-zh_en-s3407/`
+  - `runs/tmmeada/20260228-125417-TMMEA-DA-MEAformer-DBP15K-zh_en-s2026/`
+  - `runs/tmmeada/20260228-130507-TMMEA-DA-MEAformer-DBP15K-zh_en-s7/`
+  - `runs/tmmeada/20260228-131550-TMMEA-DA-MEAformer-DBP15K-zh_en-s123/`
 
 ## 3. 可写入正文的结论句（草稿）
 - 在当前统一设置下，`zh_en` 的对齐性能最高，`ja_en` 次之，`fr_en` 最低，初步体现了跨语言迁移难度差异。
