@@ -212,3 +212,26 @@
 - Cleanup:
   - removed dry-run folder runs/tmmeada/20260228-044720-TMMEA-DA-MEAformer-DBP15K-zh_en-s42/
   - reran tmmeada collect+aggregate sequentially to lock final 5-run stats
+### 2026-02-28 Evening Extension (DBP15K full TMMEA-DA MVP)
+- Added configs:
+  - configs/tmmeada/meaformer_ja_en_domain_align_mvp.yaml
+  - configs/tmmeada/meaformer_fr_en_domain_align_mvp.yaml
+- Updated script:
+  - scripts/run_tmmeada_multiseed.py (tmp config naming no longer hardcoded zh_en)
+- Completed TMMEA-DA DBP15K runs (5 seeds each):
+  - ja_en: s42/s3407/s2026/s7/s123
+  - fr_en: s42/s3407/s2026/s7/s123
+- Refreshed method summaries:
+  - reports/tmmeada_results_summary.csv (15 runs)
+  - reports/tmmeada_results_mean_std.csv (zh_en/ja_en/fr_en)
+- Added DBP15K baseline-vs-method comparison:
+  - scripts/make_tmmeada_baseline_compare_dbp15k.py
+  - reports/tmmeada_vs_baseline_dbp15k.csv
+  - reports/tmmeada_vs_baseline_dbp15k.md
+- Added multilang method note:
+  - reports/tmmeada_dbp15k_multilang.md
+- Updated documentation:
+  - reports/midterm_results_draft.md
+  - reports/tmmeada_mvp_smoke.md
+- Added project root README with task definition/dataset/run/metrics/baselines/modifications:
+  - README.md

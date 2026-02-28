@@ -61,5 +61,5 @@
 
 ## 6. 下一阶段计划
 1. 在官方数据与统一口径下，扩展训练轮次，重跑 DBP15K / FBDB15K / FBYG15K 正式配置。  
-2. TMMEA-DA MVP 已完成 zh_en 5-seed 与同预算对比；下一步扩展到 ja_en / fr_en 与跨图谱设定。  
-3. 在当前 `domain_align` MVP 基础上继续加入多源选择与缺失感知融合，开展模块化消融实验。
+2. TMMEA-DA MVP 已完成 DBP15K 三语种 5-seed 与同预算对比；下一步扩展到跨图谱设定（FBDB15K/FBYG15K）。  
+3. 在当前 `domain_align` MVP 基础上继续加入多源选择与缺失感知融合，开展模块化消融实验与训练预算扩展。

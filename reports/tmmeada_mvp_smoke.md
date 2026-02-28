@@ -71,3 +71,5 @@
 - 日志与工件完整：`run_card.md`、`config.yaml`、`log.txt`、`artifact_manifest.json` 均已生成。
 - 当前 `5 seeds` 已补齐。由于本版仅为“单一域对齐项”的简化 MVP，且训练预算仍是 1 epoch，指标低于当前基线。
 - 下一步建议：在同预算下进行模块化改造（多源选择、缺失感知融合、损失权重搜索）并扩大训练轮次，再做公平对比。
+
+> 更新：已进一步扩展到 `ja_en`、`fr_en` 的 5-seed 实验；多语种汇总见 `reports/tmmeada_dbp15k_multilang.md`。
