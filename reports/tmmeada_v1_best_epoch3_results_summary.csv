@@ -1,0 +1,2 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42,zh_en,0.6278,0.8969,0.719,0.6261,0.8952,0.717

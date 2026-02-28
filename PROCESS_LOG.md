@@ -292,3 +292,58 @@
 - Updated docs:
   - reports/tmmeada_v1_smoke.md
   - README.md
+### 2026-02-28 to 2026-03-01 TMMEA-DA v1 sweep + best follow-up
+- Added sweep base config:
+  - configs/tmmeada/meaformer_zh_en_tmmeada_v1_sweep.yaml
+- Added sweep runner:
+  - scripts/run_tmmeada_v1_weight_sweep.py
+- Added sweep summarizer:
+  - scripts/summarize_tmmeada_v1_sweep.py
+- Executed zh_en coarse sweep (single-seed, 6 runs):
+  - stage: runs/tmmeada_v1_sweep
+  - grid: dw={0.05,0.1,0.2}, sw={0.05,0.1}, mw=0.1, temp=1.0, seed=42
+- Generated sweep artifacts:
+  - reports/tmmeada_v1_sweep_summary.csv
+  - reports/tmmeada_v1_sweep_grouped.csv
+  - reports/tmmeada_v1_sweep.md
+- Selected follow-up config from sweep:
+  - dw=0.1, sw=0.05, mw=0.1, temp=1.0
+  - config: configs/tmmeada/meaformer_zh_en_tmmeada_v1_best.yaml
+- Ran 5-seed verification for selected config:
+  - stage: runs/tmmeada_v1_best
+  - seeds: 42,3407,2026,7,123
+- Generated best-config artifacts:
+  - reports/tmmeada_v1_best_results_summary.csv
+  - reports/tmmeada_v1_best_results_mean_std.csv
+- Added 4-way comparison script/output (baseline vs v0 vs v1 vs v1_best):
+  - scripts/make_tmmeada_v1_best_compare_zh_en.py
+  - reports/tmmeada_v1_best_compare_zh_en.csv
+  - reports/tmmeada_v1_best_compare_zh_en.md
+- Added phase report note:
+  - reports/tmmeada_v1_sweep_followup.md
+- Key 5-seed v1_best zh_en metrics:
+  - l2r H@1=0.5524+/-0.0056, H@10=0.8409+/-0.0016, MRR=0.6492+/-0.0035
+  - r2l H@1=0.5530+/-0.0025, H@10=0.8404+/-0.0021, MRR=0.6490+/-0.0025
+- Observation:
+  - v1_best is effectively tied with v1 under 1-epoch quick setting.
+### 2026-03-01 Early Morning epoch3 budget pilot (zh_en)
+- Added epoch3 configs:
+  - configs/baselines/meaformer_zh_en_rtx3060_safe_epoch3.yaml
+  - configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3.yaml
+- Ran single-seed pilot (seed=42) under epoch=3:
+  - baseline run: runs/baseline_epoch3/20260301-002341-MEAformer-epoch3-DBP15K-zh_en-s42/
+  - method run: runs/tmmeada_v1_best_epoch3/20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42/
+- Collected pilot outputs:
+  - reports/baseline_epoch3_results_summary.csv
+  - reports/tmmeada_v1_best_epoch3_results_summary.csv
+- Added pilot compare script and outputs:
+  - scripts/make_epoch3_pilot_compare_zh_en.py
+  - reports/epoch3_pilot_compare_zh_en.csv
+  - reports/epoch3_pilot_compare_zh_en.md
+- Pilot result (seed=42, epoch=3):
+  - baseline l2r H@1/H@10/MRR: 0.6272 / 0.8970 / 0.7190
+  - v1_best l2r H@1/H@10/MRR: 0.6278 / 0.8969 / 0.7190
+  - delta(v1_best-baseline): l2r H@1 +0.0006, MRR +0.0000; r2l metrics approx tie
+- Observation:
+  - Increasing epoch budget from 1 to 3 yields major performance gains for both methods.
+  - Under epoch=3 and seed=42, v1_best is approximately tied with baseline.

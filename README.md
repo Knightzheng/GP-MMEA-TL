@@ -120,3 +120,42 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 流程层面：baseline 与方法分支均已形成可复现实验链路（配置-运行-汇总-对比-报告）。
 - 结果层面：TMMEA-DA 当前仅含 Domain Align MVP，在 1-epoch 设置下尚未超过 baseline。
 - 下一步：补充多源选择、缺失感知融合与更完整训练预算，再进行公平对比与消融。
+
+## 9. Update (2026-03-01): v1 Weight Sweep Follow-up
+
+- Added sweep config/runner/summary scripts:
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_sweep.yaml`
+  - `scripts/run_tmmeada_v1_weight_sweep.py`
+  - `scripts/summarize_tmmeada_v1_sweep.py`
+- Ran `zh_en` coarse sweep (6 runs, seed=42):
+  - grid: `dw={0.05,0.1,0.2}`, `sw={0.05,0.1}`, `mw=0.1`, `temp=1.0`
+- Sweep reports:
+  - `reports/tmmeada_v1_sweep_summary.csv`
+  - `reports/tmmeada_v1_sweep_grouped.csv`
+  - `reports/tmmeada_v1_sweep.md`
+- Selected follow-up config and completed 5-seed validation:
+  - config: `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best.yaml`
+  - stage: `runs/tmmeada_v1_best`
+  - reports:
+    - `reports/tmmeada_v1_best_results_summary.csv`
+    - `reports/tmmeada_v1_best_results_mean_std.csv`
+    - `reports/tmmeada_v1_best_compare_zh_en.csv`
+    - `reports/tmmeada_v1_best_compare_zh_en.md`
+- Current observation under 1-epoch quick validation:
+  - `v1_best` is effectively tied with `v1`.
+  - `baseline` remains clearly higher than `v0/v1/v1_best` on `zh_en`.
+
+## 10. Update (2026-03-01): Epoch-3 Budget Pilot on zh_en
+
+- Added epoch-3 configs:
+  - `configs/baselines/meaformer_zh_en_rtx3060_safe_epoch3.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3.yaml`
+- Completed single-seed (`seed=42`) pilot runs:
+  - baseline: `runs/baseline_epoch3/20260301-002341-MEAformer-epoch3-DBP15K-zh_en-s42/`
+  - method: `runs/tmmeada_v1_best_epoch3/20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42/`
+- Pilot compare report:
+  - `reports/epoch3_pilot_compare_zh_en.csv`
+  - `reports/epoch3_pilot_compare_zh_en.md`
+- Key observation:
+  - Training budget increase (`epoch: 1 -> 3`) strongly boosts both methods.
+  - Under this pilot setting, `v1_best` is approximately tied with baseline.

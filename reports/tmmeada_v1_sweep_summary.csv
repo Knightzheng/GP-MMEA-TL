@@ -1,0 +1,7 @@
+run_id,data_choice,data_split,seed,domain_align_weight,source_select_weight,missing_align_weight,source_select_temp,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260228-221257-TMMEA-DA-v1-dw0p05_sw0p05_mw0p1_tp1_s42-DBP15K-zh_en-s42,DBP15K,zh_en,42,0.05,0.05,0.1,1.0,0.549,0.8402,0.647,0.5526,0.8381,0.647
+20260228-222420-TMMEA-DA-v1-dw0p05_sw0p1_mw0p1_tp1_s42-DBP15K-zh_en-s42,DBP15K,zh_en,42,0.05,0.1,0.1,1.0,0.5488,0.8402,0.647,0.5522,0.8381,0.647
+20260228-223556-TMMEA-DA-v1-dw0p1_sw0p05_mw0p1_tp1_s42-DBP15K-zh_en-s42,DBP15K,zh_en,42,0.1,0.05,0.1,1.0,0.549,0.8402,0.647,0.5526,0.8381,0.647
+20260228-224752-TMMEA-DA-v1-dw0p1_sw0p1_mw0p1_tp1_s42-DBP15K-zh_en-s42,DBP15K,zh_en,42,0.1,0.1,0.1,1.0,0.5488,0.8402,0.647,0.5522,0.8381,0.647
+20260228-225924-TMMEA-DA-v1-dw0p2_sw0p05_mw0p1_tp1_s42-DBP15K-zh_en-s42,DBP15K,zh_en,42,0.2,0.05,0.1,1.0,0.549,0.8402,0.647,0.5526,0.8381,0.647
+20260228-231055-TMMEA-DA-v1-dw0p2_sw0p1_mw0p1_tp1_s42-DBP15K-zh_en-s42,DBP15K,zh_en,42,0.2,0.1,0.1,1.0,0.5488,0.8402,0.647,0.5522,0.8381,0.647
