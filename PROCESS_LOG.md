@@ -279,3 +279,16 @@
 - Improved scripts/collect_meaformer_results.py:
   - now scans all run dirs under --runs-dir (not only *MEAformer*)
   - added optional --name-contains filter
+### 2026-02-28 TMMEA-DA v1 extension to 5-seed
+- Completed zh_en v1 remaining seeds: 3407, 2026, 7, 123
+  - total v1 zh_en runs: 5
+- Generated v1-only summaries:
+  - reports/tmmeada_v1_results_summary.csv
+  - reports/tmmeada_v1_results_mean_std.csv
+- Added tri-comparison baseline/v0/v1 (zh_en):
+  - scripts/make_tmmeada_v1_compare_zh_en.py
+  - reports/tmmeada_v1_compare_zh_en.csv
+  - reports/tmmeada_v1_compare_zh_en.md
+- Updated docs:
+  - reports/tmmeada_v1_smoke.md
+  - README.md

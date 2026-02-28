@@ -39,7 +39,9 @@
 当前汇总文件：
 - baseline 汇总：`reports/meaformer_results_mean_std.csv`
 - TMMEA-DA 汇总：`reports/tmmeada_results_mean_std.csv`
+- TMMEA-DA v1（zh_en）汇总：`reports/tmmeada_v1_results_mean_std.csv`
 - baseline vs TMMEA-DA 对比（全数据集）：`reports/tmmeada_vs_baseline_all.md`
+- baseline/v0/v1（zh_en）三方对比：`reports/tmmeada_v1_compare_zh_en.md`
 
 ## 4. 已复现 Baselines
 

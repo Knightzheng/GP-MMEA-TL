@@ -25,11 +25,29 @@
 - 命令：
   - `conda run -n bysj-main python scripts\run_meaformer.py --config configs\tmmeada\meaformer_zh_en_tmmeada_v1_smoke.yaml`
 
-## 4. 结果（1-epoch, seed=42）
-- run_id：`20260228-205727-TMMEA-DA-v1-DBP15K-zh_en-s42`
-- l2r: Hits@1=`0.5488`, Hits@10=`0.8402`, MRR=`0.647`
-- r2l: Hits@1=`0.5522`, Hits@10=`0.8381`, MRR=`0.647`
+## 4. 结果（1-epoch, zh_en, 5 seeds）
+
+### 4.1 单次 run
+- `20260228-205727-TMMEA-DA-v1-DBP15K-zh_en-s42`
+- `20260228-212025-TMMEA-DA-v1-DBP15K-zh_en-s3407`
+- `20260228-213208-TMMEA-DA-v1-DBP15K-zh_en-s2026`
+- `20260228-214257-TMMEA-DA-v1-DBP15K-zh_en-s7`
+- `20260228-215418-TMMEA-DA-v1-DBP15K-zh_en-s123`
+
+### 4.2 汇总（mean ± std）
+- l2r Hits@1: `0.5524 ± 0.0056`
+- l2r Hits@10: `0.8408 ± 0.0016`
+- l2r MRR: `0.6492 ± 0.0035`
+- r2l Hits@1: `0.5531 ± 0.0025`
+- r2l Hits@10: `0.8404 ± 0.0021`
+- r2l MRR: `0.6490 ± 0.0025`
+
+对应文件：
+- `reports/tmmeada_v1_results_summary.csv`
+- `reports/tmmeada_v1_results_mean_std.csv`
+- `reports/tmmeada_v1_compare_zh_en.md`（baseline / v0 / v1 三方对比）
 
 ## 5. 结论
 - v1 模块链路已跑通，参数可配置、训练闭环正常。
-- 下一步：在 `zh_en` 上补齐 5-seed，再决定是否扩展到 `ja_en/fr_en` 与跨图谱。
+- 在当前 1-epoch 预算下，v1 相比 v0 仅有极小波动（接近 0），尚无显著收益。
+- 下一步：扩展训练轮次并进行权重搜索（`domain/source_select/missing_align`），再做正式消融。
