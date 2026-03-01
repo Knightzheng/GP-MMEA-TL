@@ -372,3 +372,25 @@
     - r2l H@1=0.6234+/-0.0065, H@10=0.8924+/-0.0026, MRR=0.7150+/-0.0054
 - Observation:
   - Under equal epoch3 budget and same 5 seeds, baseline and v1_best are effectively tied.
+### 2026-03-01 Afternoon epoch3 expansion to ja_en/fr_en (pilot)
+- Added epoch3 configs for DBP15K ja_en/fr_en:
+  - configs/baselines/meaformer_ja_en_rtx3060_safe_epoch3.yaml
+  - configs/baselines/meaformer_fr_en_rtx3060_safe_epoch3.yaml
+  - configs/tmmeada/meaformer_ja_en_tmmeada_v1_best_epoch3.yaml
+  - configs/tmmeada/meaformer_fr_en_tmmeada_v1_best_epoch3.yaml
+- Completed pilot runs (seed=42):
+  - baseline ja_en: runs/baseline_epoch3/20260301-114744-MEAformer-epoch3-DBP15K-ja_en-s42/
+  - method ja_en: runs/tmmeada_v1_best_epoch3/20260301-124502-TMMEA-DA-v1-best-epoch3-DBP15K-ja_en-s42/
+  - baseline fr_en: runs/baseline_epoch3/20260301-132322-MEAformer-epoch3-DBP15K-fr_en-s42/
+  - method fr_en: runs/tmmeada_v1_best_epoch3/20260301-140254-TMMEA-DA-v1-best-epoch3-DBP15K-fr_en-s42/
+- Refreshed epoch3 summaries/aggregates (now include zh/ja/fr):
+  - reports/baseline_epoch3_results_summary.csv
+  - reports/baseline_epoch3_results_mean_std.csv
+  - reports/tmmeada_v1_best_epoch3_results_summary.csv
+  - reports/tmmeada_v1_best_epoch3_results_mean_std.csv
+- Added DBP15K epoch3 compare script and outputs:
+  - scripts/make_epoch3_compare_dbp15k.py
+  - reports/epoch3_compare_dbp15k.csv
+  - reports/epoch3_compare_dbp15k.md
+- Observation:
+  - zh_en formal 5-seed and ja_en/fr_en pilot 1-seed all show baseline and v1_best are near-tied under epoch3 budget.

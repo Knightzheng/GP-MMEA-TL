@@ -1,0 +1,55 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split fr_en --data_rate 0.3 --epoch 3 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_rtx3060_safe_epoch3 --exp_id v1_fr_en_0.3_safe_epoch3 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls
+The syntax of the command is incorrect.
+INFO - 03/01/26 13:23:24 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/01/26 13:23:24 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0301-BYSJ_MEAformer_rtx3060_safe_epoch3\MEAformer_DBP15K_fr_en_v1_fr_en_0.3_safe_epoch3
+
+INFO - 03/01/26 13:23:24 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split fr_en --data_rate '0.3' --epoch 3 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_rtx3060_safe_epoch3 --exp_id 'v1_fr_en_0.3_safe_epoch3' --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/01/26 13:23:26 - 0:00:02 - 70.69% entities have images
+INFO - 03/01/26 13:23:26 - 0:00:02 - image feature shape:(39654, 2048)
+INFO - 03/01/26 13:23:26 - 0:00:02 - #left entity : 19661, #right entity: 19993
+INFO - 03/01/26 13:23:26 - 0:00:02 - #left entity not in train set: 15161, #right entity not in train set: 15493
+INFO - 03/01/26 13:23:26 - 0:00:02 - relation feature shape:(39654, 1000)
+INFO - 03/01/26 13:23:26 - 0:00:02 - attribute feature shape:(39654, 1000)
+INFO - 03/01/26 13:23:26 - 0:00:02 - -----dataset summary-----
+INFO - 03/01/26 13:23:26 - 0:00:02 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\DBP15K\fr_en
+INFO - 03/01/26 13:23:26 - 0:00:02 - triple num:	 221720
+INFO - 03/01/26 13:23:26 - 0:00:02 - entity num:	 39654
+INFO - 03/01/26 13:23:26 - 0:00:02 - relation num:	 2111
+INFO - 03/01/26 13:23:26 - 0:00:02 - train ill num:	 4500 	 test ill num:	 10500
+INFO - 03/01/26 13:23:26 - 0:00:02 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/01/26 13:23:27 - 0:00:03 - Random init...
+INFO - 03/01/26 13:23:27 - 0:00:03 - total params num: 2892182
+INFO - 03/01/26 13:23:27 - 0:00:03 - warmup_steps: 63
+INFO - 03/01/26 13:23:27 - 0:00:03 - total_steps: 423
+INFO - 03/01/26 13:23:27 - 0:00:03 - weight_decay: 0.0001
+loading raw data...
+getting a sparse tensor r_adj...
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+Train | Ep [0/3] Step [142/423] LR [0.00027] Loss 3483.13997 :   0%|          | 0/3 [12:58<?, ?it/s]INFO - 03/01/26 13:36:33 - 0:13:09 - Ep 0 | l2r: acc of top [1, 10, 50] = [0.5751 0.8739 0.9726], mr = 8.351, mrr = 0.675, Loss = 3483.1400
+INFO - 03/01/26 13:36:33 - 0:13:09 - Ep 0 | r2l: acc of top [1, 10, 50] = [0.572  0.8752 0.974 ], mr = 8.060, mrr = 0.674, Loss = 3483.1400
+INFO - 03/01/26 13:36:33 - 0:13:09 - Best model update in Ep 0: MRR from [0.0] --> [0.6748424849886684] ...
+
+Train | Ep [0/3] Step [142/423] LR [0.00027] Loss 3483.13997 :  33%|��������      | 1/3 [13:05<26:10, 785.42s/it]
+Train | Ep [1/3] Step [283/423] LR [0.00010] Loss 1396.02023 :  33%|��������      | 1/3 [25:59<26:10, 785.42s/it]INFO - 03/01/26 13:49:34 - 0:26:11 - Ep 1 | l2r: acc of top [1, 10, 50] = [0.6086 0.8925 0.9808], mr = 6.324, mrr = 0.705, Loss = 1396.0202
+INFO - 03/01/26 13:49:34 - 0:26:11 - Ep 1 | r2l: acc of top [1, 10, 50] = [0.6032 0.893  0.9818], mr = 6.226, mrr = 0.702, Loss = 1396.0202
+INFO - 03/01/26 13:49:34 - 0:26:11 - Best model update in Ep 1: MRR from [0.6748424849886684] --> [0.7047085801523838] ...
+
+Train | Ep [1/3] Step [283/423] LR [0.00010] Loss 1396.02023 :  67%|��������������   | 2/3 [26:06<13:02, 782.84s/it]
+Train | Ep [2/3] Step [424/423] LR [0.00000] Loss 1075.39253 :  67%|��������������   | 2/3 [39:01<13:02, 782.84s/it]INFO - 03/01/26 14:02:36 - 0:39:12 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.5965 0.8873 0.979 ], mr = 6.610, mrr = 0.693, Loss = 1075.3925
+INFO - 03/01/26 14:02:36 - 0:39:12 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.5945 0.8853 0.981 ], mr = 6.548, mrr = 0.692, Loss = 1075.3925
+
+Train | Ep [2/3] Step [424/423] LR [0.00000] Loss 1075.39253 : 100%|��������������������| 3/3 [39:08<00:00, 782.37s/it]
+Train | Ep [2/3] Step [424/423] LR [0.00000] Loss 1075.39253 : 100%|��������������������| 3/3 [39:08<00:00, 782.75s/it]
+INFO - 03/01/26 14:02:36 - 0:39:12 - load from the best model before final testing ...
+INFO - 03/01/26 14:02:36 - 0:39:12 -  --------------------- Test result ---------------------
+INFO - 03/01/26 14:02:44 - 0:39:20 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.6086 0.8925 0.9808], mr = 6.324, mrr = 0.705, Loss = 1075.3925
+INFO - 03/01/26 14:02:44 - 0:39:20 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.6032 0.893  0.9818], mr = 6.226, mrr = 0.702, Loss = 1075.3925
+INFO - 03/01/26 14:02:44 - 0:39:20 - min loss 1075.3925290107727
+INFO - 03/01/26 14:02:44 - 0:39:20 - done!
+[DONE] return_code=0

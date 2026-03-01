@@ -1,2 +1,4 @@
 lang_pair,num_runs,l2r_hits@1_mean,l2r_hits@1_std,l2r_hits@10_mean,l2r_hits@10_std,l2r_mrr_mean,l2r_mrr_std,r2l_hits@1_mean,r2l_hits@1_std,r2l_hits@10_mean,r2l_hits@10_std,r2l_mrr_mean,r2l_mrr_std
+fr_en,1,0.6086,0.0,0.8925,0.0,0.705,0.0,0.6032,0.0,0.893,0.0,0.702,0.0
+ja_en,1,0.5988,0.0,0.878,0.0,0.693,0.0,0.6018,0.0,0.8808,0.0,0.695,0.0
 zh_en,5,0.6233,0.0085,0.8926,0.0054,0.7146,0.007,0.6233,0.0065,0.8925,0.0026,0.7148,0.0054

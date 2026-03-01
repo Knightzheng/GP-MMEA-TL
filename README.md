@@ -173,3 +173,16 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/epoch3_multiseed_compare_zh_en.md`
 - Key conclusion:
   - Under equal `epoch=3` budget and 5 seeds, `baseline` and `TMMEA-DA v1_best` are effectively tied on `zh_en`.
+
+## 12. Update (2026-03-01): Epoch-3 Expansion to ja_en/fr_en (Pilot)
+
+- Added epoch-3 configs for DBP15K `ja_en` and `fr_en` (baseline + method).
+- Completed seed=42 pilot runs for both languages under equal budget.
+- Refreshed epoch-3 aggregate files to include `zh_en` (5 seeds) + `ja_en/fr_en` (pilot 1 seed):
+  - `reports/baseline_epoch3_results_mean_std.csv`
+  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
+- Added DBP15K epoch3 compare report:
+  - `reports/epoch3_compare_dbp15k.csv`
+  - `reports/epoch3_compare_dbp15k.md`
+- Current stage observation:
+  - baseline and `v1_best` remain near-tied across `zh_en` (formal) and `ja_en/fr_en` (pilot).

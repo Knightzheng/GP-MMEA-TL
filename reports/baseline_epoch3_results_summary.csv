@@ -4,3 +4,5 @@ run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
 20260301-075541-MEAformer-epoch3-DBP15K-zh_en-s2026,zh_en,0.6125,0.8893,0.707,0.6165,0.8925,0.71
 20260301-082737-MEAformer-epoch3-DBP15K-zh_en-s7,zh_en,0.6261,0.8919,0.714,0.6253,0.891,0.714
 20260301-085921-MEAformer-epoch3-DBP15K-zh_en-s123,zh_en,0.6337,0.8991,0.724,0.6317,0.8946,0.723
+20260301-114744-MEAformer-epoch3-DBP15K-ja_en-s42,ja_en,0.5988,0.878,0.693,0.6018,0.8808,0.695
+20260301-132322-MEAformer-epoch3-DBP15K-fr_en-s42,fr_en,0.6086,0.8925,0.705,0.6032,0.893,0.702

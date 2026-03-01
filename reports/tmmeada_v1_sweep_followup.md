@@ -68,3 +68,11 @@ Comparison:
   - `reports/epoch3_multiseed_compare_zh_en.md`
 - Final observation under epoch=3 multi-seed:
   - baseline and v1_best are effectively tied on Hits@1/Hits@10/MRR.
+
+## 8. DBP15K epoch3 expansion status
+- zh_en: formal 5-seed comparison complete.
+- ja_en/fr_en: pilot 1-seed baseline vs v1_best complete.
+- Unified compare file:
+  - `reports/epoch3_compare_dbp15k.md`
+- Trend at current stage:
+  - baseline and v1_best are near-tied across all currently available epoch3 runs.
