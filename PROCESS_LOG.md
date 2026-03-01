@@ -418,3 +418,30 @@
   - zh_en: epoch3 formal 5-seed complete (baseline vs v1_best)
   - ja_en: epoch3 formal 5-seed complete (baseline vs v1_best)
   - fr_en: epoch3 pilot 1-seed complete (baseline vs v1_best)
+### 2026-03-02 DBP15K epoch3 fr_en formal completion + consistency fix
+- Completed remaining `fr_en` seeds for epoch3 formal comparison:
+  - baseline seeds completed: `3407`, `2026`, `7`, `123`
+  - method (`v1_best`) seeds completed: `3407`, `2026`, `7`, `123`
+- New run folders:
+  - `runs/baseline_epoch3/20260302-000107-MEAformer-epoch3-DBP15K-fr_en-s3407/`
+  - `runs/baseline_epoch3/20260302-004547-MEAformer-epoch3-DBP15K-fr_en-s2026/`
+  - `runs/baseline_epoch3/20260302-012828-MEAformer-epoch3-DBP15K-fr_en-s7/`
+  - `runs/baseline_epoch3/20260302-021052-MEAformer-epoch3-DBP15K-fr_en-s123/`
+  - `runs/tmmeada_v1_best_epoch3/20260302-025342-TMMEA-DA-v1-best-epoch3-DBP15K-fr_en-s3407/`
+  - `runs/tmmeada_v1_best_epoch3/20260302-033658-TMMEA-DA-v1-best-epoch3-DBP15K-fr_en-s2026/`
+  - `runs/tmmeada_v1_best_epoch3/20260302-042012-TMMEA-DA-v1-best-epoch3-DBP15K-fr_en-s7/`
+  - `runs/tmmeada_v1_best_epoch3/20260302-050332-TMMEA-DA-v1-best-epoch3-DBP15K-fr_en-s123/`
+- Refreshed outputs:
+  - `reports/baseline_epoch3_results_summary.csv` (15 runs)
+  - `reports/tmmeada_v1_best_epoch3_results_summary.csv` (15 runs)
+  - `reports/baseline_epoch3_results_mean_std.csv` (`zh_en/ja_en/fr_en` each 5 runs)
+  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv` (`zh_en/ja_en/fr_en` each 5 runs)
+  - `reports/epoch3_compare_dbp15k.csv`
+  - `reports/epoch3_compare_dbp15k.md`
+- Consistency fix:
+  - updated `scripts/make_epoch3_compare_dbp15k.py` notes section to be generated from real run counts.
+  - this avoids stale text like "pilot single-seed" when CSV already reports 5/5 runs.
+- Stage status:
+  - zh_en: epoch3 formal 5-seed complete (baseline vs v1_best)
+  - ja_en: epoch3 formal 5-seed complete (baseline vs v1_best)
+  - fr_en: epoch3 formal 5-seed complete (baseline vs v1_best)

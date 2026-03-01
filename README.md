@@ -186,3 +186,20 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/epoch3_compare_dbp15k.md`
 - Current stage observation:
   - baseline and `v1_best` remain near-tied across `zh_en` (formal) and `ja_en/fr_en` (pilot).
+
+## 13. Update (2026-03-02): DBP15K Epoch-3 Formal 5-Seed Completed (zh/ja/fr)
+
+- Completed remaining `fr_en` seeds (`3407, 2026, 7, 123`) for both:
+  - baseline stage: `runs/baseline_epoch3/`
+  - method stage: `runs/tmmeada_v1_best_epoch3/`
+- Refreshed summaries and aggregates (now all DBP15K language pairs are formal 5-seed):
+  - `reports/baseline_epoch3_results_summary.csv`
+  - `reports/baseline_epoch3_results_mean_std.csv`
+  - `reports/tmmeada_v1_best_epoch3_results_summary.csv`
+  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
+  - `reports/epoch3_compare_dbp15k.csv`
+  - `reports/epoch3_compare_dbp15k.md`
+- Compare script note generation has been made dynamic to avoid stale pilot wording:
+  - `scripts/make_epoch3_compare_dbp15k.py`
+- Key conclusion under equal `epoch=3` and same 5 seeds:
+  - `baseline` and `TMMEA-DA v1_best` are still near-tied on `zh_en`, `ja_en`, and `fr_en`.

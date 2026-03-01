@@ -67,7 +67,19 @@ def main():
         )
     lines.append("")
     lines.append("Notes:")
-    lines.append("- zh_en is a 5-seed formal comparison; ja_en/fr_en are current pilot single-seed results.")
+    run_desc = []
+    all_formal = True
+    for lang in langs:
+        base_runs = next(r["baseline_num_runs"] for r in rows if r["lang_pair"] == lang)
+        meth_runs = next(r["method_num_runs"] for r in rows if r["lang_pair"] == lang)
+        run_desc.append(f"{lang}={base_runs}/{meth_runs}")
+        if min(base_runs, meth_runs) < 5:
+            all_formal = False
+    lines.append("- run counts (baseline/method): " + ", ".join(run_desc))
+    if all_formal:
+        lines.append("- all listed languages are formal 5-seed comparisons.")
+    else:
+        lines.append("- some languages are still pilot (fewer than 5 seeds).")
     out_md.write_text("\n".join(lines), encoding="utf-8")
 
     print(f"Wrote: {out_csv}")

@@ -4,7 +4,8 @@
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | zh_en | 5 | 5 | +0.0000 | +0.0000 | +0.0000 | +0.0001 | -0.0001 | +0.0002 |
 | ja_en | 5 | 5 | +0.0000 | +0.0001 | +0.0002 | +0.0001 | +0.0001 | +0.0000 |
-| fr_en | 1 | 1 | +0.0003 | -0.0001 | +0.0000 | +0.0001 | -0.0001 | +0.0000 |
+| fr_en | 5 | 5 | +0.0001 | +0.0000 | +0.0002 | -0.0001 | +0.0000 | -0.0002 |
 
 Notes:
-- zh_en is a 5-seed formal comparison; ja_en/fr_en are current pilot single-seed results.
+- run counts (baseline/method): zh_en=5/5, ja_en=5/5, fr_en=5/5
+- all listed languages are formal 5-seed comparisons.
