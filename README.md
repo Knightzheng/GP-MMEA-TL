@@ -159,3 +159,17 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - Key observation:
   - Training budget increase (`epoch: 1 -> 3`) strongly boosts both methods.
   - Under this pilot setting, `v1_best` is approximately tied with baseline.
+
+## 11. Update (2026-03-01): Epoch-3 Formal 5-Seed Comparison on zh_en
+
+- Completed full 5-seed runs for both settings (`42, 3407, 2026, 7, 123`):
+  - baseline: `runs/baseline_epoch3/`
+  - method (`v1_best`): `runs/tmmeada_v1_best_epoch3/`
+- Aggregated results:
+  - `reports/baseline_epoch3_results_mean_std.csv`
+  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
+- Formal compare report:
+  - `reports/epoch3_multiseed_compare_zh_en.csv`
+  - `reports/epoch3_multiseed_compare_zh_en.md`
+- Key conclusion:
+  - Under equal `epoch=3` budget and 5 seeds, `baseline` and `TMMEA-DA v1_best` are effectively tied on `zh_en`.

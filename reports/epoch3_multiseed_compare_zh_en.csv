@@ -1,0 +1,7 @@
+metric,baseline_epoch3_mean,baseline_epoch3_std,tmmeada_v1_best_epoch3_mean,tmmeada_v1_best_epoch3_std,delta_method_minus_baseline
+l2r Hits@1,0.6233,0.0085,0.6233,0.0085,0.0
+l2r Hits@10,0.8926,0.0054,0.8926,0.0055,0.0
+l2r MRR,0.7146,0.007,0.7146,0.007,0.0
+r2l Hits@1,0.6233,0.0065,0.6234,0.0065,0.0001
+r2l Hits@10,0.8925,0.0026,0.8924,0.0026,-0.0001
+r2l MRR,0.7148,0.0054,0.715,0.0054,0.0002

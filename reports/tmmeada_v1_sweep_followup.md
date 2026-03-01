@@ -59,3 +59,12 @@ Comparison:
 - Pilot conclusion:
   - Both methods improve strongly vs 1-epoch quick setting.
   - `v1_best` and baseline are nearly tied under epoch=3 single-seed pilot.
+
+## 7. Epoch-3 formal 5-seed comparison (zh_en)
+- Baseline aggregate: `reports/baseline_epoch3_results_mean_std.csv`
+- Method aggregate: `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
+- Compare artifacts:
+  - `reports/epoch3_multiseed_compare_zh_en.csv`
+  - `reports/epoch3_multiseed_compare_zh_en.md`
+- Final observation under epoch=3 multi-seed:
+  - baseline and v1_best are effectively tied on Hits@1/Hits@10/MRR.

@@ -347,3 +347,28 @@
 - Observation:
   - Increasing epoch budget from 1 to 3 yields major performance gains for both methods.
   - Under epoch=3 and seed=42, v1_best is approximately tied with baseline.
+### 2026-03-01 Daytime epoch3 formal 5-seed comparison (zh_en)
+- Completed baseline_epoch3 remaining seeds (3407, 2026, 7, 123):
+  - stage: runs/baseline_epoch3
+  - total: 5 seeds (42, 3407, 2026, 7, 123)
+- Completed tmmeada_v1_best_epoch3 remaining seeds (3407, 2026, 7, 123):
+  - stage: runs/tmmeada_v1_best_epoch3
+  - total: 5 seeds (42, 3407, 2026, 7, 123)
+- Refreshed summaries and aggregates:
+  - reports/baseline_epoch3_results_summary.csv
+  - reports/baseline_epoch3_results_mean_std.csv
+  - reports/tmmeada_v1_best_epoch3_results_summary.csv
+  - reports/tmmeada_v1_best_epoch3_results_mean_std.csv
+- Added comparison script and outputs:
+  - scripts/make_epoch3_multiseed_compare_zh_en.py
+  - reports/epoch3_multiseed_compare_zh_en.csv
+  - reports/epoch3_multiseed_compare_zh_en.md
+- Key multi-seed results (mean+/-std):
+  - baseline epoch3 zh_en:
+    - l2r H@1=0.6233+/-0.0085, H@10=0.8926+/-0.0054, MRR=0.7146+/-0.0070
+    - r2l H@1=0.6233+/-0.0065, H@10=0.8925+/-0.0026, MRR=0.7148+/-0.0054
+  - v1_best epoch3 zh_en:
+    - l2r H@1=0.6233+/-0.0085, H@10=0.8926+/-0.0055, MRR=0.7146+/-0.0070
+    - r2l H@1=0.6234+/-0.0065, H@10=0.8924+/-0.0026, MRR=0.7150+/-0.0054
+- Observation:
+  - Under equal epoch3 budget and same 5 seeds, baseline and v1_best are effectively tied.
