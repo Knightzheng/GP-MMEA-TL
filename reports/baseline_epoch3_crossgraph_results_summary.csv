@@ -1,0 +1,3 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260302-055424-MEAformer-epoch3-FBDB15K-norm-s42,FBDB15K,0.1733,0.4706,0.27,0.1752,0.4689,0.272
+20260302-060314-MEAformer-epoch3-FBYG15K-norm-s42,FBYG15K,0.1613,0.4106,0.244,0.1616,0.4162,0.246

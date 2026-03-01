@@ -1,0 +1,3 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260302-061347-TMMEA-DA-v1-best-epoch3-FBDB15K-norm-s42,FBDB15K,0.1736,0.4716,0.27,0.1752,0.4695,0.273
+20260302-062232-TMMEA-DA-v1-best-epoch3-FBYG15K-norm-s42,FBYG15K,0.1614,0.4104,0.244,0.1615,0.4162,0.246

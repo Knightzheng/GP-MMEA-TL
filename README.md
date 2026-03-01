@@ -203,3 +203,24 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `scripts/make_epoch3_compare_dbp15k.py`
 - Key conclusion under equal `epoch=3` and same 5 seeds:
   - `baseline` and `TMMEA-DA v1_best` are still near-tied on `zh_en`, `ja_en`, and `fr_en`.
+
+## 14. Update (2026-03-02): Cross-graph Epoch-3 Pilot (FBDB15K/FBYG15K)
+
+- Added cross-graph epoch-3 configs for baseline and `v1_best`:
+  - `configs/baselines/meaformer_fbdb15k_rtx3060_safe_epoch3.yaml`
+  - `configs/baselines/meaformer_fbyg15k_rtx3060_safe_epoch3.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v1_best_epoch3.yaml`
+  - `configs/tmmeada/meaformer_fbyg15k_tmmeada_v1_best_epoch3.yaml`
+- Completed seed=42 pilot runs:
+  - baseline stage: `runs/baseline_epoch3_crossgraph/`
+  - method stage: `runs/tmmeada_v1_best_epoch3_crossgraph/`
+- Added cross-graph epoch3 comparison outputs:
+  - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3_compare_crossgraph.md`
+- Current pilot observation:
+  - `FBDB15K`: `v1_best` has very small positive deltas vs baseline.
+  - `FBYG15K`: `v1_best` is effectively tied with baseline.
+- Next step:
+  - extend cross-graph epoch3 from pilot (1 seed) to formal 5-seed comparison.

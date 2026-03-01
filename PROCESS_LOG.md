@@ -445,3 +445,26 @@
   - zh_en: epoch3 formal 5-seed complete (baseline vs v1_best)
   - ja_en: epoch3 formal 5-seed complete (baseline vs v1_best)
   - fr_en: epoch3 formal 5-seed complete (baseline vs v1_best)
+### 2026-03-02 Cross-graph epoch3 pilot (baseline vs v1_best)
+- Added cross-graph epoch3 configs:
+  - `configs/baselines/meaformer_fbdb15k_rtx3060_safe_epoch3.yaml`
+  - `configs/baselines/meaformer_fbyg15k_rtx3060_safe_epoch3.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v1_best_epoch3.yaml`
+  - `configs/tmmeada/meaformer_fbyg15k_tmmeada_v1_best_epoch3.yaml`
+- Added compare script:
+  - `scripts/make_epoch3_compare_crossgraph.py`
+- Completed pilot runs (seed=42):
+  - baseline FBDB15K: `runs/baseline_epoch3_crossgraph/20260302-055424-MEAformer-epoch3-FBDB15K-norm-s42/`
+  - baseline FBYG15K: `runs/baseline_epoch3_crossgraph/20260302-060314-MEAformer-epoch3-FBYG15K-norm-s42/`
+  - method FBDB15K: `runs/tmmeada_v1_best_epoch3_crossgraph/20260302-061347-TMMEA-DA-v1-best-epoch3-FBDB15K-norm-s42/`
+  - method FBYG15K: `runs/tmmeada_v1_best_epoch3_crossgraph/20260302-062232-TMMEA-DA-v1-best-epoch3-FBYG15K-norm-s42/`
+- Refreshed pilot summaries:
+  - `reports/baseline_epoch3_crossgraph_results_summary.csv`
+  - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_summary.csv`
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3_compare_crossgraph.md`
+- Pilot observation:
+  - FBDB15K: method is slightly higher than baseline (small positive deltas around `+0.0003~+0.0010`).
+  - FBYG15K: method and baseline are near-tied (tiny deltas).
