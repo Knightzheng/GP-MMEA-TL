@@ -394,3 +394,27 @@
   - reports/epoch3_compare_dbp15k.md
 - Observation:
   - zh_en formal 5-seed and ja_en/fr_en pilot 1-seed all show baseline and v1_best are near-tied under epoch3 budget.
+### 2026-03-01 Power-loss recovery and stage restore
+- Incident check after unexpected shutdown:
+  - git repository intact, no index lock, HEAD unchanged.
+  - remote sync status at check time: origin/main == HEAD.
+- Interrupted stage detection:
+  - baseline_epoch3 ja_en multiseed was in progress.
+  - completed runs found: s3407, s2026.
+  - partial run found: s7 (stopped before final test completion).
+  - pending run: s123 not started.
+- Recovery actions:
+  - removed partial baseline ja_en s7 run directory.
+  - reran baseline ja_en seeds: s7, s123.
+  - reran method (tmmeada_v1_best_epoch3) ja_en seeds: s3407, s2026, s7, s123.
+- Post-recovery refresh:
+  - reports/baseline_epoch3_results_summary.csv (11 runs)
+  - reports/baseline_epoch3_results_mean_std.csv
+  - reports/tmmeada_v1_best_epoch3_results_summary.csv (11 runs)
+  - reports/tmmeada_v1_best_epoch3_results_mean_std.csv
+  - reports/epoch3_compare_dbp15k.csv
+  - reports/epoch3_compare_dbp15k.md
+- Stage status after recovery:
+  - zh_en: epoch3 formal 5-seed complete (baseline vs v1_best)
+  - ja_en: epoch3 formal 5-seed complete (baseline vs v1_best)
+  - fr_en: epoch3 pilot 1-seed complete (baseline vs v1_best)
