@@ -1,0 +1,55 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice FBYG15K --data_split norm --data_rate 0.2 --epoch 3 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 2026 --exp_name BYSJ_MEAformer_crossgraph_safe_epoch3_multiseed --exp_id v1_FBYG15K_norm_0.2_safe_epoch3_s2026 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --csls
+The syntax of the command is incorrect.
+INFO - 03/02/26 07:20:37 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/02/26 07:20:37 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0302-BYSJ_MEAformer_crossgraph_safe_epoch3_multiseed\MEAformer_FBYG15K_0.2_v1_FBYG15K_norm_0.2_safe_epoch3_s2026
+
+INFO - 03/02/26 07:20:37 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice FBYG15K --data_split norm --data_rate '0.2' --epoch 3 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 2026 --exp_name BYSJ_MEAformer_crossgraph_safe_epoch3_multiseed --exp_id 'v1_FBYG15K_norm_0.2_safe_epoch3_s2026' --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/02/26 07:20:40 - 0:00:02 - 81.17% entities have images
+INFO - 03/02/26 07:20:40 - 0:00:03 - image feature shape:(30355, 4096)
+INFO - 03/02/26 07:20:40 - 0:00:03 - #left entity : 14951, #right entity: 15404
+INFO - 03/02/26 07:20:40 - 0:00:03 - #left entity not in train set: 12712, #right entity not in train set: 13165
+INFO - 03/02/26 07:20:41 - 0:00:03 - relation feature shape:(30355, 1000)
+INFO - 03/02/26 07:20:41 - 0:00:03 - attribute feature shape:(30355, 123)
+INFO - 03/02/26 07:20:41 - 0:00:03 - -----dataset summary-----
+INFO - 03/02/26 07:20:41 - 0:00:03 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\FBYG15K\norm
+INFO - 03/02/26 07:20:41 - 0:00:03 - triple num:	 715099
+INFO - 03/02/26 07:20:41 - 0:00:03 - entity num:	 30355
+INFO - 03/02/26 07:20:41 - 0:00:03 - relation num:	 1377
+INFO - 03/02/26 07:20:41 - 0:00:03 - train ill num:	 2239 	 test ill num:	 8960
+INFO - 03/02/26 07:20:41 - 0:00:03 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/02/26 07:20:42 - 0:00:04 - Random init...
+INFO - 03/02/26 07:20:42 - 0:00:04 - total params num: 2345990
+INFO - 03/02/26 07:20:42 - 0:00:04 - warmup_steps: 31
+INFO - 03/02/26 07:20:42 - 0:00:04 - total_steps: 210
+INFO - 03/02/26 07:20:42 - 0:00:04 - weight_decay: 0.0001
+loading raw data...
+getting a sparse tensor r_adj...
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+Train | Ep [0/3] Step [71/210] LR [0.00027] Loss 2799.50018 :   0%|          | 0/3 [03:25<?, ?it/s]INFO - 03/02/26 07:24:13 - 0:03:36 - Ep 0 | l2r: acc of top [1, 10, 50] = [0.1212 0.3413 0.5773], mr = 176.676, mrr = 0.195, Loss = 2799.5002
+INFO - 03/02/26 07:24:13 - 0:03:36 - Ep 0 | r2l: acc of top [1, 10, 50] = [0.1224 0.3473 0.5705], mr = 206.436, mrr = 0.198, Loss = 2799.5002
+INFO - 03/02/26 07:24:13 - 0:03:36 - Best model update in Ep 0: MRR from [0.0] --> [0.1952851997834018] ...
+
+Train | Ep [0/3] Step [71/210] LR [0.00027] Loss 2799.50018 :  33%|��������      | 1/3 [03:30<07:00, 210.26s/it]
+Train | Ep [1/3] Step [141/210] LR [0.00010] Loss 1731.26537 :  33%|��������      | 1/3 [06:55<07:00, 210.26s/it]INFO - 03/02/26 07:27:43 - 0:07:06 - Ep 1 | l2r: acc of top [1, 10, 50] = [0.1703 0.4277 0.6721], mr = 121.062, mrr = 0.255, Loss = 1731.2654
+INFO - 03/02/26 07:27:43 - 0:07:06 - Ep 1 | r2l: acc of top [1, 10, 50] = [0.1699 0.4262 0.6657], mr = 136.945, mrr = 0.255, Loss = 1731.2654
+INFO - 03/02/26 07:27:43 - 0:07:06 - Best model update in Ep 1: MRR from [0.1952851997834018] --> [0.25537212119503255] ...
+
+Train | Ep [1/3] Step [141/210] LR [0.00010] Loss 1731.26537 :  67%|��������������   | 2/3 [07:00<03:30, 210.08s/it]
+Train | Ep [2/3] Step [211/210] LR [0.00000] Loss 1419.58224 :  67%|��������������   | 2/3 [10:22<03:30, 210.08s/it]INFO - 03/02/26 07:31:10 - 0:10:33 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.1392 0.3679 0.6227], mr = 146.394, mrr = 0.217, Loss = 1419.5822
+INFO - 03/02/26 07:31:10 - 0:10:33 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.1385 0.3688 0.6121], mr = 159.495, mrr = 0.216, Loss = 1419.5822
+
+Train | Ep [2/3] Step [211/210] LR [0.00000] Loss 1419.58224 : 100%|��������������������| 3/3 [10:27<00:00, 208.73s/it]
+Train | Ep [2/3] Step [211/210] LR [0.00000] Loss 1419.58224 : 100%|��������������������| 3/3 [10:27<00:00, 209.11s/it]
+INFO - 03/02/26 07:31:10 - 0:10:33 - load from the best model before final testing ...
+INFO - 03/02/26 07:31:10 - 0:10:33 -  --------------------- Test result ---------------------
+INFO - 03/02/26 07:31:16 - 0:10:39 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.1703 0.4277 0.6721], mr = 121.062, mrr = 0.255, Loss = 1419.5822
+INFO - 03/02/26 07:31:16 - 0:10:39 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.1699 0.4262 0.6657], mr = 136.945, mrr = 0.255, Loss = 1419.5822
+INFO - 03/02/26 07:31:16 - 0:10:39 - min loss 1419.5822410583496
+INFO - 03/02/26 07:31:16 - 0:10:39 - done!
+[DONE] return_code=0

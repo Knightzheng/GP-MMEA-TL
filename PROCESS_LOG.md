@@ -468,3 +468,23 @@
 - Pilot observation:
   - FBDB15K: method is slightly higher than baseline (small positive deltas around `+0.0003~+0.0010`).
   - FBYG15K: method and baseline are near-tied (tiny deltas).
+### 2026-03-02 Cross-graph epoch3 formal 5-seed completion
+- Extended pilot to formal 5-seed for both baseline and method:
+  - seeds added: `3407`, `2026`, `7`, `123`
+  - datasets: `FBDB15K`, `FBYG15K`
+- Completed stages:
+  - baseline: `runs/baseline_epoch3_crossgraph/`
+  - method: `runs/tmmeada_v1_best_epoch3_crossgraph/`
+- Refreshed outputs:
+  - `reports/baseline_epoch3_crossgraph_results_summary.csv` (10 runs)
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_summary.csv` (10 runs)
+  - `reports/baseline_epoch3_crossgraph_results_mean_std.csv` (FBDB15K/FBYG15K each 5 runs)
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv` (FBDB15K/FBYG15K each 5 runs)
+  - `reports/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3_compare_crossgraph.md`
+- Key formal comparison (method - baseline):
+  - `FBDB15K`: small positive deltas (`l2r H@1 +0.0001`, `l2r H@10 +0.0003`, `r2l MRR +0.0004`)
+  - `FBYG15K`: small positive deltas (`l2r H@1 +0.0002`, `l2r H@10 +0.0003`, `l2r MRR +0.0004`)
+- Stage status:
+  - DBP15K epoch3: formal 5-seed complete (`zh_en`, `ja_en`, `fr_en`)
+  - Cross-graph epoch3: formal 5-seed complete (`FBDB15K`, `FBYG15K`)

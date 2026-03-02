@@ -1,0 +1,56 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice FBDB15K --data_split norm --data_rate 0.2 --epoch 3 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 3407 --exp_name BYSJ_TMMEA_DA_v1_best_crossgraph_epoch3_multiseed --exp_id v1_best_FBDB15K_norm_0.2_epoch3_s3407 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --use_domain_align 1 --domain_align_weight 0.1 --use_source_select 1 --source_select_weight 0.05 --source_select_temp 1.0 --use_missing_gate 1 --missing_align_weight 0.1 --csls
+The syntax of the command is incorrect.
+The syntax of the command is incorrect.
+INFO - 03/02/26 07:52:10 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/02/26 07:52:10 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0302-BYSJ_TMMEA_DA_v1_best_crossgraph_epoch3_multiseed\MEAformer_FBDB15K_0.2_v1_best_FBDB15K_norm_0.2_epoch3_s3407
+
+INFO - 03/02/26 07:52:10 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice FBDB15K --data_split norm --data_rate '0.2' --epoch 3 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 3407 --exp_name BYSJ_TMMEA_DA_v1_best_crossgraph_epoch3_multiseed --exp_id 'v1_best_FBDB15K_norm_0.2_epoch3_s3407' --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --use_domain_align 1 --domain_align_weight '0.1' --use_source_select 1 --source_select_weight '0.05' --source_select_temp '1.0' --use_missing_gate 1 --missing_align_weight '0.1' --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/02/26 07:52:12 - 0:00:02 - 94.56% entities have images
+INFO - 03/02/26 07:52:12 - 0:00:02 - image feature shape:(27793, 4096)
+INFO - 03/02/26 07:52:12 - 0:00:02 - #left entity : 14951, #right entity: 12842
+INFO - 03/02/26 07:52:12 - 0:00:02 - #left entity not in train set: 12382, #right entity not in train set: 10273
+INFO - 03/02/26 07:52:13 - 0:00:03 - relation feature shape:(27793, 1000)
+INFO - 03/02/26 07:52:13 - 0:00:03 - attribute feature shape:(27793, 341)
+INFO - 03/02/26 07:52:13 - 0:00:03 - -----dataset summary-----
+INFO - 03/02/26 07:52:13 - 0:00:03 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\FBDB15K\norm
+INFO - 03/02/26 07:52:13 - 0:00:03 - triple num:	 691241
+INFO - 03/02/26 07:52:13 - 0:00:03 - entity num:	 27793
+INFO - 03/02/26 07:52:13 - 0:00:03 - relation num:	 1624
+INFO - 03/02/26 07:52:13 - 0:00:03 - train ill num:	 2569 	 test ill num:	 10277
+INFO - 03/02/26 07:52:13 - 0:00:03 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/02/26 07:52:14 - 0:00:04 - Random init...
+INFO - 03/02/26 07:52:14 - 0:00:04 - total params num: 2195974
+INFO - 03/02/26 07:52:14 - 0:00:04 - warmup_steps: 36
+INFO - 03/02/26 07:52:14 - 0:00:04 - total_steps: 243
+INFO - 03/02/26 07:52:14 - 0:00:04 - weight_decay: 0.0001
+loading raw data...
+getting a sparse tensor r_adj...
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+Train | Ep [0/3] Step [82/243] LR [0.00027] Loss 2940.27449 :   0%|          | 0/3 [02:33<?, ?it/s]INFO - 03/02/26 07:54:54 - 0:02:44 - Ep 0 | l2r: acc of top [1, 10, 50] = [0.1442 0.4059 0.645 ], mr = 143.649, mrr = 0.230, Loss = 2940.2745
+INFO - 03/02/26 07:54:54 - 0:02:44 - Ep 0 | r2l: acc of top [1, 10, 50] = [0.1547 0.416  0.6529], mr = 149.164, mrr = 0.241, Loss = 2940.2745
+INFO - 03/02/26 07:54:54 - 0:02:44 - Best model update in Ep 0: MRR from [0.0] --> [0.22993965093471186] ...
+
+Train | Ep [0/3] Step [82/243] LR [0.00027] Loss 2940.27449 :  33%|��������      | 1/3 [02:39<05:18, 159.27s/it]
+Train | Ep [1/3] Step [163/243] LR [0.00010] Loss 1670.19026 :  33%|��������      | 1/3 [05:14<05:18, 159.27s/it]INFO - 03/02/26 07:57:35 - 0:05:25 - Ep 1 | l2r: acc of top [1, 10, 50] = [0.1974 0.5011 0.7391], mr = 92.060, mrr = 0.297, Loss = 1670.1903
+INFO - 03/02/26 07:57:35 - 0:05:25 - Ep 1 | r2l: acc of top [1, 10, 50] = [0.2026 0.5046 0.7387], mr = 94.607, mrr = 0.302, Loss = 1670.1903
+INFO - 03/02/26 07:57:35 - 0:05:25 - Best model update in Ep 1: MRR from [0.22993965093471186] --> [0.29706703559947867] ...
+
+Train | Ep [1/3] Step [163/243] LR [0.00010] Loss 1670.19026 :  67%|��������������   | 2/3 [05:20<02:40, 160.42s/it]
+Train | Ep [2/3] Step [244/243] LR [0.00000] Loss 1358.47785 :  67%|��������������   | 2/3 [07:56<02:40, 160.42s/it]INFO - 03/02/26 08:00:17 - 0:08:07 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.1592 0.4374 0.6918], mr = 104.439, mrr = 0.251, Loss = 1358.4778
+INFO - 03/02/26 08:00:17 - 0:08:07 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.1629 0.438  0.6911], mr = 108.922, mrr = 0.253, Loss = 1358.4778
+
+Train | Ep [2/3] Step [244/243] LR [0.00000] Loss 1358.47785 : 100%|��������������������| 3/3 [08:01<00:00, 160.89s/it]
+Train | Ep [2/3] Step [244/243] LR [0.00000] Loss 1358.47785 : 100%|��������������������| 3/3 [08:01<00:00, 160.65s/it]
+INFO - 03/02/26 08:00:17 - 0:08:07 - load from the best model before final testing ...
+INFO - 03/02/26 08:00:17 - 0:08:07 -  --------------------- Test result ---------------------
+INFO - 03/02/26 08:00:23 - 0:08:14 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.1974 0.5011 0.7391], mr = 92.060, mrr = 0.297, Loss = 1358.4778
+INFO - 03/02/26 08:00:23 - 0:08:14 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.2026 0.5046 0.7387], mr = 94.607, mrr = 0.302, Loss = 1358.4778
+INFO - 03/02/26 08:00:23 - 0:08:14 - min loss 1358.4778470993042
+INFO - 03/02/26 08:00:23 - 0:08:14 - done!
+[DONE] return_code=0

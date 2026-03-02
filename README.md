@@ -224,3 +224,22 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `FBYG15K`: `v1_best` is effectively tied with baseline.
 - Next step:
   - extend cross-graph epoch3 from pilot (1 seed) to formal 5-seed comparison.
+
+## 15. Update (2026-03-02): Cross-graph Epoch-3 Formal 5-Seed Completed
+
+- Completed remaining 4 seeds (`3407, 2026, 7, 123`) for both datasets and both settings:
+  - baseline stage: `runs/baseline_epoch3_crossgraph/`
+  - method stage: `runs/tmmeada_v1_best_epoch3_crossgraph/`
+- Refreshed formal results:
+  - `reports/baseline_epoch3_crossgraph_results_summary.csv`
+  - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_summary.csv`
+  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3_compare_crossgraph.md`
+- Formal 5-seed observation:
+  - `FBDB15K`: `v1_best` shows small positive deltas over baseline.
+  - `FBYG15K`: `v1_best` also shows small positive deltas over baseline.
+- Current scope status:
+  - `DBP15K` epoch3 formal 5-seed: complete (`zh_en`, `ja_en`, `fr_en`)
+  - cross-graph epoch3 formal 5-seed: complete (`FBDB15K`, `FBYG15K`)
