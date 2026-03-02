@@ -121,125 +121,137 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 结果层面：TMMEA-DA 当前仅含 Domain Align MVP，在 1-epoch 设置下尚未超过 baseline。
 - 下一步：补充多源选择、缺失感知融合与更完整训练预算，再进行公平对比与消融。
 
-## 9. Update (2026-03-01): v1 Weight Sweep Follow-up
+## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
-- Added sweep config/runner/summary scripts:
+- 新增权重搜索配置与脚本：
   - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_sweep.yaml`
   - `scripts/run_tmmeada_v1_weight_sweep.py`
   - `scripts/summarize_tmmeada_v1_sweep.py`
-- Ran `zh_en` coarse sweep (6 runs, seed=42):
-  - grid: `dw={0.05,0.1,0.2}`, `sw={0.05,0.1}`, `mw=0.1`, `temp=1.0`
-- Sweep reports:
+- 在 `zh_en` 上完成单种子粗搜索（6 组，`seed=42`）：
+  - 网格：`dw={0.05,0.1,0.2}`，`sw={0.05,0.1}`，`mw=0.1`，`temp=1.0`
+- 输出搜索报告：
   - `reports/tmmeada_v1_sweep_summary.csv`
   - `reports/tmmeada_v1_sweep_grouped.csv`
   - `reports/tmmeada_v1_sweep.md`
-- Selected follow-up config and completed 5-seed validation:
-  - config: `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best.yaml`
-  - stage: `runs/tmmeada_v1_best`
-  - reports:
+- 选定后续配置并完成 5-seed 验证：
+  - 配置：`configs/tmmeada/meaformer_zh_en_tmmeada_v1_best.yaml`
+  - 阶段：`runs/tmmeada_v1_best`
+  - 结果：
     - `reports/tmmeada_v1_best_results_summary.csv`
     - `reports/tmmeada_v1_best_results_mean_std.csv`
     - `reports/tmmeada_v1_best_compare_zh_en.csv`
     - `reports/tmmeada_v1_best_compare_zh_en.md`
-- Current observation under 1-epoch quick validation:
-  - `v1_best` is effectively tied with `v1`.
-  - `baseline` remains clearly higher than `v0/v1/v1_best` on `zh_en`.
+- 观察：
+  - 在 1-epoch 快速设置下，`v1_best` 与 `v1` 基本持平；
+  - `baseline` 仍显著高于 `v0/v1/v1_best`（zh_en）。
 
-## 10. Update (2026-03-01): Epoch-3 Budget Pilot on zh_en
+## 10. 阶段更新（2026-03-01）：zh_en 的 epoch=3 预算试跑
 
-- Added epoch-3 configs:
+- 新增 epoch=3 配置：
   - `configs/baselines/meaformer_zh_en_rtx3060_safe_epoch3.yaml`
   - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3.yaml`
-- Completed single-seed (`seed=42`) pilot runs:
-  - baseline: `runs/baseline_epoch3/20260301-002341-MEAformer-epoch3-DBP15K-zh_en-s42/`
-  - method: `runs/tmmeada_v1_best_epoch3/20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42/`
-- Pilot compare report:
+- 完成单种子试跑（`seed=42`）：
+  - baseline：`runs/baseline_epoch3/20260301-002341-MEAformer-epoch3-DBP15K-zh_en-s42/`
+  - method：`runs/tmmeada_v1_best_epoch3/20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42/`
+- 输出试跑对比：
   - `reports/epoch3_pilot_compare_zh_en.csv`
   - `reports/epoch3_pilot_compare_zh_en.md`
-- Key observation:
-  - Training budget increase (`epoch: 1 -> 3`) strongly boosts both methods.
-  - Under this pilot setting, `v1_best` is approximately tied with baseline.
+- 观察：
+  - 训练预算从 `epoch=1` 提升到 `epoch=3` 后，双方性能均明显提升；
+  - 在该试跑设置下，`v1_best` 与 baseline 基本持平。
 
-## 11. Update (2026-03-01): Epoch-3 Formal 5-Seed Comparison on zh_en
+## 11. 阶段更新（2026-03-01）：zh_en 的 epoch=3 正式 5-seed 对比
 
-- Completed full 5-seed runs for both settings (`42, 3407, 2026, 7, 123`):
-  - baseline: `runs/baseline_epoch3/`
-  - method (`v1_best`): `runs/tmmeada_v1_best_epoch3/`
-- Aggregated results:
+- 在相同预算下完成 `42, 3407, 2026, 7, 123` 五个种子：
+  - baseline：`runs/baseline_epoch3/`
+  - method（`v1_best`）：`runs/tmmeada_v1_best_epoch3/`
+- 聚合结果：
   - `reports/baseline_epoch3_results_mean_std.csv`
   - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
-- Formal compare report:
+- 正式对比报告：
   - `reports/epoch3_multiseed_compare_zh_en.csv`
   - `reports/epoch3_multiseed_compare_zh_en.md`
-- Key conclusion:
-  - Under equal `epoch=3` budget and 5 seeds, `baseline` and `TMMEA-DA v1_best` are effectively tied on `zh_en`.
+- 结论：
+  - 在 `epoch=3 + 5-seed` 的公平设置下，`baseline` 与 `TMMEA-DA v1_best` 在 `zh_en` 基本持平。
 
-## 12. Update (2026-03-01): Epoch-3 Expansion to ja_en/fr_en (Pilot)
+## 12. 阶段更新（2026-03-01）：扩展到 ja_en / fr_en（试跑）
 
-- Added epoch-3 configs for DBP15K `ja_en` and `fr_en` (baseline + method).
-- Completed seed=42 pilot runs for both languages under equal budget.
-- Refreshed epoch-3 aggregate files to include `zh_en` (5 seeds) + `ja_en/fr_en` (pilot 1 seed):
+- 新增 DBP15K `ja_en` 与 `fr_en` 的 epoch=3 配置（baseline + method）。
+- 在两种语言上完成 `seed=42` 试跑。
+- 更新聚合文件（`zh_en` 为 5-seed，`ja_en/fr_en` 为试跑）：
   - `reports/baseline_epoch3_results_mean_std.csv`
   - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
-- Added DBP15K epoch3 compare report:
+- 新增 DBP15K epoch3 对比：
   - `reports/epoch3_compare_dbp15k.csv`
   - `reports/epoch3_compare_dbp15k.md`
-- Current stage observation:
-  - baseline and `v1_best` remain near-tied across `zh_en` (formal) and `ja_en/fr_en` (pilot).
+- 阶段观察：
+  - `zh_en` 正式结果与 `ja_en/fr_en` 试跑结果均显示两方法接近。
 
-## 13. Update (2026-03-02): DBP15K Epoch-3 Formal 5-Seed Completed (zh/ja/fr)
+## 13. 阶段更新（2026-03-02）：DBP15K epoch=3 全语种正式 5-seed 完成
 
-- Completed remaining `fr_en` seeds (`3407, 2026, 7, 123`) for both:
-  - baseline stage: `runs/baseline_epoch3/`
-  - method stage: `runs/tmmeada_v1_best_epoch3/`
-- Refreshed summaries and aggregates (now all DBP15K language pairs are formal 5-seed):
+- 为 `fr_en` 补齐剩余四个种子（`3407, 2026, 7, 123`），baseline 与 method 同步完成。
+- 更新后的 DBP15K epoch3 结果文件：
   - `reports/baseline_epoch3_results_summary.csv`
   - `reports/baseline_epoch3_results_mean_std.csv`
   - `reports/tmmeada_v1_best_epoch3_results_summary.csv`
   - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
   - `reports/epoch3_compare_dbp15k.csv`
   - `reports/epoch3_compare_dbp15k.md`
-- Compare script note generation has been made dynamic to avoid stale pilot wording:
-  - `scripts/make_epoch3_compare_dbp15k.py`
-- Key conclusion under equal `epoch=3` and same 5 seeds:
-  - `baseline` and `TMMEA-DA v1_best` are still near-tied on `zh_en`, `ja_en`, and `fr_en`.
+- 同步修复说明文本：
+  - `scripts/make_epoch3_compare_dbp15k.py` 改为根据真实 `num_runs` 自动生成注释，避免“结果已 5-seed 但文本仍写 pilot”的不一致。
+- 结论：
+  - 在 `zh_en/ja_en/fr_en` 三语种上，`baseline` 与 `v1_best` 仍基本持平。
 
-## 14. Update (2026-03-02): Cross-graph Epoch-3 Pilot (FBDB15K/FBYG15K)
+## 14. 阶段更新（2026-03-02）：跨图谱 epoch=3 试跑（FBDB15K/FBYG15K）
 
-- Added cross-graph epoch-3 configs for baseline and `v1_best`:
+- 新增跨图谱 epoch=3 配置（baseline + `v1_best`）：
   - `configs/baselines/meaformer_fbdb15k_rtx3060_safe_epoch3.yaml`
   - `configs/baselines/meaformer_fbyg15k_rtx3060_safe_epoch3.yaml`
   - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v1_best_epoch3.yaml`
   - `configs/tmmeada/meaformer_fbyg15k_tmmeada_v1_best_epoch3.yaml`
-- Completed seed=42 pilot runs:
-  - baseline stage: `runs/baseline_epoch3_crossgraph/`
-  - method stage: `runs/tmmeada_v1_best_epoch3_crossgraph/`
-- Added cross-graph epoch3 comparison outputs:
+- 完成 `seed=42` 试跑：
+  - baseline：`runs/baseline_epoch3_crossgraph/`
+  - method：`runs/tmmeada_v1_best_epoch3_crossgraph/`
+- 输出试跑对比：
   - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
   - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
   - `reports/epoch3_compare_crossgraph.csv`
   - `reports/epoch3_compare_crossgraph.md`
-- Current pilot observation:
-  - `FBDB15K`: `v1_best` has very small positive deltas vs baseline.
-  - `FBYG15K`: `v1_best` is effectively tied with baseline.
-- Next step:
-  - extend cross-graph epoch3 from pilot (1 seed) to formal 5-seed comparison.
+- 观察：
+  - `FBDB15K`：`v1_best` 相比 baseline 有极小正增益；
+  - `FBYG15K`：两者近似持平。
 
-## 15. Update (2026-03-02): Cross-graph Epoch-3 Formal 5-Seed Completed
+## 15. 阶段更新（2026-03-02）：跨图谱 epoch=3 正式 5-seed 完成
 
-- Completed remaining 4 seeds (`3407, 2026, 7, 123`) for both datasets and both settings:
-  - baseline stage: `runs/baseline_epoch3_crossgraph/`
-  - method stage: `runs/tmmeada_v1_best_epoch3_crossgraph/`
-- Refreshed formal results:
+- 在 `FBDB15K` 与 `FBYG15K` 上补齐 `3407, 2026, 7, 123`，与 `seed=42` 共同形成正式 5-seed。
+- 阶段目录：
+  - baseline：`runs/baseline_epoch3_crossgraph/`
+  - method：`runs/tmmeada_v1_best_epoch3_crossgraph/`
+- 结果文件：
   - `reports/baseline_epoch3_crossgraph_results_summary.csv`
   - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
   - `reports/tmmeada_v1_best_epoch3_crossgraph_results_summary.csv`
   - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
   - `reports/epoch3_compare_crossgraph.csv`
   - `reports/epoch3_compare_crossgraph.md`
-- Formal 5-seed observation:
-  - `FBDB15K`: `v1_best` shows small positive deltas over baseline.
-  - `FBYG15K`: `v1_best` also shows small positive deltas over baseline.
-- Current scope status:
-  - `DBP15K` epoch3 formal 5-seed: complete (`zh_en`, `ja_en`, `fr_en`)
-  - cross-graph epoch3 formal 5-seed: complete (`FBDB15K`, `FBYG15K`)
+- 正式 5-seed 观察：
+  - `FBDB15K`：`v1_best` 小幅优于 baseline；
+  - `FBYG15K`：`v1_best` 小幅优于 baseline。
+- 当前范围状态：
+  - `DBP15K` epoch3 正式 5-seed 已完成（`zh_en`, `ja_en`, `fr_en`）；
+  - 跨图谱 epoch3 正式 5-seed 已完成（`FBDB15K`, `FBYG15K`）。
+
+## 16. 阶段更新（2026-03-02）：zh_en 模块消融（epoch=3，seed=42）
+
+- 新增三组消融配置：
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_domain_align.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_source_select.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_missing_gate.yaml`
+- 完成三组消融运行（stage: `runs/tmmeada_v1_ablation_epoch3/`）。
+- 新增消融汇总与对比：
+  - `reports/tmmeada_v1_ablation_epoch3_results_summary.csv`
+  - `reports/epoch3_ablation_zh_en.csv`
+  - `reports/epoch3_ablation_zh_en.md`
+- 试跑观察（zh_en + epoch3 + seed42）：
+  - 三组消融与 `v1_best_full` 差异极小，`wo_source_select` 在 `l2r Hits@1` 上有 `-0.0006` 的微弱回落；
+  - 整体显示当前增益量级较小，需扩展到 5-seed 才能形成稳定结论。

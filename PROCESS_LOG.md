@@ -488,3 +488,23 @@
 - Stage status:
   - DBP15K epoch3: formal 5-seed complete (`zh_en`, `ja_en`, `fr_en`)
   - Cross-graph epoch3: formal 5-seed complete (`FBDB15K`, `FBYG15K`)
+### 2026-03-02 zh_en epoch3 ablation pilot (v1_best module switches)
+- Added ablation configs:
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_domain_align.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_source_select.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_missing_gate.yaml`
+- Completed ablation runs (seed=42):
+  - `runs/tmmeada_v1_ablation_epoch3/20260302-091210-TMMEA-DA-v1-best-epoch3-wo-domain-DBP15K-zh_en-s42/`
+  - `runs/tmmeada_v1_ablation_epoch3/20260302-094459-TMMEA-DA-v1-best-epoch3-wo-source-DBP15K-zh_en-s42/`
+  - `runs/tmmeada_v1_ablation_epoch3/20260302-101712-TMMEA-DA-v1-best-epoch3-wo-missing-DBP15K-zh_en-s42/`
+- Notes on execution:
+  - first run was interrupted by terminal timeout but training continued in background and finished successfully (`done!` in log).
+- Refreshed outputs:
+  - `reports/tmmeada_v1_ablation_epoch3_results_summary.csv`
+  - `reports/epoch3_ablation_zh_en.csv`
+  - `reports/epoch3_ablation_zh_en.md`
+  - `scripts/make_epoch3_ablation_zh_en.py`
+- Pilot observation:
+  - `wo_domain_align` and `wo_missing_gate` are nearly identical to `v1_best_full` (seed=42).
+  - `wo_source_select` shows a tiny drop on `l2r Hits@1` (`-0.0006` vs full).
+  - formal conclusion still requires 5-seed ablation extension.
