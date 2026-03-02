@@ -508,3 +508,22 @@
   - `wo_domain_align` and `wo_missing_gate` are nearly identical to `v1_best_full` (seed=42).
   - `wo_source_select` shows a tiny drop on `l2r Hits@1` (`-0.0006` vs full).
   - formal conclusion still requires 5-seed ablation extension.
+### 2026-03-02 zh_en epoch3 ablation formal 5-seed completion
+- Completed remaining ablation seeds for all three variants:
+  - `wo_domain_align`: seeds `3407`, `2026`, `7`, `123`
+  - `wo_source_select`: seeds `3407`, `2026`, `7`, `123`
+  - `wo_missing_gate`: seeds `3407`, `2026`, `7`, `123`
+- Ablation stage now contains 15 runs:
+  - `runs/tmmeada_v1_ablation_epoch3/`
+- Refreshed summary and multiseed reports:
+  - `reports/tmmeada_v1_ablation_epoch3_results_summary.csv` (15 runs)
+  - `reports/epoch3_ablation_zh_en_multiseed.csv`
+  - `reports/epoch3_ablation_zh_en_multiseed.md`
+  - `scripts/summarize_epoch3_ablation_zh_en_multiseed.py`
+- Important note:
+  - first multiseed report generation was mistakenly launched in parallel with collect step, causing stale counts.
+  - reran summarize sequentially after collect to ensure final report consistency (`num_runs=5` per variant).
+- Formal multiseed observation:
+  - `wo_domain_align` and `wo_missing_gate` are effectively identical to `v1_best_full`.
+  - `wo_source_select` is slightly closer to baseline (tiny `r2l Hits@1` gap around `-0.0001` vs full).
+  - all variants remain approximately tied under current training budget.

@@ -255,3 +255,20 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 试跑观察（zh_en + epoch3 + seed42）：
   - 三组消融与 `v1_best_full` 差异极小，`wo_source_select` 在 `l2r Hits@1` 上有 `-0.0006` 的微弱回落；
   - 整体显示当前增益量级较小，需扩展到 5-seed 才能形成稳定结论。
+
+## 17. 阶段更新（2026-03-02）：zh_en 模块消融正式 5-seed 完成
+
+- 在 `wo_domain_align / wo_source_select / wo_missing_gate` 三组上补齐 `3407, 2026, 7, 123`，与 `seed=42` 合并为正式 5-seed。
+- 消融阶段目录：
+  - `runs/tmmeada_v1_ablation_epoch3/`
+- 更新文件：
+  - `reports/tmmeada_v1_ablation_epoch3_results_summary.csv`（15 runs）
+  - `reports/epoch3_ablation_zh_en_multiseed.csv`
+  - `reports/epoch3_ablation_zh_en_multiseed.md`
+  - `scripts/summarize_epoch3_ablation_zh_en_multiseed.py`
+- 正式 5-seed 观察：
+  - `wo_domain_align` 与 `v1_best_full` 基本一致；
+  - `wo_missing_gate` 与 `v1_best_full` 基本一致；
+  - `wo_source_select` 与 baseline 更接近，且相对 `v1_best_full` 仅有极小差值（约 `r2l H@1 -0.0001` 量级）。
+- 结论：
+  - 在当前 `epoch=3 + zh_en` 设置下，三模块开关带来的平均差异非常小，整体仍与 baseline 近似持平。
