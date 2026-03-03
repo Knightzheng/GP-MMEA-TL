@@ -710,3 +710,32 @@
   - `reports/epoch10_compare_v2a_no_hardneg_pilot.md`
   - `reports/epoch10_v2a_no_hardneg_decision.json`
   - `reports/epoch10_v2a_no_hardneg_decision.md`
+
+### 2026-03-03 v2a_no_hardneg pilot completion + repository sync
+- v2a 2-seed results generated:
+  - `reports/epoch10_compare_v2a_no_hardneg_pilot.csv`
+  - `reports/epoch10_v2a_no_hardneg_decision.json`
+- Result summary:
+  - `zh_en`: avg-MRR delta `+0.0000` (baseline tie)
+  - `FBDB15K`: avg-MRR delta `-0.00025` (slight drop)
+  - decision remains: `continue_tuning_or_error_analysis`
+- Synced repository to GitHub:
+  - branch: `main`
+  - commit: `bff76d0`
+  - push: `origin/main` updated successfully
+
+### 2026-03-03 v2b_lite_hardneg pilot launch (next step)
+- Rationale:
+  - after `v2a` tie result, continue with lighter hard-negative setting to test whether weak margin improves transfer without over-regularization.
+- Started sequential background queue:
+  1) `zh_en` seeds `42,3407`
+  2) `FBDB15K` seeds `42,3407`
+  3) auto-compare against baseline epoch10 pilot
+- Queue log files:
+  - `runs/pilot_next_stage/v2b_queue_20260303-230158.out.log`
+  - `runs/pilot_next_stage/v2b_queue_20260303-230158.err.log`
+- Expected outputs:
+  - `reports/epoch10_compare_v2b_lite_hardneg_pilot.csv`
+  - `reports/epoch10_compare_v2b_lite_hardneg_pilot.md`
+  - `reports/epoch10_v2b_lite_hardneg_decision.json`
+  - `reports/epoch10_v2b_lite_hardneg_decision.md`
