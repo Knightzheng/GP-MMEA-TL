@@ -739,3 +739,21 @@
   - `reports/epoch10_compare_v2b_lite_hardneg_pilot.md`
   - `reports/epoch10_v2b_lite_hardneg_decision.json`
   - `reports/epoch10_v2b_lite_hardneg_decision.md`
+
+### 2026-03-03 sleep-mode auto-continuation wiring
+- Added post-v2b auto dispatcher:
+  - `scripts/auto_next_after_v2b.py`
+- Behavior:
+  1) wait for `reports/epoch10_v2b_lite_hardneg_decision.json`
+  2) if decision is `promote_to_formal_5seed_epoch10`:
+     - auto-extend baseline + v2b to seeds `2026,7,123`
+     - auto-generate formal compare/decision reports
+  3) otherwise:
+     - auto-start fallback `v2c_source_only` pilot (`zh_en` + `FBDB15K`, seeds `42,3407`)
+     - auto-generate compare/decision reports
+- Added fallback v2c configs:
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v2c_source_only_epoch10_pilot.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v2c_source_only_epoch10_pilot.yaml`
+- Auto-dispatch monitor started in background:
+  - `runs/pilot_next_stage/auto_next_after_v2b_20260303-232426.out.log`
+  - `runs/pilot_next_stage/auto_next_after_v2b_20260303-232426.err.log`
