@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-03-03T08:54:42",
+  "threshold": 0.003,
+  "wait_seeds": [
+    42,
+    3407
+  ],
+  "formal_expand_seeds": [
+    2026,
+    7,
+    123
+  ],
+  "passed_datasets": [],
+  "decision": "stop_after_epoch10_pilot_and_prepare_writeup",
+  "action_cmd": "no extra training; use pilot compare reports for writeup and error analysis",
+  "datasets": [
+    {
+      "dataset": "zh_en",
+      "baseline_avg_mrr": 0.75025,
+      "method_avg_mrr": 0.75025,
+      "delta_avg_mrr": 0.0,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta": 0.0
+        },
+        {
+          "seed": 3407,
+          "delta": 0.0
+        }
+      ],
+      "consistent_positive": false,
+      "pass_threshold": false,
+      "baseline_summary_csv": "reports\\auto_decision_tmp\\zh_en_baseline_epoch10.summary.csv",
+      "method_summary_csv": "reports\\auto_decision_tmp\\zh_en_method_epoch10.summary.csv"
+    },
+    {
+      "dataset": "FBDB15K",
+      "baseline_avg_mrr": 0.3205,
+      "method_avg_mrr": 0.3205,
+      "delta_avg_mrr": 0.0,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta": 0.0
+        },
+        {
+          "seed": 3407,
+          "delta": 0.0
+        }
+      ],
+      "consistent_positive": false,
+      "pass_threshold": false,
+      "baseline_summary_csv": "reports\\auto_decision_tmp\\FBDB15K_baseline_epoch10.summary.csv",
+      "method_summary_csv": "reports\\auto_decision_tmp\\FBDB15K_method_epoch10.summary.csv"
+    }
+  ],
+  "pilot_compare_csv": "reports/epoch10_compare_pilot.csv",
+  "pilot_compare_md": "reports/epoch10_compare_pilot.md",
+  "formal_compare_csv": "",
+  "formal_compare_md": ""
+}

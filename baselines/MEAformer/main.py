@@ -277,7 +277,10 @@ class Runner:
         accumulation_steps = self.args.accumulation_steps
         # torch.cuda.empty_cache()
         for batch in self.train_dataloader:
-            loss, output = self.model(batch)
+            if self.args.model_name == "MEAformer":
+                loss, output = self.model(batch, current_epoch=self.epoch)
+            else:
+                loss, output = self.model(batch)
             loss = loss / accumulation_steps
             self.scaler.scale(loss).backward()
             if self.args.dist:

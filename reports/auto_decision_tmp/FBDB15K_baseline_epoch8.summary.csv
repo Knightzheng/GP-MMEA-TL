@@ -1,0 +1,3 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260302-230546-MEAformer-epoch8-pilot-FBDB15K-norm-s42,FBDB15K,0.2041,0.5096,0.307,0.2044,0.5144,0.308
+20260302-232815-MEAformer-epoch8-pilot-FBDB15K-norm-s3407,FBDB15K,0.2163,0.5214,0.316,0.2253,0.5308,0.327

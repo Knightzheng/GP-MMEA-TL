@@ -63,18 +63,41 @@ class MEAformer(nn.Module):
             return torch.as_tensor(batch, dtype=torch.long, device=device)
         return batch.to(device=device, dtype=torch.long)
 
+    def _aux_scale(self, current_epoch):
+        start = max(int(getattr(self.args, "aux_start_epoch", 0)), 0)
+        ramp = max(int(getattr(self.args, "aux_ramp_epochs", 0)), 0)
+        if current_epoch < start:
+            return 0.0
+        if ramp <= 0:
+            return 1.0
+        progress = (current_epoch - start + 1) / float(ramp)
+        return float(min(1.0, max(0.0, progress)))
+
     def _domain_align_loss(self, joint_emb, batch):
         if not getattr(self.args, "use_domain_align", 0):
-            return None
+            return None, {"domain_align_pos": 0.0, "domain_align_hard": 0.0}
         if batch is None:
-            return None
+            return None, {"domain_align_pos": 0.0, "domain_align_hard": 0.0}
         batch = self._to_cuda_batch(batch, joint_emb.device)
         if batch.numel() == 0:
-            return None
+            return None, {"domain_align_pos": 0.0, "domain_align_hard": 0.0}
 
         left_emb = joint_emb[batch[:, 0]]
         right_emb = joint_emb[batch[:, 1]]
-        return F.mse_loss(left_emb, right_emb)
+        pos_loss = F.mse_loss(left_emb, right_emb)
+        margin = float(getattr(self.args, "domain_align_margin", 0.0))
+        neg_weight = float(getattr(self.args, "domain_align_neg_weight", 0.0))
+        hard_loss = torch.tensor(0.0, device=joint_emb.device)
+        if margin > 0 and neg_weight > 0 and left_emb.shape[0] > 1:
+            perm = torch.randperm(left_emb.shape[0], device=joint_emb.device)
+            if torch.equal(perm, torch.arange(left_emb.shape[0], device=joint_emb.device)):
+                perm = torch.roll(perm, shifts=1)
+            neg_right_emb = right_emb[perm]
+            pos_dist = torch.sum((left_emb - right_emb) ** 2, dim=1)
+            neg_dist = torch.sum((left_emb - neg_right_emb) ** 2, dim=1)
+            hard_loss = F.relu(margin + pos_dist - neg_dist).mean()
+        total = pos_loss + neg_weight * hard_loss
+        return total, {"domain_align_pos": pos_loss.item(), "domain_align_hard": hard_loss.item()}
 
     def _missing_aware_img_align_loss(self, img_emb, batch):
         if not getattr(self.args, "use_missing_gate", 0):
@@ -102,10 +125,11 @@ class MEAformer(nn.Module):
         weight_dict = {f"src_w_{name}": weights[i].item() for i, (name, _) in enumerate(active)}
         return selected_loss, weight_dict
 
-    def forward(self, batch):
+    def forward(self, batch, current_epoch=0):
         gph_emb, img_emb, rel_emb, att_emb, name_emb, char_emb, joint_emb, hidden_states = self.joint_emb_generat(only_joint=False)
         gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, joint_emb_hid = self.generate_hidden_emb(hidden_states)
         batch = self._to_cuda_batch(batch, joint_emb.device)
+        aux_scale = self._aux_scale(int(current_epoch))
         if self.args.replay:
             all_ent_batch = torch.cat([batch[:, 0], batch[:, 1]])
             if not self.replay_ready:
@@ -141,16 +165,20 @@ class MEAformer(nn.Module):
         else:
             loss_joi = self.criterion_cl_joint(joint_emb, batch)
 
-        in_loss, in_info = self.inner_view_loss(gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, batch)
-        out_loss, out_info = self.inner_view_loss(gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, batch)
+        in_loss, in_info = self.inner_view_loss(gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, batch, aux_scale=aux_scale)
+        out_loss, out_info = self.inner_view_loss(gph_emb_hid, rel_emb_hid, att_emb_hid, img_emb_hid, name_emb_hid, char_emb_hid, batch, aux_scale=aux_scale)
 
         loss_all = loss_joi + in_loss + out_loss
-        domain_align_loss = self._domain_align_loss(joint_emb, batch)
-        if domain_align_loss is not None and self.args.domain_align_weight > 0:
-            loss_all = loss_all + self.args.domain_align_weight * domain_align_loss
+        domain_align_loss, domain_align_meta = self._domain_align_loss(joint_emb, batch)
+        domain_align_term = torch.tensor(0.0, device=joint_emb.device)
+        if domain_align_loss is not None and self.args.domain_align_weight > 0 and aux_scale > 0:
+            domain_align_term = aux_scale * self.args.domain_align_weight * domain_align_loss
+            loss_all = loss_all + domain_align_term
         missing_align_loss = self._missing_aware_img_align_loss(img_emb, batch)
-        if missing_align_loss is not None and self.args.missing_align_weight > 0:
-            loss_all = loss_all + self.args.missing_align_weight * missing_align_loss
+        missing_align_term = torch.tensor(0.0, device=joint_emb.device)
+        if missing_align_loss is not None and self.args.missing_align_weight > 0 and aux_scale > 0:
+            missing_align_term = aux_scale * self.args.missing_align_weight * missing_align_loss
+            loss_all = loss_all + missing_align_term
 
         source_select_loss = in_info["source_loss"] + out_info["source_loss"]
 
@@ -158,8 +186,13 @@ class MEAformer(nn.Module):
             "joint_Intra_modal": loss_joi.item(),
             "Intra_modal": in_loss.item(),
             "domain_align": domain_align_loss.item() if domain_align_loss is not None else 0.0,
+            "domain_align_pos": domain_align_meta.get("domain_align_pos", 0.0),
+            "domain_align_hard": domain_align_meta.get("domain_align_hard", 0.0),
+            "domain_align_term": domain_align_term.item(),
             "missing_align": missing_align_loss.item() if missing_align_loss is not None else 0.0,
+            "missing_align_term": missing_align_term.item(),
             "source_select": source_select_loss.item() if torch.is_tensor(source_select_loss) else 0.0,
+            "aux_scale": aux_scale,
         }
         for k, v in in_info.get("source_weights", {}).items():
             loss_dic[f"in_{k}"] = v
@@ -183,7 +216,7 @@ class MEAformer(nn.Module):
 
         return gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, joint_emb
 
-    def inner_view_loss(self, gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, train_ill):
+    def inner_view_loss(self, gph_emb, rel_emb, att_emb, img_emb, name_emb, char_emb, train_ill, aux_scale=1.0):
         modal_losses = {
             "gcn": self.criterion_cl(gph_emb, train_ill) if gph_emb is not None else None,
             "rel": self.criterion_cl(rel_emb, train_ill) if rel_emb is not None else None,
@@ -206,8 +239,8 @@ class MEAformer(nn.Module):
         source_loss, source_weights = self._source_select_loss(modal_losses)
         if source_loss is None:
             source_loss = zero
-        elif self.args.source_select_weight > 0:
-            total_loss = total_loss + self.args.source_select_weight * source_loss
+        elif self.args.source_select_weight > 0 and aux_scale > 0:
+            total_loss = total_loss + (aux_scale * self.args.source_select_weight) * source_loss
 
         return total_loss, {"source_loss": source_loss, "source_weights": source_weights}
 

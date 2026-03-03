@@ -115,6 +115,10 @@ class cfg():
         parser.add_argument("--source_select_temp", type=float, default=1.0, help="temperature used for source-selection softmax")
         parser.add_argument("--use_missing_gate", type=int, default=0, choices=[0, 1], help="enable missing-aware image alignment loss")
         parser.add_argument("--missing_align_weight", type=float, default=0.0, help="weight for missing-aware image alignment loss")
+        parser.add_argument("--aux_start_epoch", type=int, default=0, help="start epoch to enable auxiliary losses")
+        parser.add_argument("--aux_ramp_epochs", type=int, default=0, help="ramp epochs for auxiliary-loss scale")
+        parser.add_argument("--domain_align_margin", type=float, default=0.0, help="margin for domain alignment hard-negative term")
+        parser.add_argument("--domain_align_neg_weight", type=float, default=0.0, help="weight for hard-negative domain alignment term")
 
         # --------- MSNEA -----------
         parser.add_argument("--dim", type=int, default=100, help="the hidden size of MSNEA")

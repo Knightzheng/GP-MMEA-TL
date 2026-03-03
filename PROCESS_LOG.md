@@ -527,3 +527,186 @@
   - `wo_domain_align` and `wo_missing_gate` are effectively identical to `v1_best_full`.
   - `wo_source_select` is slightly closer to baseline (tiny `r2l Hits@1` gap around `-0.0001` vs full).
   - all variants remain approximately tied under current training budget.
+
+### 2026-03-02 Midterm report submission-ready update
+- Produced a submission-ready midterm report with latest formal results:
+  - `reports/midterm_report_submission.md`
+- Updated legacy draft files to avoid stale metrics:
+  - `reports/midterm_results_draft.md` (now points to latest official summary + sources)
+  - `reports/midterm_experiment_section.md` (rewritten with epoch3 5-seed conclusions)
+- Updated report basis to latest official artifacts:
+  - `reports/epoch3_compare_dbp15k.csv`
+  - `reports/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3_ablation_zh_en_multiseed.csv`
+- Midterm status:
+  - report materials are now ready for direct submission.
+  - next stage is pilot training-budget extension experiment (`epoch=8/10`) to test whether gains become significant.
+
+### 2026-03-02 Next-stage pilot kickoff (training-budget extension)
+- Added generic multiseed launcher:
+  - `scripts/run_from_base_config_multiseed.py`
+- Added sequential pilot queue runner:
+  - `scripts/run_next_stage_pilot_queue.py`
+- Added pilot configs (`zh_en` + `FBDB15K`, baseline + method, `epoch=8/10`):
+  - `configs/baselines/meaformer_zh_en_rtx3060_safe_epoch8_pilot.yaml`
+  - `configs/baselines/meaformer_zh_en_rtx3060_safe_epoch10_pilot.yaml`
+  - `configs/baselines/meaformer_fbdb15k_rtx3060_safe_epoch8_pilot.yaml`
+  - `configs/baselines/meaformer_fbdb15k_rtx3060_safe_epoch10_pilot.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch8_pilot.yaml`
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch10_pilot.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v1_best_epoch8_pilot.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v1_best_epoch10_pilot.yaml`
+- Added pilot plan document:
+  - `reports/next_stage_pilot_plan.md`
+- Background queue started (seed set `42,3407`, epoch8 block first):
+  - launcher process command: `D:\Anaconda_envs\envs\bysj-main\python.exe scripts/run_next_stage_pilot_queue.py --seeds 42,3407`
+  - first active run path:
+    - `runs/baseline_pilot_epoch8/20260302-172128-MEAformer-epoch8-pilot-DBP15K-zh_en-s42/`
+  - queue stdout/stderr:
+    - `runs/pilot_next_stage/pilot_queue_20260302-172127.out.log`
+    - `runs/pilot_next_stage/pilot_queue_20260302-172127.err.log`
+- Runtime note:
+  - the known Windows wrapper message ("syntax incorrect") still appears before logger init, but training continues normally and logs are being updated.
+
+### 2026-03-02 Auto decision + auto dispatch wiring
+- Added queue mode extension:
+  - `scripts/run_next_stage_pilot_queue.py`
+  - new option: `--epoch10-only` (run only epoch10 block, avoid re-running epoch8).
+- Added automatic decision dispatcher:
+  - `scripts/auto_decide_next_stage.py`
+  - behavior:
+    1) wait until epoch8 pilot required seeds (`42,3407`) complete on both datasets (`zh_en`, `FBDB15K`) for baseline+method
+    2) auto-collect and aggregate stage results
+    3) compute decision rule (`delta_avg_mrr >= 0.003` and 2-seed positive consistency)
+    4) auto-dispatch:
+       - pass: expand to 5-seed on epoch8 (`seeds=2026,7,123`)
+       - fail: continue epoch10 pilot (`--epoch10-only --seeds 42,3407`)
+    5) write decision artifacts:
+       - `reports/next_stage_auto_decision.md`
+       - `reports/next_stage_auto_decision.json`
+- Background monitor started:
+  - command: `D:\Anaconda_envs\envs\bysj-main\python.exe scripts/auto_decide_next_stage.py --poll-seconds 120 --threshold 0.003`
+  - process status verified running together with pilot queue process.
+
+### 2026-03-03 Epoch10 post-pilot auto-handoff wiring
+- Added epoch10 post-pilot automation script:
+  - `scripts/auto_decide_after_epoch10.py`
+- Automation behavior after epoch10 pilot (`seeds=42,3407`) completion:
+  1) wait for both datasets and both methods:
+     - `runs/baseline_pilot_epoch10`
+     - `runs/tmmeada_v1_best_pilot_epoch10`
+     - `runs/baseline_pilot_epoch10_crossgraph`
+     - `runs/tmmeada_v1_best_pilot_epoch10_crossgraph`
+  2) auto-collect and aggregate epoch10 pilot results
+  3) auto-generate pilot compare reports:
+     - `reports/epoch10_compare_pilot.csv`
+     - `reports/epoch10_compare_pilot.md`
+  4) apply decision rule (`delta_avg_mrr >= 0.003` and 2-seed positive consistency)
+     - pass: auto-expand to 5-seed epoch10 (`seeds=2026,7,123`) and generate:
+       - `reports/epoch10_compare_formal.csv`
+       - `reports/epoch10_compare_formal.md`
+     - fail: stop extra training and keep pilot report for writeup
+  5) write decision artifacts:
+     - `reports/epoch10_auto_decision.md`
+     - `reports/epoch10_auto_decision.json`
+- Background monitor started in unbuffered mode for real-time log flush:
+  - command:
+    - `D:\Anaconda_envs\envs\bysj-main\python.exe -u scripts/auto_decide_after_epoch10.py --poll-seconds 120 --threshold 0.003`
+  - runtime log files:
+    - `runs/pilot_next_stage/auto_e10_decide_*.out.log`
+    - `runs/pilot_next_stage/auto_e10_decide_*.err.log`
+
+### 2026-03-03 Core code refactor for metric lift (TMMEA-DA v2 tuned)
+- Refactor objective:
+  - improve metric headroom under same framework by upgrading auxiliary-loss design instead of only extending epochs.
+- Added new train-time controls in `baselines/MEAformer/config.py`:
+  - `aux_start_epoch`, `aux_ramp_epochs`
+  - `domain_align_margin`, `domain_align_neg_weight`
+- Refactored `baselines/MEAformer/model/MEAformer.py`:
+  - added `_aux_scale(current_epoch)` for staged auxiliary-loss activation
+  - upgraded `_domain_align_loss` from positive-only MSE to:
+    - positive term (`domain_align_pos`)
+    - optional hard-negative hinge term (`domain_align_hard`)
+  - applied `aux_scale` to:
+    - domain align term
+    - missing align term
+    - source-select term
+  - expanded diagnostics in `loss_dic`:
+    - `aux_scale`, `domain_align_pos`, `domain_align_hard`, `domain_align_term`, `missing_align_term`
+- Updated epoch-aware training call in `baselines/MEAformer/main.py`:
+  - `self.model(batch, current_epoch=self.epoch)` for MEAformer branch
+- Updated argument passthrough in `scripts/run_meaformer.py`:
+  - pass new CLI args from yaml config to training process
+- Added tuned pilot config:
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v2_tuned_epoch10_pilot.yaml`
+- Added report-ready technical memo:
+  - `reports/core_code_refactor_20260303.md`
+
+### 2026-03-03 TMMEA-DA v2 tuned pilot launch (epoch10, 2-seed)
+- Added cross-graph v2 tuned config:
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v2_tuned_epoch10_pilot.yaml`
+- Dry-run checks passed for both configs (new args correctly forwarded):
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v2_tuned_epoch10_pilot.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v2_tuned_epoch10_pilot.yaml`
+- Started background sequential pilot queue (seed `42,3407`):
+  1) `zh_en` (`runs/tmmeada_v2_tuned_pilot_epoch10`)
+  2) `FBDB15K` (`runs/tmmeada_v2_tuned_pilot_epoch10_crossgraph`)
+- Queue logs:
+  - `runs/pilot_next_stage/v2_tuned_queue_20260303-110552.out.log`
+  - `runs/pilot_next_stage/v2_tuned_queue_20260303-110552.err.log`
+- First active run confirmed:
+  - `runs/tmmeada_v2_tuned_pilot_epoch10/20260303-110553-TMMEA-DA-v2-tuned-epoch10-pilot-DBP15K-zh_en-s42/`
+
+### 2026-03-03 v2 pilot auto-compare wiring
+- Added comparison script (baseline epoch10 pilot vs v2 tuned pilot):
+  - `scripts/compare_epoch10_v2_tuned_vs_baseline.py`
+  - outputs:
+    - `reports/epoch10_compare_v2_tuned_pilot.csv`
+    - `reports/epoch10_compare_v2_tuned_pilot.md`
+    - `reports/epoch10_v2_tuned_decision.json`
+    - `reports/epoch10_v2_tuned_decision.md`
+- Added wait-then-compare dispatcher:
+  - `scripts/auto_compare_v2_tuned.py`
+  - waits for required seeds (`42,3407`) on:
+    - `runs/tmmeada_v2_tuned_pilot_epoch10`
+    - `runs/tmmeada_v2_tuned_pilot_epoch10_crossgraph`
+  - then auto-runs compare script.
+- Started auto-compare monitor in background:
+  - log files:
+    - `runs/pilot_next_stage/auto_v2_compare_20260303-110909.out.log`
+    - `runs/pilot_next_stage/auto_v2_compare_20260303-110909.err.log`
+
+### 2026-03-03 v2 tuned result review + next tuning branch preparation
+- v2 tuned 2-seed pilot comparison files generated:
+  - `reports/epoch10_compare_v2_tuned_pilot.csv`
+  - `reports/epoch10_v2_tuned_decision.json`
+  - decision: `continue_tuning_or_error_analysis`
+- Added review memo:
+  - `reports/epoch10_v2_tuned_review_20260303.md`
+- Added next-step configs for targeted tuning:
+  - v2a (no hard-negative + delayed aux):
+    - `configs/tmmeada/meaformer_zh_en_tmmeada_v2a_no_hardneg_epoch10_pilot.yaml`
+    - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v2a_no_hardneg_epoch10_pilot.yaml`
+  - v2b (lite hard-negative + delayed aux):
+    - `configs/tmmeada/meaformer_zh_en_tmmeada_v2b_lite_hardneg_epoch10_pilot.yaml`
+    - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v2b_lite_hardneg_epoch10_pilot.yaml`
+
+### 2026-03-03 v2a_no_hardneg pilot launch (epoch10, 2-seed)
+- Started sequential background queue:
+  1) `zh_en` with seeds `42,3407`
+  2) `FBDB15K` with seeds `42,3407`
+  3) auto-compare against baseline epoch10 pilot
+- Queue command chain uses:
+  - `scripts/run_from_base_config_multiseed.py`
+  - `scripts/compare_epoch10_v2_tuned_vs_baseline.py`
+- Configs:
+  - `configs/tmmeada/meaformer_zh_en_tmmeada_v2a_no_hardneg_epoch10_pilot.yaml`
+  - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v2a_no_hardneg_epoch10_pilot.yaml`
+- Background log files:
+  - `runs/pilot_next_stage/v2a_queue_20260303-180248.out.log`
+  - `runs/pilot_next_stage/v2a_queue_20260303-180248.err.log`
+- Expected outputs after completion:
+  - `reports/epoch10_compare_v2a_no_hardneg_pilot.csv`
+  - `reports/epoch10_compare_v2a_no_hardneg_pilot.md`
+  - `reports/epoch10_v2a_no_hardneg_decision.json`
+  - `reports/epoch10_v2a_no_hardneg_decision.md`

@@ -1,0 +1,2 @@
+lang_pair,num_runs,l2r_hits@1_mean,l2r_hits@1_std,l2r_hits@10_mean,l2r_hits@10_std,l2r_mrr_mean,l2r_mrr_std,r2l_hits@1_mean,r2l_hits@1_std,r2l_hits@10_mean,r2l_hits@10_std,r2l_mrr_mean,r2l_mrr_std
+zh_en,2,0.6586,0.0037,0.9112,0.0028,0.745,0.0028,0.6585,0.0007,0.9123,0.0028,0.745,0.0014

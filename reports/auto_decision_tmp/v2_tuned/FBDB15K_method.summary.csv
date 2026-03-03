@@ -1,0 +1,3 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260303-214401-TMMEA-DA-v2a-no-hardneg-epoch10-pilot-FBDB15K-norm-s42,FBDB15K,0.2158,0.518,0.317,0.2146,0.5224,0.318
+20260303-221308-TMMEA-DA-v2a-no-hardneg-epoch10-pilot-FBDB15K-norm-s3407,FBDB15K,0.2205,0.5378,0.323,0.219,0.5378,0.323

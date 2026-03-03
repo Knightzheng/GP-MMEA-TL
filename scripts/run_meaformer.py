@@ -173,6 +173,14 @@ def main():
         cmd.extend(["--use_missing_gate", str(m["use_missing_gate"])])
     if "missing_align_weight" in m:
         cmd.extend(["--missing_align_weight", str(m["missing_align_weight"])])
+    if "aux_start_epoch" in m:
+        cmd.extend(["--aux_start_epoch", str(m["aux_start_epoch"])])
+    if "aux_ramp_epochs" in m:
+        cmd.extend(["--aux_ramp_epochs", str(m["aux_ramp_epochs"])])
+    if "domain_align_margin" in m:
+        cmd.extend(["--domain_align_margin", str(m["domain_align_margin"])])
+    if "domain_align_neg_weight" in m:
+        cmd.extend(["--domain_align_neg_weight", str(m["domain_align_neg_weight"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):

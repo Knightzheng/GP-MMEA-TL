@@ -1,0 +1,3 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260302-200453-TMMEA-DA-v1-best-epoch8-pilot-DBP15K-zh_en-s42,zh_en,0.6613,0.9132,0.747,0.659,0.9142,0.746
+20260302-213729-TMMEA-DA-v1-best-epoch8-pilot-DBP15K-zh_en-s3407,zh_en,0.656,0.9092,0.743,0.658,0.9103,0.744

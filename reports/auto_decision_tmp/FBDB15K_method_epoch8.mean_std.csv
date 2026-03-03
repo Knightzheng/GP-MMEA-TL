@@ -1,0 +1,2 @@
+lang_pair,num_runs,l2r_hits@1_mean,l2r_hits@1_std,l2r_hits@10_mean,l2r_hits@10_std,l2r_mrr_mean,l2r_mrr_std,r2l_hits@1_mean,r2l_hits@1_std,r2l_hits@10_mean,r2l_hits@10_std,r2l_mrr_mean,r2l_mrr_std
+FBDB15K,2,0.2098,0.0087,0.5152,0.0077,0.311,0.0071,0.2149,0.0148,0.5227,0.0119,0.3175,0.0134

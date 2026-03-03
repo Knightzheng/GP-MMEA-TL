@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-03-03T00:32:44",
+  "threshold": 0.003,
+  "wait_seeds": [
+    42,
+    3407
+  ],
+  "formal_expand_seeds": [
+    2026,
+    7,
+    123
+  ],
+  "passed_datasets": [],
+  "decision": "continue_epoch10_pilot",
+  "action_cmd": "D:\\Anaconda_envs\\envs\\bysj-main\\python.exe scripts/run_next_stage_pilot_queue.py --epoch10-only --seeds 42,3407",
+  "datasets": [
+    {
+      "dataset": "zh_en",
+      "baseline_avg_mrr": 0.74475,
+      "method_avg_mrr": 0.745,
+      "delta_avg_mrr": 0.00025,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta": 0.0004999999999999449
+        },
+        {
+          "seed": 3407,
+          "delta": 0.0
+        }
+      ],
+      "consistent_positive": false,
+      "pass_threshold": false,
+      "baseline_summary_csv": "reports\\auto_decision_tmp\\zh_en_baseline_epoch8.summary.csv",
+      "method_summary_csv": "reports\\auto_decision_tmp\\zh_en_method_epoch8.summary.csv"
+    },
+    {
+      "dataset": "FBDB15K",
+      "baseline_avg_mrr": 0.3145,
+      "method_avg_mrr": 0.31425,
+      "delta_avg_mrr": -0.00025,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta": -0.0005000000000000004
+        },
+        {
+          "seed": 3407,
+          "delta": 0.0
+        }
+      ],
+      "consistent_positive": false,
+      "pass_threshold": false,
+      "baseline_summary_csv": "reports\\auto_decision_tmp\\FBDB15K_baseline_epoch8.summary.csv",
+      "method_summary_csv": "reports\\auto_decision_tmp\\FBDB15K_method_epoch8.summary.csv"
+    }
+  ]
+}
