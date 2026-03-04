@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-03-04T03:39:24",
+  "required_seeds": [
+    42,
+    3407
+  ],
+  "threshold": 0.003,
+  "decision": "continue_tuning_or_error_analysis",
+  "datasets": [
+    {
+      "dataset": "zh_en",
+      "delta_avg_mrr": -0.0005,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta": -0.0014999999999999458
+        },
+        {
+          "seed": 3407,
+          "delta": 0.0004999999999999449
+        }
+      ],
+      "consistent_positive": false,
+      "pass_threshold": false
+    },
+    {
+      "dataset": "FBDB15K",
+      "delta_avg_mrr": -0.00075,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta": -0.0020000000000000018
+        },
+        {
+          "seed": 3407,
+          "delta": 0.0005000000000000004
+        }
+      ],
+      "consistent_positive": false,
+      "pass_threshold": false
+    }
+  ]
+}
