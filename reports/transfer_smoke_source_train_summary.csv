@@ -1,0 +1,2 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260304-101353-MEAformer-transfer-source-transfer-src-DBP15K-zh_en-s42,zh_en,0.5487,0.8403,0.647,0.5522,0.8377,0.647

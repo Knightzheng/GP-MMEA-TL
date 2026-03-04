@@ -1,0 +1,4 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260304-104156-TMMEA-DA-transfer-target-ja_en-transfer-tgt-DBP15K-ja_en-s42,ja_en,0.0697,0.1739,0.107,0.0721,0.1849,0.111
+20260304-104212-TMMEA-DA-transfer-target-fr_en-transfer-tgt-DBP15K-fr_en-s42,fr_en,0.0348,0.1135,0.063,0.036,0.1158,0.064
+20260304-104225-TMMEA-DA-transfer-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42,FBDB15K,0.0002,0.0018,0.002,0.0002,0.0021,0.002

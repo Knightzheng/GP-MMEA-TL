@@ -473,10 +473,55 @@ class Runner:
                 self.logger.info("Random init...")
             model.cuda()
             return model
+
+        loaded_state = torch.load(save_path, map_location=self.args.device)
         if 'Dist' in self.args.model_name:
-            model.load_state_dict({k.replace('module.', ''): v for k, v in torch.load(save_path, map_location=self.args.device).items()})
+            loaded_state = {k.replace('module.', ''): v for k, v in loaded_state.items()}
+
+        if getattr(self.args, "transfer_non_strict", 0):
+            current_state = model.state_dict()
+            skip_keys = set()
+            raw_skip = getattr(self.args, "transfer_skip_keys", "")
+            if isinstance(raw_skip, str) and len(raw_skip.strip()) > 0:
+                skip_keys = {x.strip() for x in raw_skip.split(",") if len(x.strip()) > 0}
+
+            filtered_state = {}
+            skipped_by_name = []
+            skipped_shape = []
+            skipped_missing = []
+            for key, value in loaded_state.items():
+                if key in skip_keys:
+                    skipped_by_name.append(key)
+                    continue
+                if key not in current_state:
+                    skipped_missing.append(key)
+                    continue
+                if tuple(current_state[key].shape) != tuple(value.shape):
+                    skipped_shape.append(
+                        {
+                            "key": key,
+                            "source": tuple(value.shape),
+                            "target": tuple(current_state[key].shape),
+                        }
+                    )
+                    continue
+                filtered_state[key] = value
+
+            load_result = model.load_state_dict(filtered_state, strict=False)
+            if self.rank == 0 and getattr(self.args, "transfer_verbose", 1):
+                self.logger.info(
+                    f"[transfer_load] loaded={len(filtered_state)} "
+                    f"skipped_by_name={len(skipped_by_name)} "
+                    f"skipped_shape={len(skipped_shape)} "
+                    f"skipped_missing={len(skipped_missing)} "
+                    f"missing_after_load={len(load_result.missing_keys)} "
+                    f"unexpected_after_load={len(load_result.unexpected_keys)}"
+                )
+                if len(skipped_shape) > 0:
+                    preview = skipped_shape[:8]
+                    self.logger.info(f"[transfer_load] shape_mismatch_preview={preview}")
         else:
-            model.load_state_dict(torch.load(save_path, map_location=self.args.device))
+            model.load_state_dict(loaded_state)
 
         model.cuda()
         if self.rank == 0:

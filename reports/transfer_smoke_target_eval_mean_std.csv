@@ -1,0 +1,4 @@
+lang_pair,num_runs,l2r_hits@1_mean,l2r_hits@1_std,l2r_hits@10_mean,l2r_hits@10_std,l2r_mrr_mean,l2r_mrr_std,r2l_hits@1_mean,r2l_hits@1_std,r2l_hits@10_mean,r2l_hits@10_std,r2l_mrr_mean,r2l_mrr_std
+FBDB15K,1,0.0002,0.0,0.0018,0.0,0.002,0.0,0.0002,0.0,0.0021,0.0,0.002,0.0
+fr_en,1,0.0348,0.0,0.1136,0.0,0.063,0.0,0.0359,0.0,0.1156,0.0,0.064,0.0
+ja_en,1,0.0697,0.0,0.1736,0.0,0.107,0.0,0.0721,0.0,0.185,0.0,0.111,0.0

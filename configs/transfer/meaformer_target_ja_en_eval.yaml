@@ -1,0 +1,43 @@
+meta:
+  stage: transfer_target
+  model_tag: MEAformer-transfer-target-ja_en
+
+meaformer:
+  model_name: MEAformer
+  gpu: 0
+  eval_epoch: 1
+  only_test: 1
+  data_choice: DBP15K
+  data_split: ja_en
+  data_rate: 0.3
+  epoch: 1
+  lr: 0.0003
+  hidden_units: "64,64,64"
+  save_model: 0
+  batch_size: 32
+  csls: true
+  csls_k: 3
+  random_seed: 42
+  exp_name: "BYSJ_MEAformer_transfer_target_ja_en"
+  exp_id: "transfer_tgt_ja_en_eval"
+  workers: 1
+  dist: 0
+  accumulation_steps: 1
+  scheduler: cos
+  attr_dim: 64
+  img_dim: 64
+  name_dim: 64
+  char_dim: 64
+  hidden_size: 64
+  tau: 0.1
+  structure_encoder: gat
+  num_attention_heads: 1
+  num_hidden_layers: 1
+  use_surface: 0
+  use_intermediate: 1
+  enable_sota: false
+  replay: 0
+  model_name_save: ""
+  transfer_non_strict: 1
+  transfer_skip_keys: "multimodal_encoder.entity_emb.weight"
+  transfer_verbose: 1

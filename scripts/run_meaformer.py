@@ -159,6 +159,14 @@ def main():
         "--use_intermediate", str(m["use_intermediate"]),
         "--replay", str(m["replay"]),
     ]
+    if "model_name_save" in m and str(m["model_name_save"]).strip():
+        cmd.extend(["--model_name_save", str(m["model_name_save"])])
+    if "transfer_non_strict" in m:
+        cmd.extend(["--transfer_non_strict", str(m["transfer_non_strict"])])
+    if "transfer_skip_keys" in m and str(m["transfer_skip_keys"]).strip():
+        cmd.extend(["--transfer_skip_keys", str(m["transfer_skip_keys"])])
+    if "transfer_verbose" in m:
+        cmd.extend(["--transfer_verbose", str(m["transfer_verbose"])])
     if "use_domain_align" in m:
         cmd.extend(["--use_domain_align", str(m["use_domain_align"])])
     if "domain_align_weight" in m:

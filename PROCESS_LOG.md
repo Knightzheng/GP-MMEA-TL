@@ -778,3 +778,35 @@
     - `FBDB15K`: `+0.0000` (tie)
 - Added consolidated overnight analysis note:
   - `reports/overnight_v2b_v2c_summary_20260304.md`
+### 2026-03-04 Transfer experiment pipeline implementation (source->target)
+- Implemented transfer-compatible checkpoint loading in `baselines/MEAformer/main.py`:
+  - non-strict loading with key/shape filtering
+  - skip-list support (`transfer_skip_keys`)
+  - load statistics logging (`transfer_verbose`)
+- Added transfer CLI args in `baselines/MEAformer/config.py`:
+  - `transfer_non_strict`, `transfer_skip_keys`, `transfer_verbose`
+- Updated runner passthrough in `scripts/run_meaformer.py`:
+  - supports `model_name_save` + transfer args
+- Added automation scripts:
+  - `scripts/run_transfer_train_eval.py` (source train + target eval pipeline)
+  - `scripts/compare_transfer_summaries.py` (method vs baseline transfer delta)
+- Added transfer config templates:
+  - `configs/transfer/meaformer_source_zh_en_epoch10.yaml`
+  - `configs/transfer/meaformer_target_ja_en_eval.yaml`
+  - `configs/transfer/meaformer_target_fr_en_eval.yaml`
+  - `configs/transfer/meaformer_target_fbdb15k_eval.yaml`
+  - `configs/transfer/tmmeada_source_zh_en_epoch10.yaml`
+  - `configs/transfer/tmmeada_target_ja_en_eval.yaml`
+  - `configs/transfer/tmmeada_target_fr_en_eval.yaml`
+  - `configs/transfer/tmmeada_target_fbdb15k_eval.yaml`
+- Executed baseline transfer smoke (seed=42, source epoch=1):
+  - source run summary: `reports/transfer_smoke_source_train_summary.csv`
+  - target transfer summary: `reports/transfer_smoke_target_eval_summary.csv`
+- Executed TMMEA-DA transfer smoke (seed=42, source epoch=1):
+  - source run summary: `reports/transfer_smoke_tmmeada_source_train_summary.csv`
+  - target transfer summary: `reports/transfer_smoke_tmmeada_target_eval_summary.csv`
+- Generated transfer comparison artifacts:
+  - `reports/transfer_smoke_compare_tmmeada_vs_baseline.csv`
+  - `reports/transfer_smoke_compare_tmmeada_vs_baseline.md`
+- Added stage writeup:
+  - `reports/transfer_stage_update_20260304.md`

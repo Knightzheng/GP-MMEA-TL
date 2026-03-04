@@ -1,0 +1,4 @@
+run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
+20260304-102611-MEAformer-transfer-target-ja_en-transfer-tgt-DBP15K-ja_en-s42,ja_en,0.0697,0.1736,0.107,0.0721,0.185,0.111
+20260304-102622-MEAformer-transfer-target-fr_en-transfer-tgt-DBP15K-fr_en-s42,fr_en,0.0348,0.1136,0.063,0.0359,0.1156,0.064
+20260304-102632-MEAformer-transfer-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42,FBDB15K,0.0002,0.0018,0.002,0.0002,0.0021,0.002

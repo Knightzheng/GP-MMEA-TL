@@ -37,6 +37,26 @@ class cfg():
         # TODO: add some dynamic variable
         parser.add_argument("--model_name", default="MEAformer", type=str, choices=["EVA", "MCLEA", "MSNEA", "MEAformer"], help="model name")
         parser.add_argument("--model_name_save", default="", type=str, help="model name for model load")
+        parser.add_argument(
+            "--transfer_non_strict",
+            type=int,
+            default=0,
+            choices=[0, 1],
+            help="load checkpoint with key/shape filtering for cross-dataset transfer",
+        )
+        parser.add_argument(
+            "--transfer_skip_keys",
+            type=str,
+            default="multimodal_encoder.entity_emb.weight",
+            help="comma-separated state_dict keys to skip when transfer_non_strict=1",
+        )
+        parser.add_argument(
+            "--transfer_verbose",
+            type=int,
+            default=1,
+            choices=[0, 1],
+            help="print transfer loading statistics",
+        )
 
         parser.add_argument('--workers', type=int, default=8)
         parser.add_argument('--accumulation_steps', type=int, default=1)
