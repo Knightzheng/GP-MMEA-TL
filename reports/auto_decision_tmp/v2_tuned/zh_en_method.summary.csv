@@ -1,3 +1,3 @@
 run_id,lang_pair,l2r_hits@1,l2r_hits@10,l2r_mrr,r2l_hits@1,r2l_hits@10,r2l_mrr
-20260303-180249-TMMEA-DA-v2a-no-hardneg-epoch10-pilot-DBP15K-zh_en-s42,zh_en,0.6654,0.9174,0.751,0.6641,0.915,0.751
-20260303-195312-TMMEA-DA-v2a-no-hardneg-epoch10-pilot-DBP15K-zh_en-s3407,zh_en,0.663,0.9153,0.749,0.6646,0.9144,0.75
+20260304-034028-TMMEA-DA-v2c-source-only-epoch10-pilot-DBP15K-zh_en-s42,zh_en,0.6653,0.9173,0.751,0.6638,0.9152,0.751
+20260304-052718-TMMEA-DA-v2c-source-only-epoch10-pilot-DBP15K-zh_en-s3407,zh_en,0.6627,0.9151,0.749,0.6649,0.9145,0.75
