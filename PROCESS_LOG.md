@@ -810,3 +810,14 @@
   - `reports/transfer_smoke_compare_tmmeada_vs_baseline.md`
 - Added stage writeup:
   - `reports/transfer_stage_update_20260304.md`
+### 2026-03-04 Formal transfer queue started (epoch10, seed=42)
+- Added queue launcher:
+  - `scripts/run_transfer_formal_queue.py`
+- Queue content (sequential):
+  1) baseline formal transfer (`source zh_en epoch10 -> target ja_en/fr_en/FBDB15K`)
+  2) TMMEA-DA formal transfer (`source zh_en epoch10 -> target ja_en/fr_en/FBDB15K`)
+- Launched in background:
+  - out log: `runs/pilot_next_stage/transfer_formal_queue_20260304-104824.out.log`
+  - err log: `runs/pilot_next_stage/transfer_formal_queue_20260304-104824.err.log`
+- Current active run path:
+  - `runs/transfer_formal/source_train/20260304-104824-MEAformer-transfer-source-transfer-src-DBP15K-zh_en-s42/`
