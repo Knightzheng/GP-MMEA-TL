@@ -757,3 +757,24 @@
 - Auto-dispatch monitor started in background:
   - `runs/pilot_next_stage/auto_next_after_v2b_20260303-232426.out.log`
   - `runs/pilot_next_stage/auto_next_after_v2b_20260303-232426.err.log`
+
+### 2026-03-04 overnight chain completion check (v2b -> v2c)
+- Checked runtime status at `2026-03-04 10:00 +08:00`:
+  - no active Python training process
+  - GPU returned to low usage (idle-like state)
+- v2b pilot outputs confirmed:
+  - `reports/epoch10_compare_v2b_lite_hardneg_pilot.csv`
+  - `reports/epoch10_v2b_lite_hardneg_decision.json`
+  - decision: `continue_tuning_or_error_analysis`
+  - avg-MRR delta:
+    - `zh_en`: `-0.0005`
+    - `FBDB15K`: `-0.0008`
+- auto-next dispatcher triggered fallback v2c and completed:
+  - `reports/epoch10_compare_v2c_source_only_pilot.csv`
+  - `reports/epoch10_v2c_source_only_decision.json`
+  - decision: `continue_tuning_or_error_analysis`
+  - avg-MRR delta:
+    - `zh_en`: `+0.0000` (tie)
+    - `FBDB15K`: `+0.0000` (tie)
+- Added consolidated overnight analysis note:
+  - `reports/overnight_v2b_v2c_summary_20260304.md`
