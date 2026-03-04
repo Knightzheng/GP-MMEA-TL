@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 from pathlib import Path
 
 
@@ -21,12 +21,12 @@ def read_csv_as_map(path: Path):
 
 
 def main():
-    baseline_map = read_csv_as_map(Path("reports/baseline_epoch3_crossgraph_results_mean_std.csv"))
-    method_map = read_csv_as_map(Path("reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv"))
+    baseline_map = read_csv_as_map(Path("reports/baseline/baseline_epoch3_crossgraph_results_mean_std.csv"))
+    method_map = read_csv_as_map(Path("reports/tmmeada/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv"))
     datasets = [x for x in ("FBDB15K", "FBYG15K") if x in baseline_map and x in method_map]
 
-    out_csv = Path("reports/epoch3_compare_crossgraph.csv")
-    out_md = Path("reports/epoch3_compare_crossgraph.md")
+    out_csv = Path("reports/epoch3/epoch3_compare_crossgraph.csv")
+    out_md = Path("reports/epoch3/epoch3_compare_crossgraph.md")
 
     rows = []
     for ds in datasets:
@@ -93,3 +93,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import itertools
 import subprocess
 from pathlib import Path
@@ -60,7 +60,7 @@ def main():
     seeds = parse_seed_list(args.seeds)
 
     combos = list(itertools.product(dws, sws, mws, temps, seeds))
-    tmp_dir = Path("runs/multiseed_tmp/tmmeada_v1_sweep")
+    tmp_dir = Path("runs/system/multiseed_tmp/tmmeada_v1_sweep")
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
     total = len(combos)
@@ -97,3 +97,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

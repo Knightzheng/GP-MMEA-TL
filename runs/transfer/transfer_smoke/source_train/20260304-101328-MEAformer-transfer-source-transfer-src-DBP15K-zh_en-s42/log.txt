@@ -1,0 +1,6 @@
+[RUN] D:\Anaconda_envs\envs\bysj-main\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split zh_en --data_rate 0.3 --epoch 1 --lr 0.0003 --hidden_units 64,64,64 --save_model 1 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_transfer_source_zh_en_baseline_transfer_smoke_real_src --exp_id transfer_src_zh_en_epoch10_baseline_transfer_smoke_real_src_s42 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --transfer_non_strict 0 --csls
+Traceback (most recent call last):
+  File "D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py", line 9, in <module>
+    from easydict import EasyDict as edict
+ModuleNotFoundError: No module named 'easydict'
+[DONE] return_code=1

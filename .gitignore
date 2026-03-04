@@ -10,10 +10,8 @@ __pycache__/
 *.log
 
 # Temporary run configs
-runs/multiseed_tmp/
-
-# Runtime outputs (training logs, checkpoints, intermediate artifacts)
-runs/
+runs/system/multiseed_tmp/
+runs/system/transfer_tmp/
 
 # Large raw datasets and extracted corpora (not pushed to GitHub)
 data/raw/

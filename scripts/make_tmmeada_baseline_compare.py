@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 from pathlib import Path
 
 
@@ -11,10 +11,10 @@ def read_row(path: Path, lang_pair: str):
 
 
 def main():
-    baseline_path = Path("reports/meaformer_results_mean_std.csv")
-    tmmeada_path = Path("reports/tmmeada_results_mean_std.csv")
-    out_csv = Path("reports/tmmeada_vs_baseline_zh_en.csv")
-    out_md = Path("reports/tmmeada_vs_baseline_zh_en.md")
+    baseline_path = Path("reports/baseline/meaformer_results_mean_std.csv")
+    tmmeada_path = Path("reports/tmmeada/tmmeada_results_mean_std.csv")
+    out_csv = Path("reports/compare/tmmeada_vs_baseline_zh_en.csv")
+    out_md = Path("reports/compare/tmmeada_vs_baseline_zh_en.md")
 
     baseline = read_row(baseline_path, "zh_en")
     tmmeada = read_row(tmmeada_path, "zh_en")
@@ -76,3 +76,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

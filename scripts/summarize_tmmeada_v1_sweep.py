@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import csv
 import math
 import re
@@ -61,10 +61,10 @@ def round4(x):
 
 def main():
     parser = argparse.ArgumentParser(description="Summarize TMMEA-DA v1 sweep runs.")
-    parser.add_argument("--runs-dir", default="runs/tmmeada_v1_sweep")
-    parser.add_argument("--out-summary", default="reports/tmmeada_v1_sweep_summary.csv")
-    parser.add_argument("--out-grouped", default="reports/tmmeada_v1_sweep_grouped.csv")
-    parser.add_argument("--out-md", default="reports/tmmeada_v1_sweep.md")
+    parser.add_argument("--runs-dir", default="runs/experiments/tmmeada/tmmeada_v1_sweep")
+    parser.add_argument("--out-summary", default="reports/tmmeada/tmmeada_v1_sweep_summary.csv")
+    parser.add_argument("--out-grouped", default="reports/tmmeada/tmmeada_v1_sweep_grouped.csv")
+    parser.add_argument("--out-md", default="reports/tmmeada/tmmeada_v1_sweep.md")
     args = parser.parse_args()
 
     runs_dir = Path(args.runs_dir)
@@ -232,3 +232,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

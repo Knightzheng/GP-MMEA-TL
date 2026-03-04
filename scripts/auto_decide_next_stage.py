@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import csv
 import json
 import re
@@ -172,8 +172,8 @@ def main():
     parser.add_argument("--threshold", type=float, default=0.003)
     parser.add_argument("--poll-seconds", type=int, default=120)
     parser.add_argument("--timeout-hours", type=float, default=36.0)
-    parser.add_argument("--decision-md", default="reports/next_stage_auto_decision.md")
-    parser.add_argument("--decision-json", default="reports/next_stage_auto_decision.json")
+    parser.add_argument("--decision-md", default="reports/planning/next_stage_auto_decision.md")
+    parser.add_argument("--decision-json", default="reports/planning/next_stage_auto_decision.json")
     args = parser.parse_args()
 
     wait_seeds = parse_seeds(args.wait_seeds)
@@ -182,14 +182,14 @@ def main():
     stages = [
         StageSpec(
             name="zh_en",
-            baseline_runs_dir=Path("runs/baseline_pilot_epoch8"),
-            method_runs_dir=Path("runs/tmmeada_v1_best_pilot_epoch8"),
+            baseline_runs_dir=Path("runs/experiments/baseline/baseline_pilot_epoch8"),
+            method_runs_dir=Path("runs/experiments/tmmeada/tmmeada_v1_best_pilot_epoch8"),
             lang_tag="zh_en",
         ),
         StageSpec(
             name="FBDB15K",
-            baseline_runs_dir=Path("runs/baseline_pilot_epoch8_crossgraph"),
-            method_runs_dir=Path("runs/tmmeada_v1_best_pilot_epoch8_crossgraph"),
+            baseline_runs_dir=Path("runs/experiments/baseline/baseline_pilot_epoch8_crossgraph"),
+            method_runs_dir=Path("runs/experiments/tmmeada/tmmeada_v1_best_pilot_epoch8_crossgraph"),
             lang_tag="FBDB15K",
         ),
     ]
@@ -201,7 +201,7 @@ def main():
         timeout_hours=args.timeout_hours,
     )
 
-    report_dir = Path("reports/auto_decision_tmp")
+    report_dir = Path("reports/tmp/auto_decision_tmp")
     report_dir.mkdir(parents=True, exist_ok=True)
 
     dataset_reports = []
@@ -300,3 +300,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

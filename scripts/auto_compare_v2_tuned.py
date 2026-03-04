@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import re
 import subprocess
 import time
@@ -76,8 +76,8 @@ def main():
     parser.add_argument("--poll-seconds", type=int, default=120)
     parser.add_argument("--timeout-hours", type=float, default=48.0)
     parser.add_argument("--threshold", type=float, default=0.003)
-    parser.add_argument("--method-zh-dir", default="runs/tmmeada_v2_tuned_pilot_epoch10")
-    parser.add_argument("--method-fbdb-dir", default="runs/tmmeada_v2_tuned_pilot_epoch10_crossgraph")
+    parser.add_argument("--method-zh-dir", default="runs/experiments/tmmeada/tmmeada_v2_tuned_pilot_epoch10")
+    parser.add_argument("--method-fbdb-dir", default="runs/experiments/tmmeada/tmmeada_v2_tuned_pilot_epoch10_crossgraph")
     args = parser.parse_args()
 
     required_seeds = parse_seeds(args.required_seeds)
@@ -108,3 +108,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import subprocess
 from pathlib import Path
 
@@ -36,7 +36,7 @@ def main():
         raise FileNotFoundError(f"Base config not found: {base_cfg}")
 
     seeds = [int(x.strip()) for x in args.seeds.split(",") if x.strip()]
-    tmp_dir = Path("runs/multiseed_tmp/custom")
+    tmp_dir = Path("runs/system/multiseed_tmp/custom")
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
     original = load_yaml(base_cfg)
@@ -57,3 +57,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

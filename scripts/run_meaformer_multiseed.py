@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import subprocess
 from pathlib import Path
 
@@ -33,7 +33,7 @@ def main():
 
     langs = [x.strip() for x in args.langs.split(",") if x.strip()]
     seeds = [int(x.strip()) for x in args.seeds.split(",") if x.strip()]
-    tmp_dir = Path("runs/multiseed_tmp")
+    tmp_dir = Path("runs/system/multiseed_tmp")
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
     for lang in langs:
@@ -55,3 +55,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import csv
 import json
 import re
@@ -243,12 +243,12 @@ def main():
     parser.add_argument("--threshold", type=float, default=0.003)
     parser.add_argument("--poll-seconds", type=int, default=120)
     parser.add_argument("--timeout-hours", type=float, default=48.0)
-    parser.add_argument("--decision-md", default="reports/epoch10_auto_decision.md")
-    parser.add_argument("--decision-json", default="reports/epoch10_auto_decision.json")
-    parser.add_argument("--pilot-compare-csv", default="reports/epoch10_compare_pilot.csv")
-    parser.add_argument("--pilot-compare-md", default="reports/epoch10_compare_pilot.md")
-    parser.add_argument("--formal-compare-csv", default="reports/epoch10_compare_formal.csv")
-    parser.add_argument("--formal-compare-md", default="reports/epoch10_compare_formal.md")
+    parser.add_argument("--decision-md", default="reports/epoch10/epoch10_auto_decision.md")
+    parser.add_argument("--decision-json", default="reports/epoch10/epoch10_auto_decision.json")
+    parser.add_argument("--pilot-compare-csv", default="reports/epoch10/epoch10_compare_pilot.csv")
+    parser.add_argument("--pilot-compare-md", default="reports/epoch10/epoch10_compare_pilot.md")
+    parser.add_argument("--formal-compare-csv", default="reports/epoch10/epoch10_compare_formal.csv")
+    parser.add_argument("--formal-compare-md", default="reports/epoch10/epoch10_compare_formal.md")
     args = parser.parse_args()
 
     wait_seeds = parse_seeds(args.wait_seeds)
@@ -257,14 +257,14 @@ def main():
     stages = [
         StageSpec(
             name="zh_en",
-            baseline_runs_dir=Path("runs/baseline_pilot_epoch10"),
-            method_runs_dir=Path("runs/tmmeada_v1_best_pilot_epoch10"),
+            baseline_runs_dir=Path("runs/experiments/baseline/baseline_pilot_epoch10"),
+            method_runs_dir=Path("runs/experiments/tmmeada/tmmeada_v1_best_pilot_epoch10"),
             lang_tag="zh_en",
         ),
         StageSpec(
             name="FBDB15K",
-            baseline_runs_dir=Path("runs/baseline_pilot_epoch10_crossgraph"),
-            method_runs_dir=Path("runs/tmmeada_v1_best_pilot_epoch10_crossgraph"),
+            baseline_runs_dir=Path("runs/experiments/baseline/baseline_pilot_epoch10_crossgraph"),
+            method_runs_dir=Path("runs/experiments/tmmeada/tmmeada_v1_best_pilot_epoch10_crossgraph"),
             lang_tag="FBDB15K",
         ),
     ]
@@ -276,7 +276,7 @@ def main():
         timeout_hours=args.timeout_hours,
     )
 
-    report_dir = Path("reports/auto_decision_tmp")
+    report_dir = Path("reports/tmp/auto_decision_tmp")
     report_dir.mkdir(parents=True, exist_ok=True)
 
     dataset_reports = []
@@ -406,3 +406,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

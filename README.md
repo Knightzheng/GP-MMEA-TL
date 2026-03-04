@@ -1,4 +1,4 @@
-# GP-MMEA-TL
+﻿# GP-MMEA-TL
 
 多模态实体对齐（MMEA）毕业设计实验仓库。当前阶段目标是建立统一、可复现的实验流水线，并在 `DBP15K` 与跨图谱数据上完成 baseline 复现与 TMMEA-DA 方法原型验证。
 
@@ -37,11 +37,11 @@
 - `MRR`
 
 当前汇总文件：
-- baseline 汇总：`reports/meaformer_results_mean_std.csv`
-- TMMEA-DA 汇总：`reports/tmmeada_results_mean_std.csv`
-- TMMEA-DA v1（zh_en）汇总：`reports/tmmeada_v1_results_mean_std.csv`
-- baseline vs TMMEA-DA 对比（全数据集）：`reports/tmmeada_vs_baseline_all.md`
-- baseline/v0/v1（zh_en）三方对比：`reports/tmmeada_v1_compare_zh_en.md`
+- baseline 汇总：`reports/baseline/meaformer_results_mean_std.csv`
+- TMMEA-DA 汇总：`reports/tmmeada/tmmeada_results_mean_std.csv`
+- TMMEA-DA v1（zh_en）汇总：`reports/tmmeada/tmmeada_v1_results_mean_std.csv`
+- baseline vs TMMEA-DA 对比（全数据集）：`reports/compare/tmmeada_vs_baseline_all.md`
+- baseline/v0/v1（zh_en）三方对比：`reports/tmmeada/tmmeada_v1_compare_zh_en.md`
 
 ## 4. 已复现 Baselines
 
@@ -111,9 +111,9 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 ## 7. 过程留痕与报告材料
 
 - 总过程日志：`PROCESS_LOG.md`
-- 中期实验草稿：`reports/midterm_results_draft.md`
-- 中期实验章节：`reports/midterm_experiment_section.md`
-- 方法全数据集汇总：`reports/tmmeada_dbp15k_multilang.md`
+- 中期实验草稿：`reports/midterm/midterm_results_draft.md`
+- 中期实验章节：`reports/midterm/midterm_experiment_section.md`
+- 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -130,17 +130,17 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 在 `zh_en` 上完成单种子粗搜索（6 组，`seed=42`）：
   - 网格：`dw={0.05,0.1,0.2}`，`sw={0.05,0.1}`，`mw=0.1`，`temp=1.0`
 - 输出搜索报告：
-  - `reports/tmmeada_v1_sweep_summary.csv`
-  - `reports/tmmeada_v1_sweep_grouped.csv`
-  - `reports/tmmeada_v1_sweep.md`
+  - `reports/tmmeada/tmmeada_v1_sweep_summary.csv`
+  - `reports/tmmeada/tmmeada_v1_sweep_grouped.csv`
+  - `reports/tmmeada/tmmeada_v1_sweep.md`
 - 选定后续配置并完成 5-seed 验证：
   - 配置：`configs/tmmeada/meaformer_zh_en_tmmeada_v1_best.yaml`
-  - 阶段：`runs/tmmeada_v1_best`
+  - 阶段：`runs/experiments/tmmeada/tmmeada_v1_best`
   - 结果：
-    - `reports/tmmeada_v1_best_results_summary.csv`
-    - `reports/tmmeada_v1_best_results_mean_std.csv`
-    - `reports/tmmeada_v1_best_compare_zh_en.csv`
-    - `reports/tmmeada_v1_best_compare_zh_en.md`
+    - `reports/tmmeada/tmmeada_v1_best_results_summary.csv`
+    - `reports/tmmeada/tmmeada_v1_best_results_mean_std.csv`
+    - `reports/tmmeada/tmmeada_v1_best_compare_zh_en.csv`
+    - `reports/tmmeada/tmmeada_v1_best_compare_zh_en.md`
 - 观察：
   - 在 1-epoch 快速设置下，`v1_best` 与 `v1` 基本持平；
   - `baseline` 仍显著高于 `v0/v1/v1_best`（zh_en）。
@@ -151,11 +151,11 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `configs/baselines/meaformer_zh_en_rtx3060_safe_epoch3.yaml`
   - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3.yaml`
 - 完成单种子试跑（`seed=42`）：
-  - baseline：`runs/baseline_epoch3/20260301-002341-MEAformer-epoch3-DBP15K-zh_en-s42/`
-  - method：`runs/tmmeada_v1_best_epoch3/20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42/`
+  - baseline：`runs/experiments/baseline/baseline_epoch3/20260301-002341-MEAformer-epoch3-DBP15K-zh_en-s42/`
+  - method：`runs/experiments/tmmeada/tmmeada_v1_best_epoch3/20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42/`
 - 输出试跑对比：
-  - `reports/epoch3_pilot_compare_zh_en.csv`
-  - `reports/epoch3_pilot_compare_zh_en.md`
+  - `reports/epoch3/epoch3_pilot_compare_zh_en.csv`
+  - `reports/epoch3/epoch3_pilot_compare_zh_en.md`
 - 观察：
   - 训练预算从 `epoch=1` 提升到 `epoch=3` 后，双方性能均明显提升；
   - 在该试跑设置下，`v1_best` 与 baseline 基本持平。
@@ -163,14 +163,14 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 ## 11. 阶段更新（2026-03-01）：zh_en 的 epoch=3 正式 5-seed 对比
 
 - 在相同预算下完成 `42, 3407, 2026, 7, 123` 五个种子：
-  - baseline：`runs/baseline_epoch3/`
-  - method（`v1_best`）：`runs/tmmeada_v1_best_epoch3/`
+  - baseline：`runs/experiments/baseline/baseline_epoch3/`
+  - method（`v1_best`）：`runs/experiments/tmmeada/tmmeada_v1_best_epoch3/`
 - 聚合结果：
-  - `reports/baseline_epoch3_results_mean_std.csv`
-  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
+  - `reports/baseline/baseline_epoch3_results_mean_std.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_results_mean_std.csv`
 - 正式对比报告：
-  - `reports/epoch3_multiseed_compare_zh_en.csv`
-  - `reports/epoch3_multiseed_compare_zh_en.md`
+  - `reports/epoch3/epoch3_multiseed_compare_zh_en.csv`
+  - `reports/epoch3/epoch3_multiseed_compare_zh_en.md`
 - 结论：
   - 在 `epoch=3 + 5-seed` 的公平设置下，`baseline` 与 `TMMEA-DA v1_best` 在 `zh_en` 基本持平。
 
@@ -179,11 +179,11 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 新增 DBP15K `ja_en` 与 `fr_en` 的 epoch=3 配置（baseline + method）。
 - 在两种语言上完成 `seed=42` 试跑。
 - 更新聚合文件（`zh_en` 为 5-seed，`ja_en/fr_en` 为试跑）：
-  - `reports/baseline_epoch3_results_mean_std.csv`
-  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
+  - `reports/baseline/baseline_epoch3_results_mean_std.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_results_mean_std.csv`
 - 新增 DBP15K epoch3 对比：
-  - `reports/epoch3_compare_dbp15k.csv`
-  - `reports/epoch3_compare_dbp15k.md`
+  - `reports/epoch3/epoch3_compare_dbp15k.csv`
+  - `reports/epoch3/epoch3_compare_dbp15k.md`
 - 阶段观察：
   - `zh_en` 正式结果与 `ja_en/fr_en` 试跑结果均显示两方法接近。
 
@@ -191,12 +191,12 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 
 - 为 `fr_en` 补齐剩余四个种子（`3407, 2026, 7, 123`），baseline 与 method 同步完成。
 - 更新后的 DBP15K epoch3 结果文件：
-  - `reports/baseline_epoch3_results_summary.csv`
-  - `reports/baseline_epoch3_results_mean_std.csv`
-  - `reports/tmmeada_v1_best_epoch3_results_summary.csv`
-  - `reports/tmmeada_v1_best_epoch3_results_mean_std.csv`
-  - `reports/epoch3_compare_dbp15k.csv`
-  - `reports/epoch3_compare_dbp15k.md`
+  - `reports/baseline/baseline_epoch3_results_summary.csv`
+  - `reports/baseline/baseline_epoch3_results_mean_std.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_results_summary.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_results_mean_std.csv`
+  - `reports/epoch3/epoch3_compare_dbp15k.csv`
+  - `reports/epoch3/epoch3_compare_dbp15k.md`
 - 同步修复说明文本：
   - `scripts/make_epoch3_compare_dbp15k.py` 改为根据真实 `num_runs` 自动生成注释，避免“结果已 5-seed 但文本仍写 pilot”的不一致。
 - 结论：
@@ -210,13 +210,13 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `configs/tmmeada/meaformer_fbdb15k_tmmeada_v1_best_epoch3.yaml`
   - `configs/tmmeada/meaformer_fbyg15k_tmmeada_v1_best_epoch3.yaml`
 - 完成 `seed=42` 试跑：
-  - baseline：`runs/baseline_epoch3_crossgraph/`
-  - method：`runs/tmmeada_v1_best_epoch3_crossgraph/`
+  - baseline：`runs/experiments/baseline/baseline_epoch3_crossgraph/`
+  - method：`runs/experiments/tmmeada/tmmeada_v1_best_epoch3_crossgraph/`
 - 输出试跑对比：
-  - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
-  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
-  - `reports/epoch3_compare_crossgraph.csv`
-  - `reports/epoch3_compare_crossgraph.md`
+  - `reports/baseline/baseline_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/epoch3/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3/epoch3_compare_crossgraph.md`
 - 观察：
   - `FBDB15K`：`v1_best` 相比 baseline 有极小正增益；
   - `FBYG15K`：两者近似持平。
@@ -225,15 +225,15 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 
 - 在 `FBDB15K` 与 `FBYG15K` 上补齐 `3407, 2026, 7, 123`，与 `seed=42` 共同形成正式 5-seed。
 - 阶段目录：
-  - baseline：`runs/baseline_epoch3_crossgraph/`
-  - method：`runs/tmmeada_v1_best_epoch3_crossgraph/`
+  - baseline：`runs/experiments/baseline/baseline_epoch3_crossgraph/`
+  - method：`runs/experiments/tmmeada/tmmeada_v1_best_epoch3_crossgraph/`
 - 结果文件：
-  - `reports/baseline_epoch3_crossgraph_results_summary.csv`
-  - `reports/baseline_epoch3_crossgraph_results_mean_std.csv`
-  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_summary.csv`
-  - `reports/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
-  - `reports/epoch3_compare_crossgraph.csv`
-  - `reports/epoch3_compare_crossgraph.md`
+  - `reports/baseline/baseline_epoch3_crossgraph_results_summary.csv`
+  - `reports/baseline/baseline_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_crossgraph_results_summary.csv`
+  - `reports/tmmeada/tmmeada_v1_best_epoch3_crossgraph_results_mean_std.csv`
+  - `reports/epoch3/epoch3_compare_crossgraph.csv`
+  - `reports/epoch3/epoch3_compare_crossgraph.md`
 - 正式 5-seed 观察：
   - `FBDB15K`：`v1_best` 小幅优于 baseline；
   - `FBYG15K`：`v1_best` 小幅优于 baseline。
@@ -247,11 +247,11 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_domain_align.yaml`
   - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_source_select.yaml`
   - `configs/tmmeada/meaformer_zh_en_tmmeada_v1_best_epoch3_wo_missing_gate.yaml`
-- 完成三组消融运行（stage: `runs/tmmeada_v1_ablation_epoch3/`）。
+- 完成三组消融运行（stage: `runs/experiments/tmmeada/tmmeada_v1_ablation_epoch3/`）。
 - 新增消融汇总与对比：
-  - `reports/tmmeada_v1_ablation_epoch3_results_summary.csv`
-  - `reports/epoch3_ablation_zh_en.csv`
-  - `reports/epoch3_ablation_zh_en.md`
+  - `reports/tmmeada/tmmeada_v1_ablation_epoch3_results_summary.csv`
+  - `reports/epoch3/epoch3_ablation_zh_en.csv`
+  - `reports/epoch3/epoch3_ablation_zh_en.md`
 - 试跑观察（zh_en + epoch3 + seed42）：
   - 三组消融与 `v1_best_full` 差异极小，`wo_source_select` 在 `l2r Hits@1` 上有 `-0.0006` 的微弱回落；
   - 整体显示当前增益量级较小，需扩展到 5-seed 才能形成稳定结论。
@@ -260,11 +260,11 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 
 - 在 `wo_domain_align / wo_source_select / wo_missing_gate` 三组上补齐 `3407, 2026, 7, 123`，与 `seed=42` 合并为正式 5-seed。
 - 消融阶段目录：
-  - `runs/tmmeada_v1_ablation_epoch3/`
+  - `runs/experiments/tmmeada/tmmeada_v1_ablation_epoch3/`
 - 更新文件：
-  - `reports/tmmeada_v1_ablation_epoch3_results_summary.csv`（15 runs）
-  - `reports/epoch3_ablation_zh_en_multiseed.csv`
-  - `reports/epoch3_ablation_zh_en_multiseed.md`
+  - `reports/tmmeada/tmmeada_v1_ablation_epoch3_results_summary.csv`（15 runs）
+  - `reports/epoch3/epoch3_ablation_zh_en_multiseed.csv`
+  - `reports/epoch3/epoch3_ablation_zh_en_multiseed.md`
   - `scripts/summarize_epoch3_ablation_zh_en_multiseed.py`
 - 正式 5-seed 观察：
   - `wo_domain_align` 与 `v1_best_full` 基本一致；
@@ -272,3 +272,4 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `wo_source_select` 与 baseline 更接近，且相对 `v1_best_full` 仅有极小差值（约 `r2l H@1 -0.0001` 量级）。
 - 结论：
   - 在当前 `epoch=3 + zh_en` 设置下，三模块开关带来的平均差异非常小，整体仍与 baseline 近似持平。
+

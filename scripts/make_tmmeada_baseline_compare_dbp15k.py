@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 from pathlib import Path
 
 
@@ -22,10 +22,10 @@ def read_agg(path: Path):
 
 
 def main():
-    base_path = Path("reports/meaformer_results_mean_std.csv")
-    tmmeada_path = Path("reports/tmmeada_results_mean_std.csv")
-    out_csv = Path("reports/tmmeada_vs_baseline_dbp15k.csv")
-    out_md = Path("reports/tmmeada_vs_baseline_dbp15k.md")
+    base_path = Path("reports/baseline/meaformer_results_mean_std.csv")
+    tmmeada_path = Path("reports/tmmeada/tmmeada_results_mean_std.csv")
+    out_csv = Path("reports/compare/tmmeada_vs_baseline_dbp15k.csv")
+    out_md = Path("reports/compare/tmmeada_vs_baseline_dbp15k.md")
 
     baseline = read_agg(base_path)
     tmmeada = read_agg(tmmeada_path)
@@ -85,3 +85,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

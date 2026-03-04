@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 from pathlib import Path
 
 
@@ -26,9 +26,9 @@ def to_float_map(row):
 
 
 def main():
-    baseline_rows = read_rows(Path("reports/baseline_epoch3_results_summary.csv"))
-    full_rows = read_rows(Path("reports/tmmeada_v1_best_epoch3_results_summary.csv"))
-    ablation_rows = read_rows(Path("reports/tmmeada_v1_ablation_epoch3_results_summary.csv"))
+    baseline_rows = read_rows(Path("reports/baseline/baseline_epoch3_results_summary.csv"))
+    full_rows = read_rows(Path("reports/tmmeada/tmmeada_v1_best_epoch3_results_summary.csv"))
+    ablation_rows = read_rows(Path("reports/tmmeada/tmmeada_v1_ablation_epoch3_results_summary.csv"))
 
     baseline = pick_unique(
         baseline_rows,
@@ -83,8 +83,8 @@ def main():
             }
         )
 
-    out_csv = Path("reports/epoch3_ablation_zh_en.csv")
-    out_md = Path("reports/epoch3_ablation_zh_en.md")
+    out_csv = Path("reports/epoch3/epoch3_ablation_zh_en.csv")
+    out_md = Path("reports/epoch3/epoch3_ablation_zh_en.md")
 
     with out_csv.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(out_rows[0].keys()))
@@ -115,3 +115,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

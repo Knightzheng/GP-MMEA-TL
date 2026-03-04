@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 from pathlib import Path
 
 
@@ -21,11 +21,11 @@ def read_row(path: Path, key: str = "zh_en"):
 
 
 def main():
-    baseline = read_row(Path("reports/baseline_epoch3_results_summary.csv"))
-    method = read_row(Path("reports/tmmeada_v1_best_epoch3_results_summary.csv"))
+    baseline = read_row(Path("reports/baseline/baseline_epoch3_results_summary.csv"))
+    method = read_row(Path("reports/tmmeada/tmmeada_v1_best_epoch3_results_summary.csv"))
 
-    out_csv = Path("reports/epoch3_pilot_compare_zh_en.csv")
-    out_md = Path("reports/epoch3_pilot_compare_zh_en.md")
+    out_csv = Path("reports/epoch3/epoch3_pilot_compare_zh_en.csv")
+    out_md = Path("reports/epoch3/epoch3_pilot_compare_zh_en.md")
 
     rows = []
     for key, name in METRICS:
@@ -71,3 +71,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

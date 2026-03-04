@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import csv
 import math
 from collections import defaultdict
@@ -28,8 +28,8 @@ def std(values):
 
 def main():
     parser = argparse.ArgumentParser(description="Aggregate MEAformer summary csv into mean±std by lang pair.")
-    parser.add_argument("--in-csv", default="reports/meaformer_results_summary.csv")
-    parser.add_argument("--out-csv", default="reports/meaformer_results_mean_std.csv")
+    parser.add_argument("--in-csv", default="reports/baseline/meaformer_results_summary.csv")
+    parser.add_argument("--out-csv", default="reports/baseline/meaformer_results_mean_std.csv")
     args = parser.parse_args()
 
     in_path = Path(args.in_csv)
@@ -66,3 +66,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import csv
 import json
 import re
@@ -145,18 +145,18 @@ def main():
     parser.add_argument("--runner-python", default=r"D:\Anaconda_envs\envs\bysj-main\python.exe")
     parser.add_argument("--required-seeds", default="42,3407")
     parser.add_argument("--threshold", type=float, default=0.003)
-    parser.add_argument("--baseline-zh-dir", default="runs/baseline_pilot_epoch10")
-    parser.add_argument("--baseline-fbdb-dir", default="runs/baseline_pilot_epoch10_crossgraph")
-    parser.add_argument("--method-zh-dir", default="runs/tmmeada_v2_tuned_pilot_epoch10")
-    parser.add_argument("--method-fbdb-dir", default="runs/tmmeada_v2_tuned_pilot_epoch10_crossgraph")
-    parser.add_argument("--compare-csv", default="reports/epoch10_compare_v2_tuned_pilot.csv")
-    parser.add_argument("--compare-md", default="reports/epoch10_compare_v2_tuned_pilot.md")
-    parser.add_argument("--decision-json", default="reports/epoch10_v2_tuned_decision.json")
-    parser.add_argument("--decision-md", default="reports/epoch10_v2_tuned_decision.md")
+    parser.add_argument("--baseline-zh-dir", default="runs/experiments/baseline/baseline_pilot_epoch10")
+    parser.add_argument("--baseline-fbdb-dir", default="runs/experiments/baseline/baseline_pilot_epoch10_crossgraph")
+    parser.add_argument("--method-zh-dir", default="runs/experiments/tmmeada/tmmeada_v2_tuned_pilot_epoch10")
+    parser.add_argument("--method-fbdb-dir", default="runs/experiments/tmmeada/tmmeada_v2_tuned_pilot_epoch10_crossgraph")
+    parser.add_argument("--compare-csv", default="reports/epoch10/epoch10_compare_v2_tuned_pilot.csv")
+    parser.add_argument("--compare-md", default="reports/epoch10/epoch10_compare_v2_tuned_pilot.md")
+    parser.add_argument("--decision-json", default="reports/epoch10/epoch10_v2_tuned_decision.json")
+    parser.add_argument("--decision-md", default="reports/epoch10/epoch10_v2_tuned_decision.md")
     args = parser.parse_args()
 
     required_seeds = parse_seeds(args.required_seeds)
-    report_tmp = Path("reports/auto_decision_tmp/v2_tuned")
+    report_tmp = Path("reports/tmp/auto_decision_tmp/v2_tuned")
     report_tmp.mkdir(parents=True, exist_ok=True)
 
     stage_specs = [
@@ -233,3 +233,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

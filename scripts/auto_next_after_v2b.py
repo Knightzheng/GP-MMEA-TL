@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import json
 import time
 from datetime import datetime
@@ -89,17 +89,17 @@ def run_formal_v2b(args):
             "--threshold",
             str(args.threshold),
             "--method-zh-dir",
-            "runs/tmmeada_v2b_lite_hardneg_pilot_epoch10",
+            "runs/experiments/tmmeada/tmmeada_v2b_lite_hardneg_pilot_epoch10",
             "--method-fbdb-dir",
-            "runs/tmmeada_v2b_lite_hardneg_pilot_epoch10_crossgraph",
+            "runs/experiments/tmmeada/tmmeada_v2b_lite_hardneg_pilot_epoch10_crossgraph",
             "--compare-csv",
-            "reports/epoch10_compare_v2b_lite_hardneg_formal.csv",
+            "reports/epoch10/epoch10_compare_v2b_lite_hardneg_formal.csv",
             "--compare-md",
-            "reports/epoch10_compare_v2b_lite_hardneg_formal.md",
+            "reports/epoch10/epoch10_compare_v2b_lite_hardneg_formal.md",
             "--decision-json",
-            "reports/epoch10_v2b_lite_hardneg_formal_decision.json",
+            "reports/epoch10/epoch10_v2b_lite_hardneg_formal_decision.json",
             "--decision-md",
-            "reports/epoch10_v2b_lite_hardneg_formal_decision.md",
+            "reports/epoch10/epoch10_v2b_lite_hardneg_formal_decision.md",
         ]
     )
 
@@ -136,17 +136,17 @@ def run_fallback_v2c(args):
             "--threshold",
             str(args.threshold),
             "--method-zh-dir",
-            "runs/tmmeada_v2c_source_only_pilot_epoch10",
+            "runs/experiments/tmmeada/tmmeada_v2c_source_only_pilot_epoch10",
             "--method-fbdb-dir",
-            "runs/tmmeada_v2c_source_only_pilot_epoch10_crossgraph",
+            "runs/experiments/tmmeada/tmmeada_v2c_source_only_pilot_epoch10_crossgraph",
             "--compare-csv",
-            "reports/epoch10_compare_v2c_source_only_pilot.csv",
+            "reports/epoch10/epoch10_compare_v2c_source_only_pilot.csv",
             "--compare-md",
-            "reports/epoch10_compare_v2c_source_only_pilot.md",
+            "reports/epoch10/epoch10_compare_v2c_source_only_pilot.md",
             "--decision-json",
-            "reports/epoch10_v2c_source_only_decision.json",
+            "reports/epoch10/epoch10_v2c_source_only_decision.json",
             "--decision-md",
-            "reports/epoch10_v2c_source_only_decision.md",
+            "reports/epoch10/epoch10_v2c_source_only_decision.md",
         ]
     )
 
@@ -154,7 +154,7 @@ def run_fallback_v2c(args):
 def main():
     parser = argparse.ArgumentParser(description="Auto-run next stage once v2b decision is ready.")
     parser.add_argument("--runner-python", default=r"D:\Anaconda_envs\envs\bysj-main\python.exe")
-    parser.add_argument("--decision-json", default="reports/epoch10_v2b_lite_hardneg_decision.json")
+    parser.add_argument("--decision-json", default="reports/epoch10/epoch10_v2b_lite_hardneg_decision.json")
     parser.add_argument("--poll-seconds", type=int, default=120)
     parser.add_argument("--timeout-hours", type=float, default=48.0)
     parser.add_argument("--threshold", type=float, default=0.003)
@@ -175,3 +175,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

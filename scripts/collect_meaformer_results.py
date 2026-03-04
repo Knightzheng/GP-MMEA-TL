@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import csv
 import re
 from pathlib import Path
@@ -64,8 +64,8 @@ def infer_lang(run_name, cfg_path):
 
 def main():
     parser = argparse.ArgumentParser(description="Collect MEAformer run metrics into a CSV summary.")
-    parser.add_argument("--runs-dir", default="runs/baseline")
-    parser.add_argument("--out", default="reports/meaformer_results_summary.csv")
+    parser.add_argument("--runs-dir", default="runs/experiments/baseline/baseline")
+    parser.add_argument("--out", default="reports/baseline/meaformer_results_summary.csv")
     parser.add_argument("--name-contains", default="", help="optional substring filter for run directory name")
     args = parser.parse_args()
 
@@ -114,3 +114,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import json
 import subprocess
 from datetime import datetime
@@ -80,7 +80,7 @@ def main():
     args = parser.parse_args()
 
     ts = now_tag()
-    tmp_root = Path("runs/transfer_tmp") / f"{ts}_{args.tag}"
+    tmp_root = Path("runs/system/transfer_tmp") / f"{ts}_{args.tag}"
     tmp_root.mkdir(parents=True, exist_ok=True)
 
     source_cfg_path = Path(args.source_config)
@@ -244,3 +244,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

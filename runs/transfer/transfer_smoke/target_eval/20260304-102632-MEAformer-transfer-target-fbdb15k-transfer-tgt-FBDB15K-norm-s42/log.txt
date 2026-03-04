@@ -1,0 +1,35 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 1 --model_name MEAformer --data_choice FBDB15K --data_split norm --data_rate 0.2 --epoch 1 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_transfer_target_FBDB15K_baseline_transfer_smoke_real_eval_from_DBP15K_zh_en --exp_id transfer_tgt_FBDB15K_eval_baseline_transfer_smoke_real_eval_from_DBP15K_zh_en_s42 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_smoke_real_src_s42_ --transfer_non_strict 1 --transfer_skip_keys multimodal_encoder.entity_emb.weight --transfer_verbose 1 --csls
+The syntax of the command is incorrect.
+The syntax of the command is incorrect.
+INFO - 03/04/26 10:26:34 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/04/26 10:26:34 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0304-BYSJ_MEAformer_transfer_target_FBDB15K_baseline_transfer_smoke_real_eval_from_DBP15K_zh_en\MEAformer_FBDB15K_0.2_transfer_tgt_FBDB15K_eval_baseline_transfer_smoke_real_eval_from_DBP15K_zh_en_s42
+
+INFO - 03/04/26 10:26:34 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 1 --model_name MEAformer --data_choice FBDB15K --data_split norm --data_rate '0.2' --epoch 1 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_transfer_target_FBDB15K_baseline_transfer_smoke_real_eval_from_DBP15K_zh_en --exp_id transfer_tgt_FBDB15K_eval_baseline_transfer_smoke_real_eval_from_DBP15K_zh_en_s42 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_smoke_real_src_s42_ --transfer_non_strict 1 --transfer_skip_keys 'multimodal_encoder.entity_emb.weight' --transfer_verbose 1 --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/04/26 10:26:36 - 0:00:02 - 94.56% entities have images
+INFO - 03/04/26 10:26:36 - 0:00:02 - image feature shape:(27793, 4096)
+INFO - 03/04/26 10:26:36 - 0:00:02 - #left entity : 14951, #right entity: 12842
+INFO - 03/04/26 10:26:36 - 0:00:02 - #left entity not in train set: 12382, #right entity not in train set: 10273
+INFO - 03/04/26 10:26:37 - 0:00:02 - relation feature shape:(27793, 1000)
+INFO - 03/04/26 10:26:37 - 0:00:03 - attribute feature shape:(27793, 341)
+INFO - 03/04/26 10:26:37 - 0:00:03 - -----dataset summary-----
+INFO - 03/04/26 10:26:37 - 0:00:03 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\FBDB15K\norm
+INFO - 03/04/26 10:26:37 - 0:00:03 - triple num:	 691241
+INFO - 03/04/26 10:26:37 - 0:00:03 - entity num:	 27793
+INFO - 03/04/26 10:26:37 - 0:00:03 - relation num:	 1624
+INFO - 03/04/26 10:26:37 - 0:00:03 - train ill num:	 2569 	 test ill num:	 10277
+INFO - 03/04/26 10:26:37 - 0:00:03 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/04/26 10:26:38 - 0:00:03 - [transfer_load] loaded=27 skipped_by_name=1 skipped_shape=2 skipped_missing=2 missing_after_load=3 unexpected_after_load=0
+INFO - 03/04/26 10:26:38 - 0:00:03 - [transfer_load] shape_mismatch_preview=[{'key': 'multimodal_encoder.att_fc.weight', 'source': (64, 1000), 'target': (64, 341)}, {'key': 'multimodal_encoder.img_fc.weight', 'source': (64, 2048), 'target': (64, 4096)}]
+INFO - 03/04/26 10:26:38 - 0:00:03 - loading model [MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_smoke_real_src_s42_.pkl] done!
+INFO - 03/04/26 10:26:38 - 0:00:03 - total params num: 2195974
+INFO - 03/04/26 10:26:38 - 0:00:03 -  --------------------- Test result ---------------------
+INFO - 03/04/26 10:26:43 - 0:00:08 - Ep Test | l2r: acc of top [1, 10, 50] = [0.0002 0.0018 0.0093], mr = 4275.641, mrr = 0.002
+INFO - 03/04/26 10:26:43 - 0:00:08 - Ep Test | r2l: acc of top [1, 10, 50] = [0.0002 0.0021 0.0101], mr = 4236.955, mrr = 0.002
+loading raw data...
+getting a sparse tensor r_adj...
+[DONE] return_code=0

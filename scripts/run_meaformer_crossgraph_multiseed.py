@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import subprocess
 from pathlib import Path
 
@@ -34,7 +34,7 @@ def main():
         Path("configs/baselines/meaformer_fbdb15k_rtx3060_safe.yaml"),
         Path("configs/baselines/meaformer_fbyg15k_rtx3060_safe.yaml"),
     ]
-    tmp_dir = Path("runs/multiseed_tmp")
+    tmp_dir = Path("runs/system/multiseed_tmp")
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
     for base_cfg in base_cfgs:
@@ -53,3 +53,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

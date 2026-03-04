@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import subprocess
 from pathlib import Path
 
@@ -38,7 +38,7 @@ def main():
     split = str(cfg["meaformer"]["data_split"])
     data_choice = str(cfg["meaformer"]["data_choice"])
     seeds = [int(x.strip()) for x in args.seeds.split(",") if x.strip()]
-    tmp_dir = Path("runs/multiseed_tmp/tmmeada")
+    tmp_dir = Path("runs/system/multiseed_tmp/tmmeada")
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
     for seed in seeds:
@@ -55,3 +55,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

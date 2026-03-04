@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 import math
 from collections import defaultdict
 from pathlib import Path
@@ -31,9 +31,9 @@ def read_rows(path: Path):
 
 
 def collect_variant_values():
-    baseline_rows = read_rows(Path("reports/baseline_epoch3_results_summary.csv"))
-    full_rows = read_rows(Path("reports/tmmeada_v1_best_epoch3_results_summary.csv"))
-    ablation_rows = read_rows(Path("reports/tmmeada_v1_ablation_epoch3_results_summary.csv"))
+    baseline_rows = read_rows(Path("reports/baseline/baseline_epoch3_results_summary.csv"))
+    full_rows = read_rows(Path("reports/tmmeada/tmmeada_v1_best_epoch3_results_summary.csv"))
+    ablation_rows = read_rows(Path("reports/tmmeada/tmmeada_v1_ablation_epoch3_results_summary.csv"))
 
     vals = defaultdict(lambda: defaultdict(list))
 
@@ -92,8 +92,8 @@ def main():
         row["delta_r2l_mrr_vs_full"] = round(row["r2l_mrr_mean"] - full_means["r2l_mrr"], 4)
         out_rows.append(row)
 
-    out_csv = Path("reports/epoch3_ablation_zh_en_multiseed.csv")
-    out_md = Path("reports/epoch3_ablation_zh_en_multiseed.md")
+    out_csv = Path("reports/epoch3/epoch3_ablation_zh_en_multiseed.csv")
+    out_md = Path("reports/epoch3/epoch3_ablation_zh_en_multiseed.md")
 
     fields = ["variant", "num_runs"]
     for k in METRICS:
@@ -140,3 +140,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
