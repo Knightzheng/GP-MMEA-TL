@@ -1,6 +1,6 @@
 ﻿# GP-MMEA-TL
 
-多模态实体对齐（MMEA）毕业设计实验仓库。当前阶段目标是建立统一、可复现的实验流水线，并在 `DBP15K` 与跨图谱数据上完成 baseline 复现与 TMMEA-DA 方法原型验证。
+多模态实体对齐（MMEA）毕业设计实验仓库。当前阶段目标是建立统一、可复现的实验流水线，并在 `DBP15K` 与跨图谱数据上完成 baseline 复现、迁移实验（source->target）与 TMMEA-DA 的目标域自适应优化。
 
 ## 1. 任务定义
 
@@ -42,6 +42,9 @@
 - TMMEA-DA v1（zh_en）汇总：`reports/tmmeada/tmmeada_v1_results_mean_std.csv`
 - baseline vs TMMEA-DA 对比（全数据集）：`reports/compare/tmmeada_vs_baseline_all.md`
 - baseline/v0/v1（zh_en）三方对比：`reports/tmmeada/tmmeada_v1_compare_zh_en.md`
+- 迁移自适应 v6 对比（2-seed）：`reports/transfer/transfer_adapt_v6_mixed_compare_vs_baseline.csv`
+- 迁移自适应 v7(FBDB) 对比（2-seed）：`reports/transfer/transfer_adapt_v7_fbdb_compare_vs_baseline.csv`
+- v7 自动决策记录：`reports/transfer/transfer_adapt_v7_fbdb_decision.md`
 
 ## 4. 已复现 Baselines
 
@@ -114,12 +117,15 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260305.md`
 
 ## 8. 当前阶段结论（简要）
 
 - 流程层面：baseline 与方法分支均已形成可复现实验链路（配置-运行-汇总-对比-报告）。
-- 结果层面：TMMEA-DA 当前仅含 Domain Align MVP，在 1-epoch 设置下尚未超过 baseline。
-- 下一步：补充多源选择、缺失感知融合与更完整训练预算，再进行公平对比与消融。
+- 结果层面（最新）：在 transfer-adapt 2-seed 设置下，`ja_en` 与 `FBDB15K` 已出现小幅正增益。
+  - `ja_en`：`delta_avg_mrr_mean = +0.00075`（v6 mixed）
+  - `FBDB15K`：`delta_avg_mrr_mean = +0.00075`（v7b formal）
+- 下一步：扩展到 `fr_en` / `FBYG15K` 的同口径 transfer-adapt，并补齐 5-seed 正式统计与误差分析。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -272,4 +278,31 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `wo_source_select` 与 baseline 更接近，且相对 `v1_best_full` 仅有极小差值（约 `r2l H@1 -0.0001` 量级）。
 - 结论：
   - 在当前 `epoch=3 + zh_en` 设置下，三模块开关带来的平均差异非常小，整体仍与 baseline 近似持平。
+
+## 18. 阶段更新（2026-03-05）：Transfer-Adapt v3-v7（2-seed）完成
+
+- 目标：面向任务书的“可迁移能力”主线，执行 `source=zh_en -> target` 的目标域无标注自适应实验。
+- 覆盖阶段：
+  - `v3` / `v4` / `v5`：持续调节 `ja_en` 与 `FBDB15K` 的自适应策略；
+  - `v6_mixed`：按目标域拆分策略（`ja_en` 保持强配置，`FBDB15K` 使用 baseline source + mild DA）；
+  - `v7_fbdb`：针对 `FBDB15K` 进行 `v7a/v7b/v7c` 自动试跑与自动决策。
+- 关键结果（2-seed）：
+  - `v6_mixed` vs baseline：
+    - `ja_en`：`delta_avg_mrr_mean = +0.00075`
+    - `FBDB15K`：`delta_avg_mrr_mean = +0.00000`（持平）
+  - `v7_fbdb`（best variant=`v7b`）vs baseline：
+    - `FBDB15K`：`delta_avg_mrr_mean = +0.00075`
+    - `delta_avg_hits@1_mean = +0.000875`
+    - `delta_avg_hits@10_mean = +0.001425`
+- 产出文件：
+  - `reports/transfer/transfer_adapt_v6_mixed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v7_fbdb_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v7_fbdb_decision.{md,json}`
+  - `runs/transfer/transfer_adapt_v7_fbdb_formal_v7b/`
+
+## 19. 阶段更新（2026-03-05）：README 与阶段报告同步
+
+- README 已同步到 transfer-adapt 最新进度（v7）。
+- 新增阶段报告：
+  - `reports/transfer/transfer_stage_update_20260305.md`
 

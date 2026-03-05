@@ -1,16 +1,36 @@
-# 任务书对齐更新（2026-03-05）
+# 任务书对齐状态更新（2026-03-05）
 
-## 已新增完成
-- 动机实验链路从“纯迁移 only_test”扩展到“目标域无标注自适应（unsup+IL）”并实跑成功。
-- 已完成 `seed=42` 的 `zh_en -> ja_en` 与 `zh_en -> FBDB15K` 两组 baseline/TMMEA-DA 对照。
-- 结果显示迁移性能显著提升（相较 only_test 设定）：
-  - `ja_en`: `avg_mrr` 提升约 `+0.302`
-  - `FBDB15K`: `avg_mrr` 提升约 `+0.023`
+## 已完成
 
-## 仍在进行
-- `seed=3407` 的同配置队列已启动后台执行（用于稳定性验证）。
+- 动机实验链路已从纯 `only_test` 迁移到 `target adapt (unsup + IL)`，并稳定运行。
+- 已完成 `source=zh_en` 到目标域的 2-seed 对比：
+  - `ja_en`
+  - `FBDB15K`
+- 已完成多轮优化（v3-v7）并产出自动决策报告：
+  - `reports/transfer/transfer_adapt_v7_fbdb_decision.md`
+  - `reports/transfer/transfer_adapt_v7_fbdb_compare_vs_baseline.csv`
 
-## 下一步对齐项
-1. 扩展到 `fr_en` 与 `FBYG15K`，补齐任务书中的目标域矩阵。  
-2. 在 adapt 设定下继续调优 `TMMEA-DA`，目标是形成“优于 baseline”的证据。  
-3. 将 `2-seed` 稳定后再扩展 `5-seed` 正式结果用于终稿。  
+## 当前结果摘要
+
+- `ja_en`（v6 mixed）：
+  - `delta_avg_mrr_mean = +0.00075`
+- `FBDB15K`（v7b formal）：
+  - `delta_avg_mrr_mean = +0.00075`
+  - `delta_avg_hits@1_mean = +0.000875`
+
+说明：当前已实现“小幅正增益”，但需要扩展 seed 和目标域来增强结论说服力。
+
+## 尚未完成（按任务书）
+
+1. 目标域矩阵未补齐：
+   - `fr_en`（transfer-adapt）
+   - `FBYG15K`（transfer-adapt）
+2. 正式统计规模需扩展到 `5-seed`。
+3. 中期/终稿所需的完整误差分析与可视化图表仍需补齐。
+
+## 下一步执行顺序
+
+1. 补齐 `fr_en` / `FBYG15K` transfer-adapt 2-seed。  
+2. 对关键目标域执行 5-seed 正式跑并汇总均值/方差。  
+3. 输出中期报告主表与“方法改造 -> 指标变化”的证据链图表。  
+
