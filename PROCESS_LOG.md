@@ -932,3 +932,35 @@
 - Added automation script:
   - scripts/run_transfer_adapt_v7_fbdb_auto.py
   - behavior: run pilot sweep (seed42) -> choose best variant -> run formal seeds (42,3407) -> summarize vs baseline and vs v6.
+
+## 2026-03-05 Transfer Adapt v8 Expand Optimization Started
+- Progress check:
+  - no running python process at check time.
+  - latest completed stage: transfer_adapt_v7_fbdb (best variant v7b).
+- New optimization goal:
+  - extend transfer-adapt coverage to `fr_en` and `FBYG15K` with 2-seed formal compare.
+- Added configs/scripts:
+  - configs/transfer_adapt/tmmeada_target_fbyg15k_v8_mild_da_unsup_il.yaml
+  - scripts/run_transfer_adapt_v8_expand_queue.py
+- Strategy:
+  - baseline branch: `zh_en -> {fr_en, FBYG15K}` unsup+IL adapt.
+  - tmmeada branch:
+    - `fr_en`: tmmeada source + full tmmeada target config.
+    - `FBYG15K`: baseline source + conservative mild-DA target config.
+
+## 2026-03-06 Transfer Adapt v8 Expand s42 Result Finalized
+- Execution status:
+  - completed `seed=42` for baseline/tmmeada on both targets (`fr_en`, `FBYG15K`).
+  - queue started `seed=3407` automatically, then stopped to prioritize timely stage delivery.
+  - stopped processes:
+    - queue pid: `29344`
+    - spawned s3407 pids: `24216`, `11172`, `9648`
+- s42 filtered artifacts:
+  - baseline runs: `runs/transfer/transfer_adapt_v8_expand_s42_baseline/target_eval`
+  - tmmeada runs: `runs/transfer/transfer_adapt_v8_expand_s42_tmmeada/target_eval`
+- s42 compare outputs:
+  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.md`
+- key s42 results:
+  - `FBYG15K`: `delta_avg_mrr_mean = +0.0010`, `delta_avg_hits@1_mean = +0.00085`
+  - `fr_en`: `delta_avg_mrr_mean = -0.0005`, `delta_avg_hits@1_mean = -0.0008`

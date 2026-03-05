@@ -1,0 +1,37 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split fr_en --data_rate 0.3 --epoch 10 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 3407 --exp_name BYSJ_MEAformer_transfer_adapt_target_fr_en_baseline_transfer_adapt_v8_expand_s3407_from_DBP15K_zh_en --exp_id transfer_adapt_tgt_fr_en_unsup_il_baseline_transfer_adapt_v8_expand_s3407_from_DBP15K_zh_en_s3407 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_ --transfer_non_strict 1 --transfer_skip_keys multimodal_encoder.entity_emb.weight --transfer_verbose 1 --il --semi_learn_step 1 --il_start 2 --unsup --unsup_k 1000 --unsup_mode img --csls
+�����﷨����ȷ��
+�����﷨����ȷ��
+INFO - 03/06/26 01:55:57 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/06/26 01:55:57 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0306-BYSJ_MEAformer_transfer_adapt_target_fr_en_baseline_transfer_adapt_v8_expand_s3407_from_DBP15K_zh_en\MEAformer_DBP15K_fr_en_transfer_adapt_tgt_fr_en_unsup_il_baseline_transfer_adapt_v8_expand_s3407_from_DBP15K_zh_en_s3407
+
+INFO - 03/06/26 01:55:57 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice DBP15K --data_split fr_en --data_rate '0.3' --epoch 10 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 3407 --exp_name BYSJ_MEAformer_transfer_adapt_target_fr_en_baseline_transfer_adapt_v8_expand_s3407_from_DBP15K_zh_en --exp_id transfer_adapt_tgt_fr_en_unsup_il_baseline_transfer_adapt_v8_expand_s3407_from_DBP15K_zh_en_s3407 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_ --transfer_non_strict 1 --transfer_skip_keys 'multimodal_encoder.entity_emb.weight' --transfer_verbose 1 --il --semi_learn_step 1 --il_start 2 --unsup --unsup_k 1000 --unsup_mode img --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/06/26 01:55:58 - 0:00:02 - 70.69% entities have images
+INFO - 03/06/26 01:55:58 - 0:00:02 - image feature shape:(39654, 2048)
+INFO - 03/06/26 01:56:08 - 0:00:12 - 66.70% in true links
+INFO - 03/06/26 01:56:08 - 0:00:12 - visual links length: 1000
+INFO - 03/06/26 01:56:08 - 0:00:12 - #left entity : 19661, #right entity: 19993
+INFO - 03/06/26 01:56:08 - 0:00:12 - #left entity not in train set: 18661, #right entity not in train set: 18993
+INFO - 03/06/26 01:56:09 - 0:00:12 - relation feature shape:(39654, 1000)
+INFO - 03/06/26 01:56:09 - 0:00:13 - attribute feature shape:(39654, 1000)
+INFO - 03/06/26 01:56:09 - 0:00:13 - -----dataset summary-----
+INFO - 03/06/26 01:56:09 - 0:00:13 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\DBP15K\fr_en
+INFO - 03/06/26 01:56:09 - 0:00:13 - triple num:	 221720
+INFO - 03/06/26 01:56:09 - 0:00:13 - entity num:	 39654
+INFO - 03/06/26 01:56:09 - 0:00:13 - relation num:	 2111
+INFO - 03/06/26 01:56:09 - 0:00:13 - train ill num:	 1000 	 test ill num:	 10500
+INFO - 03/06/26 01:56:09 - 0:00:13 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/06/26 01:56:10 - 0:00:14 - [transfer_load] loaded=31 skipped_by_name=1 skipped_shape=0 skipped_missing=0 missing_after_load=1 unexpected_after_load=0
+INFO - 03/06/26 01:56:10 - 0:00:14 - loading model [MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_.pkl] done!
+INFO - 03/06/26 01:56:10 - 0:00:14 - total params num: 2892182
+INFO - 03/06/26 01:56:10 - 0:00:14 - warmup_steps: 9
+INFO - 03/06/26 01:56:10 - 0:00:14 - total_steps: 64
+INFO - 03/06/26 01:56:10 - 0:00:14 - weight_decay: 0.0001
+loading raw data...
+highest sim: 1.0000004768371582 lowest sim: 0.9205940961837769
+getting a sparse tensor r_adj...
+

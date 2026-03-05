@@ -306,3 +306,16 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 新增阶段报告：
   - `reports/transfer/transfer_stage_update_20260305.md`
 
+## 20. 阶段更新（2026-03-06）：Transfer-Adapt v8 扩展（s42）
+
+- 扩展目标域：`fr_en` 与 `FBYG15K`（transfer-adapt）。
+- 产出对比文件：
+  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.md`
+  - `reports/transfer/transfer_stage_update_20260306_v8_s42.md`
+- s42 关键结果：
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.0010`（小幅正增益）
+  - `fr_en`：`delta_avg_mrr_mean = -0.0005`（轻微回落）
+- 说明：
+  - `seed=3407` 在本轮为保证阶段交付时效已中止，后续可继续补齐 2-seed 正式统计。
+

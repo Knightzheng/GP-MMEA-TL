@@ -34,3 +34,14 @@
 2. 对关键目标域执行 5-seed 正式跑并汇总均值/方差。  
 3. 输出中期报告主表与“方法改造 -> 指标变化”的证据链图表。  
 
+## 2026-03-06 进展补充（v8 s42）
+
+- 已完成 `fr_en` 与 `FBYG15K` 的 transfer-adapt（`seed=42`）baseline/tmmeada 对比。
+- 新增结果：
+  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.md`
+- 结果摘要：
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.0010`
+  - `fr_en`：`delta_avg_mrr_mean = -0.0005`
+- 说明：
+  - `seed=3407` 已启动后中止，后续可在现有脚本基础上继续补齐 2-seed/5-seed 正式统计。
