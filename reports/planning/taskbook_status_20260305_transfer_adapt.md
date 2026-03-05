@@ -22,10 +22,8 @@
 
 ## 尚未完成（按任务书）
 
-1. 目标域矩阵未补齐：
-   - `fr_en`（transfer-adapt）
-   - `FBYG15K`（transfer-adapt）
-2. 正式统计规模需扩展到 `5-seed`。
+1. 正式统计规模需扩展到 `5-seed`（当前已到 2-seed）。
+2. `fr_en` 目标域仍有轻微负迁移，需要定向调参。
 3. 中期/终稿所需的完整误差分析与可视化图表仍需补齐。
 
 ## 下一步执行顺序
@@ -34,14 +32,13 @@
 2. 对关键目标域执行 5-seed 正式跑并汇总均值/方差。  
 3. 输出中期报告主表与“方法改造 -> 指标变化”的证据链图表。  
 
-## 2026-03-06 进展补充（v8 s42）
+## 2026-03-06 进展补充（v8 2-seed）
 
-- 已完成 `fr_en` 与 `FBYG15K` 的 transfer-adapt（`seed=42`）baseline/tmmeada 对比。
+- 已完成 `fr_en` 与 `FBYG15K` 的 transfer-adapt `2-seed`（`42,3407`）baseline/tmmeada 对比。
 - 新增结果：
-  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.csv`
-  - `reports/transfer/transfer_adapt_v8_expand_s42_compare_vs_baseline.md`
-- 结果摘要：
-  - `FBYG15K`：`delta_avg_mrr_mean = +0.0010`
-  - `fr_en`：`delta_avg_mrr_mean = -0.0005`
-- 说明：
-  - `seed=3407` 已启动后中止，后续可在现有脚本基础上继续补齐 2-seed/5-seed 正式统计。
+  - `reports/transfer/transfer_adapt_v8_expand_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v8_expand_2seed_compare_vs_baseline.md`
+  - `reports/transfer/transfer_stage_update_20260306_v8_2seed.md`
+- 结果摘要（2-seed）：
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00075`
+  - `fr_en`：`delta_avg_mrr_mean = -0.00075`

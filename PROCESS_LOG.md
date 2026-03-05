@@ -964,3 +964,22 @@
 - key s42 results:
   - `FBYG15K`: `delta_avg_mrr_mean = +0.0010`, `delta_avg_hits@1_mean = +0.00085`
   - `fr_en`: `delta_avg_mrr_mean = -0.0005`, `delta_avg_hits@1_mean = -0.0008`
+
+## 2026-03-06 Transfer Adapt v8 Expand 2-seed Finalized
+- Continued optimization:
+  - resumed `seed=3407` with isolated stage roots:
+    - `transfer/transfer_adapt_v8_expand_baseline_s3407`
+    - `transfer/transfer_adapt_v8_expand_tmmeada_s3407`
+  - queue script: `scripts/run_transfer_adapt_v8_expand_queue.py`
+- Queue completion status:
+  - baseline done `2/2` targets (`fr_en`, `FBYG15K`)
+  - tmmeada done `2/2` targets (`fr_en`, `FBYG15K`)
+- Built 2-seed merged folders:
+  - `runs/transfer/transfer_adapt_v8_expand_2seed_baseline/target_eval`
+  - `runs/transfer/transfer_adapt_v8_expand_2seed_tmmeada/target_eval`
+- 2-seed compare outputs:
+  - `reports/transfer/transfer_adapt_v8_expand_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v8_expand_2seed_compare_vs_baseline.md`
+- key 2-seed results:
+  - `FBYG15K`: `delta_avg_mrr_mean = +0.00075`, `delta_avg_hits@1_mean = +0.000925`
+  - `fr_en`: `delta_avg_mrr_mean = -0.00075`, `delta_avg_hits@1_mean = -0.00125`

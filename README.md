@@ -319,3 +319,14 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 说明：
   - `seed=3407` 在本轮为保证阶段交付时效已中止，后续可继续补齐 2-seed 正式统计。
 
+## 21. 阶段更新（2026-03-06）：Transfer-Adapt v8 扩展（2-seed 完成）
+
+- 已补齐 `seed=3407` 并合并 `s42+s3407` 形成正式 2-seed 对比。
+- 结果文件：
+  - `reports/transfer/transfer_adapt_v8_expand_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v8_expand_2seed_compare_vs_baseline.md`
+  - `reports/transfer/transfer_stage_update_20260306_v8_2seed.md`
+- 2-seed 关键结论：
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00075`（稳定正增益）
+  - `fr_en`：`delta_avg_mrr_mean = -0.00075`（仍轻微负迁移）
+
