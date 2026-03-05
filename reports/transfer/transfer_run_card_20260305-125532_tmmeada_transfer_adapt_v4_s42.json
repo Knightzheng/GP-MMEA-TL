@@ -1,0 +1,38 @@
+{
+  "timestamp": "20260305-125532",
+  "tag": "tmmeada_transfer_adapt_v4_s42",
+  "source": {
+    "config": "configs\\transfer\\tmmeada_source_zh_en_epoch10.yaml",
+    "tmp_config": "runs\\system\\transfer_tmp\\20260305-125532_tmmeada_transfer_adapt_v4_s42\\source_tmmeada_source_zh_en_epoch10.yaml",
+    "stage": "transfer/transfer_adapt_v4/source_train",
+    "data_choice": "DBP15K",
+    "data_split": "zh_en",
+    "seed": 42,
+    "exp_id": "tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_adapt_v4_s42_src_s42",
+    "model_name_save": "tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_adapt_v4_s42_src_s42_",
+    "resolved_checkpoint": "data\\mmkg\\MEAformer\\save\\MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s42_src_s42_.pkl",
+    "resolved_model_name_save": "MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s42_src_s42_"
+  },
+  "targets": [
+    {
+      "config": "configs\\transfer_adapt\\tmmeada_target_ja_en_v4_unsup_il.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260305-125532_tmmeada_transfer_adapt_v4_s42\\target_tmmeada_target_ja_en_v4_unsup_il.yaml",
+      "stage": "transfer/transfer_adapt_v4/target_eval",
+      "data_choice": "DBP15K",
+      "data_split": "ja_en",
+      "seed": 42,
+      "exp_id": "tmmeada_transfer_adapt_v4_tgt_ja_en_unsup_il_tmmeada_transfer_adapt_v4_s42_from_DBP15K_zh_en_s42",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260305-125532_tmmeada_transfer_adapt_v4_s42\\target_tmmeada_target_ja_en_v4_unsup_il.yaml --stage transfer/transfer_adapt_v4/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    },
+    {
+      "config": "configs\\transfer_adapt\\tmmeada_target_fbdb15k_v4_unsup_il.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260305-125532_tmmeada_transfer_adapt_v4_s42\\target_tmmeada_target_fbdb15k_v4_unsup_il.yaml",
+      "stage": "transfer/transfer_adapt_v4/target_eval",
+      "data_choice": "FBDB15K",
+      "data_split": "norm",
+      "seed": 42,
+      "exp_id": "tmmeada_transfer_adapt_v4_tgt_FBDB15K_unsup_il_tmmeada_transfer_adapt_v4_s42_from_DBP15K_zh_en_s42",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260305-125532_tmmeada_transfer_adapt_v4_s42\\target_tmmeada_target_fbdb15k_v4_unsup_il.yaml --stage transfer/transfer_adapt_v4/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    }
+  ]
+}

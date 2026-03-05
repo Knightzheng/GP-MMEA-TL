@@ -14,7 +14,7 @@ def main():
     parser.add_argument("--runner-python", default=r"D:\Anaconda_envs\envs\bysj-main\python.exe")
     parser.add_argument("--meaformer-python", default=r"D:\Anaconda_envs\envs\bysj-meaformer\python.exe")
     parser.add_argument("--seed", default="42")
-    parser.add_argument("--stage-root", default="transfer_formal")
+    parser.add_argument("--stage-root", default="transfer/transfer_formal")
     parser.add_argument("--source-epoch", type=int, default=10)
     args = parser.parse_args()
 
@@ -23,6 +23,7 @@ def main():
             "configs/transfer/meaformer_target_ja_en_eval.yaml",
             "configs/transfer/meaformer_target_fr_en_eval.yaml",
             "configs/transfer/meaformer_target_fbdb15k_eval.yaml",
+            "configs/transfer/meaformer_target_fbyg15k_eval.yaml",
         ]
     )
     common_targets_tmmeada = ",".join(
@@ -30,6 +31,7 @@ def main():
             "configs/transfer/tmmeada_target_ja_en_eval.yaml",
             "configs/transfer/tmmeada_target_fr_en_eval.yaml",
             "configs/transfer/tmmeada_target_fbdb15k_eval.yaml",
+            "configs/transfer/tmmeada_target_fbyg15k_eval.yaml",
         ]
     )
 

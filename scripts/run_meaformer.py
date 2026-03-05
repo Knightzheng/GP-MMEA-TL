@@ -189,6 +189,18 @@ def main():
         cmd.extend(["--domain_align_margin", str(m["domain_align_margin"])])
     if "domain_align_neg_weight" in m:
         cmd.extend(["--domain_align_neg_weight", str(m["domain_align_neg_weight"])])
+    if m.get("il", False):
+        cmd.append("--il")
+    if "semi_learn_step" in m:
+        cmd.extend(["--semi_learn_step", str(m["semi_learn_step"])])
+    if "il_start" in m:
+        cmd.extend(["--il_start", str(m["il_start"])])
+    if m.get("unsup", False):
+        cmd.append("--unsup")
+    if "unsup_k" in m:
+        cmd.extend(["--unsup_k", str(m["unsup_k"])])
+    if "unsup_mode" in m and str(m["unsup_mode"]).strip():
+        cmd.extend(["--unsup_mode", str(m["unsup_mode"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):

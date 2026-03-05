@@ -1,0 +1,35 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 1 --model_name MEAformer --data_choice FBYG15K --data_split norm --data_rate 0.2 --epoch 1 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_transfer_target_FBYG15K_baseline_transfer_formal_s42_fbyg_addon_from_DBP15K_zh_en --exp_id transfer_tgt_FBYG15K_eval_baseline_transfer_formal_s42_fbyg_addon_from_DBP15K_zh_en_s42 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s42_src_s42_ --transfer_non_strict 1 --transfer_skip_keys multimodal_encoder.entity_emb.weight --transfer_verbose 1 --csls
+The syntax of the command is incorrect.
+The syntax of the command is incorrect.
+INFO - 03/04/26 15:03:02 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/04/26 15:03:02 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0304-BYSJ_MEAformer_transfer_target_FBYG15K_baseline_transfer_formal_s42_fbyg_addon_from_DBP15K_zh_en\MEAformer_FBYG15K_0.2_transfer_tgt_FBYG15K_eval_baseline_transfer_formal_s42_fbyg_addon_from_DBP15K_zh_en_s42
+
+INFO - 03/04/26 15:03:02 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 1 --model_name MEAformer --data_choice FBYG15K --data_split norm --data_rate '0.2' --epoch 1 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 42 --exp_name BYSJ_MEAformer_transfer_target_FBYG15K_baseline_transfer_formal_s42_fbyg_addon_from_DBP15K_zh_en --exp_id transfer_tgt_FBYG15K_eval_baseline_transfer_formal_s42_fbyg_addon_from_DBP15K_zh_en_s42 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s42_src_s42_ --transfer_non_strict 1 --transfer_skip_keys 'multimodal_encoder.entity_emb.weight' --transfer_verbose 1 --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/04/26 15:03:05 - 0:00:03 - 81.17% entities have images
+INFO - 03/04/26 15:03:06 - 0:00:03 - image feature shape:(30355, 4096)
+INFO - 03/04/26 15:03:06 - 0:00:03 - #left entity : 14951, #right entity: 15404
+INFO - 03/04/26 15:03:06 - 0:00:03 - #left entity not in train set: 12712, #right entity not in train set: 13165
+INFO - 03/04/26 15:03:06 - 0:00:04 - relation feature shape:(30355, 1000)
+INFO - 03/04/26 15:03:06 - 0:00:04 - attribute feature shape:(30355, 123)
+INFO - 03/04/26 15:03:06 - 0:00:04 - -----dataset summary-----
+INFO - 03/04/26 15:03:06 - 0:00:04 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\FBYG15K\norm
+INFO - 03/04/26 15:03:06 - 0:00:04 - triple num:	 715099
+INFO - 03/04/26 15:03:06 - 0:00:04 - entity num:	 30355
+INFO - 03/04/26 15:03:06 - 0:00:04 - relation num:	 1377
+INFO - 03/04/26 15:03:06 - 0:00:04 - train ill num:	 2239 	 test ill num:	 8960
+INFO - 03/04/26 15:03:06 - 0:00:04 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/04/26 15:03:08 - 0:00:05 - [transfer_load] loaded=27 skipped_by_name=1 skipped_shape=2 skipped_missing=2 missing_after_load=3 unexpected_after_load=0
+INFO - 03/04/26 15:03:08 - 0:00:05 - [transfer_load] shape_mismatch_preview=[{'key': 'multimodal_encoder.att_fc.weight', 'source': (64, 1000), 'target': (64, 123)}, {'key': 'multimodal_encoder.img_fc.weight', 'source': (64, 2048), 'target': (64, 4096)}]
+INFO - 03/04/26 15:03:08 - 0:00:05 - loading model [MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s42_src_s42_.pkl] done!
+INFO - 03/04/26 15:03:08 - 0:00:05 - total params num: 2345990
+INFO - 03/04/26 15:03:08 - 0:00:05 -  --------------------- Test result ---------------------
+INFO - 03/04/26 15:03:22 - 0:00:20 - Ep Test | l2r: acc of top [1, 10, 50] = [0.0011 0.007  0.0228], mr = 3199.611, mrr = 0.004
+INFO - 03/04/26 15:03:22 - 0:00:20 - Ep Test | r2l: acc of top [1, 10, 50] = [0.0012 0.0051 0.0191], mr = 3208.973, mrr = 0.004
+loading raw data...
+getting a sparse tensor r_adj...
+[DONE] return_code=0

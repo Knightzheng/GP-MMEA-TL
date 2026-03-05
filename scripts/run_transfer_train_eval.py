@@ -62,10 +62,30 @@ def main():
     parser.add_argument("--target-configs", required=True, help="comma-separated config paths")
     parser.add_argument("--runner-python", default=r"D:\Anaconda_envs\envs\bysj-main\python.exe")
     parser.add_argument("--runner-script", default="scripts/run_meaformer.py")
-    parser.add_argument("--stage-root", default="transfer_pilot")
+    parser.add_argument("--stage-root", default="transfer/transfer_pilot")
     parser.add_argument("--tag", default="xfer")
     parser.add_argument("--seed", type=int, default=None, help="override source/target seed if set")
     parser.add_argument("--source-epoch", type=int, default=None, help="override source training epochs")
+    parser.add_argument(
+        "--target-only-test",
+        type=int,
+        default=1,
+        choices=[0, 1],
+        help="1: evaluate-only target; 0: train/adapt on target then evaluate",
+    )
+    parser.add_argument(
+        "--target-epoch",
+        type=int,
+        default=None,
+        help="override target epoch when target-only-test=0",
+    )
+    parser.add_argument(
+        "--target-save-model",
+        type=int,
+        default=0,
+        choices=[0, 1],
+        help="whether to save model in target stage",
+    )
     parser.add_argument(
         "--source-model-name",
         default="",
@@ -195,12 +215,14 @@ def main():
         target_m["exp_name"] = (
             f"{target_m.get('exp_name', 'BYSJ_TRANSFER')}_{args.tag}_from_{src_choice}_{src_split}"
         )
-        target_m["only_test"] = 1
-        target_m["save_model"] = 0
+        target_m["only_test"] = int(args.target_only_test)
+        target_m["save_model"] = int(args.target_save_model)
         target_m["model_name_save"] = source_ckpt_name
         target_m["transfer_non_strict"] = 1
         target_m["transfer_skip_keys"] = args.transfer_skip_keys
         target_m["transfer_verbose"] = 1
+        if args.target_epoch is not None:
+            target_m["epoch"] = int(args.target_epoch)
 
         target_stage = f"{args.stage_root}/target_eval"
         target_meta["stage"] = target_stage
@@ -236,7 +258,7 @@ def main():
         else:
             run_cmd(target_cmd)
 
-    report_path = Path("reports") / f"transfer_run_card_{ts}_{args.tag}.json"
+    report_path = Path("reports/transfer") / f"transfer_run_card_{ts}_{args.tag}.json"
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"[DONE] report -> {report_path}")

@@ -1,0 +1,28 @@
+{
+  "timestamp": "20260304-220938",
+  "tag": "smoke_transfer_adapt_dry",
+  "source": {
+    "config": "configs\\transfer\\meaformer_source_zh_en_epoch10.yaml",
+    "tmp_config": "runs\\system\\transfer_tmp\\20260304-220938_smoke_transfer_adapt_dry\\source_meaformer_source_zh_en_epoch10.yaml",
+    "stage": "transfer/transfer_adapt_pilot/source_train",
+    "data_choice": "DBP15K",
+    "data_split": "zh_en",
+    "seed": 42,
+    "exp_id": "transfer_src_zh_en_epoch10_smoke_transfer_adapt_dry_src_s42",
+    "model_name_save": "transfer_src_zh_en_epoch10_smoke_transfer_adapt_dry_src_s42_",
+    "resolved_checkpoint": "data\\mmkg\\MEAformer\\save\\MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s42_src_s42_.pkl",
+    "resolved_model_name_save": "MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s42_src_s42_"
+  },
+  "targets": [
+    {
+      "config": "configs\\transfer_adapt\\meaformer_target_ja_en_unsup_il.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260304-220938_smoke_transfer_adapt_dry\\target_meaformer_target_ja_en_unsup_il.yaml",
+      "stage": "transfer/transfer_adapt_pilot/target_eval",
+      "data_choice": "DBP15K",
+      "data_split": "ja_en",
+      "seed": 42,
+      "exp_id": "transfer_adapt_tgt_ja_en_unsup_il_smoke_transfer_adapt_dry_from_DBP15K_zh_en_s42",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260304-220938_smoke_transfer_adapt_dry\\target_meaformer_target_ja_en_unsup_il.yaml --stage transfer/transfer_adapt_pilot/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-03-05 02:27:24",
+  "threshold": 0.001,
+  "required_targets": [
+    "ja_en",
+    "FBDB15K"
+  ],
+  "wait_seeds": [
+    3407
+  ],
+  "reference_seeds": [
+    42,
+    3407
+  ],
+  "decision": "run_tmmeada_tuned_lite_on_ja_fbdb",
+  "next_action": "run_transfer_adapt_tuned_queue",
+  "details": [
+    {
+      "target": "ja_en",
+      "baseline_num_runs": 2,
+      "tmmeada_num_runs": 2,
+      "delta_avg_mrr_mean": 0.00075,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta_avg_mrr": 0.0,
+          "status": "ok"
+        },
+        {
+          "seed": 3407,
+          "delta_avg_mrr": 0.0015,
+          "status": "ok"
+        }
+      ],
+      "consistent_positive": true,
+      "enough_runs": true,
+      "pass_threshold": false
+    },
+    {
+      "target": "FBDB15K",
+      "baseline_num_runs": 2,
+      "tmmeada_num_runs": 2,
+      "delta_avg_mrr_mean": -0.00025,
+      "seed_deltas": [
+        {
+          "seed": 42,
+          "delta_avg_mrr": -0.0005,
+          "status": "ok"
+        },
+        {
+          "seed": 3407,
+          "delta_avg_mrr": 0.0,
+          "status": "ok"
+        }
+      ],
+      "consistent_positive": false,
+      "enough_runs": true,
+      "pass_threshold": false
+    }
+  ]
+}

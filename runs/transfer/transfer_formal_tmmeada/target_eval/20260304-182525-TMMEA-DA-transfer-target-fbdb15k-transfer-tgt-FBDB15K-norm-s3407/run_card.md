@@ -1,0 +1,8 @@
+# run_card
+
+- run_id: `20260304-182525-TMMEA-DA-transfer-target-fbdb15k-transfer-tgt-FBDB15K-norm-s3407`
+- stage: `transfer/transfer_formal_tmmeada/target_eval`
+- model: `TMMEA-DA-transfer-target-fbdb15k-transfer-tgt`
+- started_at: `2026-03-04T18:25:25`
+- command: `scripts/run_meaformer.py --config runs\system\transfer_tmp\20260304-164537_tmmeada_transfer_formal_s3407\target_tmmeada_target_fbdb15k_eval.yaml --stage transfer/transfer_formal_tmmeada/target_eval --python D:\Anaconda_envs\envs\bysj-meaformer\python.exe`
+- config: `runs\system\transfer_tmp\20260304-164537_tmmeada_transfer_formal_s3407\target_tmmeada_target_fbdb15k_eval.yaml`

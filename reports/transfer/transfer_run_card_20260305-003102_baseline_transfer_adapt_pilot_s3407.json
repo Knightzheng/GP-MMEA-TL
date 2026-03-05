@@ -1,0 +1,38 @@
+{
+  "timestamp": "20260305-003102",
+  "tag": "baseline_transfer_adapt_pilot_s3407",
+  "source": {
+    "config": "configs\\transfer\\meaformer_source_zh_en_epoch10.yaml",
+    "tmp_config": "runs\\system\\transfer_tmp\\20260305-003102_baseline_transfer_adapt_pilot_s3407\\source_meaformer_source_zh_en_epoch10.yaml",
+    "stage": "transfer/transfer_adapt_pilot/source_train",
+    "data_choice": "DBP15K",
+    "data_split": "zh_en",
+    "seed": 3407,
+    "exp_id": "transfer_src_zh_en_epoch10_baseline_transfer_adapt_pilot_s3407_src_s3407",
+    "model_name_save": "transfer_src_zh_en_epoch10_baseline_transfer_adapt_pilot_s3407_src_s3407_",
+    "resolved_checkpoint": "data\\mmkg\\MEAformer\\save\\MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_.pkl",
+    "resolved_model_name_save": "MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_"
+  },
+  "targets": [
+    {
+      "config": "configs\\transfer_adapt\\meaformer_target_ja_en_unsup_il.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260305-003102_baseline_transfer_adapt_pilot_s3407\\target_meaformer_target_ja_en_unsup_il.yaml",
+      "stage": "transfer/transfer_adapt_pilot/target_eval",
+      "data_choice": "DBP15K",
+      "data_split": "ja_en",
+      "seed": 3407,
+      "exp_id": "transfer_adapt_tgt_ja_en_unsup_il_baseline_transfer_adapt_pilot_s3407_from_DBP15K_zh_en_s3407",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260305-003102_baseline_transfer_adapt_pilot_s3407\\target_meaformer_target_ja_en_unsup_il.yaml --stage transfer/transfer_adapt_pilot/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    },
+    {
+      "config": "configs\\transfer_adapt\\meaformer_target_fbdb15k_unsup_il.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260305-003102_baseline_transfer_adapt_pilot_s3407\\target_meaformer_target_fbdb15k_unsup_il.yaml",
+      "stage": "transfer/transfer_adapt_pilot/target_eval",
+      "data_choice": "FBDB15K",
+      "data_split": "norm",
+      "seed": 3407,
+      "exp_id": "transfer_adapt_tgt_FBDB15K_unsup_il_baseline_transfer_adapt_pilot_s3407_from_DBP15K_zh_en_s3407",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260305-003102_baseline_transfer_adapt_pilot_s3407\\target_meaformer_target_fbdb15k_unsup_il.yaml --stage transfer/transfer_adapt_pilot/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    }
+  ]
+}

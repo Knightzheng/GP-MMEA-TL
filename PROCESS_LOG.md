@@ -821,3 +821,114 @@
   - err log: `runs/pilot_next_stage/transfer_formal_queue_20260304-104824.err.log`
 - Current active run path:
   - `runs/transfer_formal/source_train/20260304-104824-MEAformer-transfer-source-transfer-src-DBP15K-zh_en-s42/`
+
+## 2026-03-05 Transfer Adapt Auto-Orchestration
+- Added transfer-adapt branch configs:
+  - configs/transfer_adapt/meaformer_target_fr_en_unsup_il.yaml
+  - configs/transfer_adapt/meaformer_target_fbyg15k_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbyg15k_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_ja_en_tune_lite_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_tune_lite_unsup_il.yaml
+- Added queue scripts:
+  - scripts/run_transfer_adapt_expand_queue.py
+  - scripts/run_transfer_adapt_tuned_queue.py
+- Added auto-next script:
+  - scripts/auto_after_transfer_adapt_queue.py
+  - behavior: wait current seed3407 queue -> summarize -> decision -> auto-run expand or tuned-lite branch.
+- Started background auto orchestrator (unbuffered):
+  - command: D:\Anaconda_envs\envs\bysj-main\python.exe -u scripts/auto_after_transfer_adapt_queue.py --wait-seeds 3407 --reference-seeds 42,3407 --required-targets ja_en,FBDB15K --threshold 0.001 --poll-seconds 120
+  - progress log: runs/transfer/transfer_adapt_auto/auto_after_queue_20260305-004521.out.log
+
+## 2026-03-05 Transfer Adapt v3 Optimization Started
+- Progress check:
+  - auto_after_transfer_adapt_queue.py completed.
+  - Decision branch executed: tuned_lite (non-expand).
+  - Output: reports/transfer/transfer_adapt_tuned_lite_compare_vs_baseline.csv
+- New optimization launched (v3, target-specific):
+  - configs/transfer_adapt/tmmeada_target_ja_en_v3_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v3_unsup_il.yaml
+  - queue script: scripts/run_transfer_adapt_v3_queue.py
+  - running command: python scripts/run_transfer_adapt_v3_queue.py --seeds 42,3407
+  - queue log: runs/transfer/transfer_adapt_v3/queue_20260305-111306.out.log
+- Auto summarize for v3 enabled:
+  - script: scripts/auto_after_transfer_adapt_v3.py
+  - log: runs/transfer/transfer_adapt_v3/auto_after_20260305-111420.out.log
+  - outputs after done:
+    - reports/transfer/transfer_adapt_v3_compare_vs_baseline.csv
+    - reports/transfer/transfer_adapt_v3_compare_vs_tuned_lite.csv
+
+## 2026-03-05 Transfer Adapt v4 Optimization Started
+- Checked current status:
+  - transfer_adapt_v3 finished and auto summaries generated.
+  - key result: ja_en slight gain, FBDB15K large drop vs baseline.
+- Added v4 configs:
+  - configs/transfer_adapt/tmmeada_target_ja_en_v4_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v4_unsup_il.yaml
+- Added scripts:
+  - scripts/run_transfer_adapt_v4_queue.py
+  - scripts/auto_after_transfer_adapt_v4.py
+- Started v4 queue (2-seed):
+  - D:\Anaconda_envs\envs\bysj-main\python.exe scripts/run_transfer_adapt_v4_queue.py --seeds 42,3407
+  - log: runs/transfer/transfer_adapt_v4/queue_20260305-125531.out.log
+- Started v4 auto summarize:
+  - D:\Anaconda_envs\envs\bysj-main\python.exe -u scripts/auto_after_transfer_adapt_v4.py --seeds 42,3407 --targets ja_en,FBDB15K --poll-seconds 120
+  - log: runs/transfer/transfer_adapt_v4/auto_after_20260305-125548.out.log
+  - outputs after done:
+    - reports/transfer/transfer_adapt_v4_compare_vs_baseline.csv
+    - reports/transfer/transfer_adapt_v4_compare_vs_v3.csv
+
+## 2026-03-05 Transfer Adapt v5 Optimization Started
+- Progress check:
+  - v4 finished and summaries available.
+  - v4 result vs baseline: ja_en slight positive, FBDB15K still negative.
+- Added v5 configs:
+  - configs/transfer_adapt/tmmeada_target_ja_en_v5_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v5_unsup_il.yaml
+  - strategy: keep ja_en strong aux; FBDB15K fallback to conservative (aux off, stable IL).
+- Added scripts:
+  - scripts/run_transfer_adapt_v5_queue.py
+  - scripts/auto_after_transfer_adapt_v5.py
+- Started v5 queue (2-seed):
+  - D:\Anaconda_envs\envs\bysj-main\python.exe scripts/run_transfer_adapt_v5_queue.py --seeds 42,3407
+  - log: runs/transfer/transfer_adapt_v5/queue_20260305-145612.out.log
+- Started v5 auto summarize:
+  - D:\Anaconda_envs\envs\bysj-main\python.exe -u scripts/auto_after_transfer_adapt_v5.py --seeds 42,3407 --targets ja_en,FBDB15K --poll-seconds 120
+  - log: runs/transfer/transfer_adapt_v5/auto_after_20260305-145626.out.log
+  - outputs after done:
+    - reports/transfer/transfer_adapt_v5_compare_vs_baseline.csv
+    - reports/transfer/transfer_adapt_v5_compare_vs_v4.csv
+
+## 2026-03-05 Transfer Adapt v6 Mixed Optimization Started
+- Progress check:
+  - v5 finished and summaries generated.
+  - v5 result vs baseline: ja_en positive, FBDB15K still slightly negative.
+- Added v6 mixed config/script:
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v6_mild_da_unsup_il.yaml
+  - scripts/run_transfer_adapt_v6_mixed_queue.py
+  - scripts/auto_after_transfer_adapt_v6_mixed.py
+- Optimization idea:
+  - ja_en: keep current best branch (tmmeada source + v5 ja config)
+  - FBDB15K: switch to baseline source + mild DA conservative target config
+- Started v6 mixed queue (2-seed):
+  - D:\Anaconda_envs\envs\bysj-main\python.exe scripts/run_transfer_adapt_v6_mixed_queue.py --seeds 42,3407
+  - log: runs/transfer/transfer_adapt_v6_mixed/queue_20260305-190900.out.log
+- Started v6 mixed auto summarize:
+  - D:\Anaconda_envs\envs\bysj-main\python.exe -u scripts/auto_after_transfer_adapt_v6_mixed.py --seeds 42,3407 --targets ja_en,FBDB15K --poll-seconds 120
+  - log: runs/transfer/transfer_adapt_v6_mixed/auto_after_20260305-190915.out.log
+  - outputs after done:
+    - reports/transfer/transfer_adapt_v6_mixed_compare_vs_baseline.csv
+    - reports/transfer/transfer_adapt_v6_mixed_compare_vs_v5.csv
+
+## 2026-03-05 Transfer Adapt v7 FBDB Auto Optimization Started
+- Progress check:
+  - no running python process at check time.
+  - v6 mixed completed and summarized.
+  - key result: ja_en slightly positive; FBDB15K reached baseline parity (delta_avg_mrr_mean=0.0000).
+- Added FBDB v7 sweep configs:
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v7a_mild_da_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v7b_mild_da_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fbdb15k_v7c_mild_da_unsup_il.yaml
+- Added automation script:
+  - scripts/run_transfer_adapt_v7_fbdb_auto.py
+  - behavior: run pilot sweep (seed42) -> choose best variant -> run formal seeds (42,3407) -> summarize vs baseline and vs v6.

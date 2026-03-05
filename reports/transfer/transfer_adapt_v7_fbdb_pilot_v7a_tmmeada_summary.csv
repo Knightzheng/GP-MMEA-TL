@@ -1,0 +1,2 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260305-211306-TMMEA-DA-transfer-adapt-v7a-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42,FBDB15K,norm,FBDB15K,0.0088,0.0413,0.023,1321.119,0.0096,0.0419,0.023,1344.43,0.0092,0.0416,0.023,1332.7745

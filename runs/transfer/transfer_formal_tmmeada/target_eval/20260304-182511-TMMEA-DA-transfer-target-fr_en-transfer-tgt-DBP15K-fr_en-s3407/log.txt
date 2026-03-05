@@ -1,0 +1,34 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 1 --model_name MEAformer --data_choice DBP15K --data_split fr_en --data_rate 0.3 --epoch 1 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 3407 --exp_name BYSJ_TMMEA_DA_transfer_target_fr_en_tmmeada_transfer_formal_s3407_from_DBP15K_zh_en --exp_id tmmeada_transfer_tgt_fr_en_eval_tmmeada_transfer_formal_s3407_from_DBP15K_zh_en_s3407 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s3407_src_s3407_ --transfer_non_strict 1 --transfer_skip_keys multimodal_encoder.entity_emb.weight --transfer_verbose 1 --use_domain_align 1 --domain_align_weight 0.1 --use_source_select 1 --source_select_weight 0.05 --source_select_temp 1.0 --use_missing_gate 1 --missing_align_weight 0.1 --csls
+�����﷨����ȷ��
+�����﷨����ȷ��
+INFO - 03/04/26 18:25:13 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/04/26 18:25:13 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0304-BYSJ_TMMEA_DA_transfer_target_fr_en_tmmeada_transfer_formal_s3407_from_DBP15K_zh_en\MEAformer_DBP15K_fr_en_tmmeada_transfer_tgt_fr_en_eval_tmmeada_transfer_formal_s3407_from_DBP15K_zh_en_s3407
+
+INFO - 03/04/26 18:25:13 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 1 --model_name MEAformer --data_choice DBP15K --data_split fr_en --data_rate '0.3' --epoch 1 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 3407 --exp_name BYSJ_TMMEA_DA_transfer_target_fr_en_tmmeada_transfer_formal_s3407_from_DBP15K_zh_en --exp_id tmmeada_transfer_tgt_fr_en_eval_tmmeada_transfer_formal_s3407_from_DBP15K_zh_en_s3407 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 1 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s3407_src_s3407_ --transfer_non_strict 1 --transfer_skip_keys 'multimodal_encoder.entity_emb.weight' --transfer_verbose 1 --use_domain_align 1 --domain_align_weight '0.1' --use_source_select 1 --source_select_weight '0.05' --source_select_temp '1.0' --use_missing_gate 1 --missing_align_weight '0.1' --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/04/26 18:25:15 - 0:00:02 - 70.69% entities have images
+INFO - 03/04/26 18:25:15 - 0:00:02 - image feature shape:(39654, 2048)
+INFO - 03/04/26 18:25:15 - 0:00:02 - #left entity : 19661, #right entity: 19993
+INFO - 03/04/26 18:25:15 - 0:00:02 - #left entity not in train set: 15161, #right entity not in train set: 15493
+INFO - 03/04/26 18:25:16 - 0:00:02 - relation feature shape:(39654, 1000)
+INFO - 03/04/26 18:25:16 - 0:00:03 - attribute feature shape:(39654, 1000)
+INFO - 03/04/26 18:25:16 - 0:00:03 - -----dataset summary-----
+INFO - 03/04/26 18:25:16 - 0:00:03 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\DBP15K\fr_en
+INFO - 03/04/26 18:25:16 - 0:00:03 - triple num:	 221720
+INFO - 03/04/26 18:25:16 - 0:00:03 - entity num:	 39654
+INFO - 03/04/26 18:25:16 - 0:00:03 - relation num:	 2111
+INFO - 03/04/26 18:25:16 - 0:00:03 - train ill num:	 4500 	 test ill num:	 10500
+INFO - 03/04/26 18:25:16 - 0:00:03 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/04/26 18:25:17 - 0:00:04 - [transfer_load] loaded=31 skipped_by_name=1 skipped_shape=0 skipped_missing=0 missing_after_load=1 unexpected_after_load=0
+INFO - 03/04/26 18:25:17 - 0:00:04 - loading model [MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s3407_src_s3407_.pkl] done!
+INFO - 03/04/26 18:25:17 - 0:00:04 - total params num: 2892182
+INFO - 03/04/26 18:25:17 - 0:00:04 -  --------------------- Test result ---------------------
+INFO - 03/04/26 18:25:24 - 0:00:11 - Ep Test | l2r: acc of top [1, 10, 50] = [0.1165 0.2341 0.3234], mr = 2008.286, mrr = 0.157
+INFO - 03/04/26 18:25:24 - 0:00:11 - Ep Test | r2l: acc of top [1, 10, 50] = [0.1177 0.2384 0.3296], mr = 2014.603, mrr = 0.159
+loading raw data...
+getting a sparse tensor r_adj...
+[DONE] return_code=0

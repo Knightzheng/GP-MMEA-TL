@@ -1,0 +1,58 @@
+{
+  "timestamp": "20260304-150552",
+  "tag": "baseline_transfer_formal_s3407",
+  "source": {
+    "config": "configs\\transfer\\meaformer_source_zh_en_epoch10.yaml",
+    "tmp_config": "runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\source_meaformer_source_zh_en_epoch10.yaml",
+    "stage": "transfer/transfer_formal/source_train",
+    "data_choice": "DBP15K",
+    "data_split": "zh_en",
+    "seed": 3407,
+    "exp_id": "transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407",
+    "model_name_save": "transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_",
+    "resolved_checkpoint": "data\\mmkg\\MEAformer\\save\\MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_.pkl",
+    "resolved_model_name_save": "MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s3407_src_s3407_"
+  },
+  "targets": [
+    {
+      "config": "configs\\transfer\\meaformer_target_ja_en_eval.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_ja_en_eval.yaml",
+      "stage": "transfer/transfer_formal/target_eval",
+      "data_choice": "DBP15K",
+      "data_split": "ja_en",
+      "seed": 3407,
+      "exp_id": "transfer_tgt_ja_en_eval_baseline_transfer_formal_s3407_from_DBP15K_zh_en_s3407",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_ja_en_eval.yaml --stage transfer/transfer_formal/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    },
+    {
+      "config": "configs\\transfer\\meaformer_target_fr_en_eval.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_fr_en_eval.yaml",
+      "stage": "transfer/transfer_formal/target_eval",
+      "data_choice": "DBP15K",
+      "data_split": "fr_en",
+      "seed": 3407,
+      "exp_id": "transfer_tgt_fr_en_eval_baseline_transfer_formal_s3407_from_DBP15K_zh_en_s3407",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_fr_en_eval.yaml --stage transfer/transfer_formal/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    },
+    {
+      "config": "configs\\transfer\\meaformer_target_fbdb15k_eval.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_fbdb15k_eval.yaml",
+      "stage": "transfer/transfer_formal/target_eval",
+      "data_choice": "FBDB15K",
+      "data_split": "norm",
+      "seed": 3407,
+      "exp_id": "transfer_tgt_FBDB15K_eval_baseline_transfer_formal_s3407_from_DBP15K_zh_en_s3407",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_fbdb15k_eval.yaml --stage transfer/transfer_formal/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    },
+    {
+      "config": "configs\\transfer\\meaformer_target_fbyg15k_eval.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_fbyg15k_eval.yaml",
+      "stage": "transfer/transfer_formal/target_eval",
+      "data_choice": "FBYG15K",
+      "data_split": "norm",
+      "seed": 3407,
+      "exp_id": "transfer_tgt_FBYG15K_eval_baseline_transfer_formal_s3407_from_DBP15K_zh_en_s3407",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260304-150552_baseline_transfer_formal_s3407\\target_meaformer_target_fbyg15k_eval.yaml --stage transfer/transfer_formal/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260305-022724-TMMEA-DA-transfer-adapt-tuned-target-ja_en-transfer-tgt-DBP15K-ja_en-s42,DBP15K,ja_en,ja_en,0.4314,0.6516,0.507,78.874,0.4268,0.6559,0.506,76.329,0.42910000000000004,0.65375,0.5065,77.60149999999999
+20260305-031023-TMMEA-DA-transfer-adapt-tuned-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42,FBDB15K,norm,FBDB15K,0.0103,0.0439,0.024,1334.057,0.0098,0.0437,0.024,1351.543,0.01005,0.043800000000000006,0.024,1342.8
+20260305-032309-TMMEA-DA-transfer-adapt-tuned-target-ja_en-transfer-tgt-DBP15K-ja_en-s3407,DBP15K,ja_en,ja_en,0.4344,0.6607,0.511,64.939,0.4305,0.657,0.507,64.818,0.43245,0.6588499999999999,0.509,64.8785
+20260305-040626-TMMEA-DA-transfer-adapt-tuned-target-fbdb15k-transfer-tgt-FBDB15K-norm-s3407,FBDB15K,norm,FBDB15K,0.0109,0.0456,0.025,1289.005,0.0107,0.0463,0.025,1300.408,0.0108,0.045950000000000005,0.025,1294.7065
