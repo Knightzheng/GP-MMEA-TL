@@ -983,3 +983,29 @@
 - key 2-seed results:
   - `FBYG15K`: `delta_avg_mrr_mean = +0.00075`, `delta_avg_hits@1_mean = +0.000925`
   - `fr_en`: `delta_avg_mrr_mean = -0.00075`, `delta_avg_hits@1_mean = -0.00125`
+
+## 2026-03-06 Transfer Adapt v9 fr_en Auto Optimization Finalized
+- New configs/scripts:
+  - configs/transfer_adapt/tmmeada_target_fr_en_v9a_mild_da_unsup_il.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v9b_mild_da_unsup_il.yaml
+  - scripts/run_transfer_adapt_v9_fren_auto.py
+- Automation flow:
+  - pilot seed=42 on two fr_en variants:
+    - `v9a_tm_src_mild_da`
+    - `v9b_base_src_mild_da`
+  - auto-select best pilot variant by `delta_avg_mrr_mean` on fr_en
+  - formal seed=3407 on selected variant
+  - build merged 2-seed target folder and summarize vs baseline and vs v8
+- Auto decision:
+  - best variant: `v9a_tm_src_mild_da`
+  - pilot deltas:
+    - v9a: `-0.0010`
+    - v9b: `-0.0025`
+- Final 2-seed fr_en result:
+  - vs baseline: `delta_avg_mrr_mean = -0.00025`, `delta_avg_hits@1_mean = -0.000175`
+  - vs v8 tmmeada: `delta_avg_mrr_mean = +0.00050`, `delta_avg_hits@1_mean = +0.001075`
+- Output files:
+  - reports/transfer/transfer_adapt_v9_fren_decision.json
+  - reports/transfer/transfer_adapt_v9_fren_decision.md
+  - reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_baseline.csv
+  - reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_v8.csv

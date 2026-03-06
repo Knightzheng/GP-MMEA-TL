@@ -1,0 +1,2 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260306-102641-TMMEA-DA-transfer-adapt-v9b-target-fr_en-transfer-tgt-DBP15K-fr_en-s42,DBP15K,fr_en,fr_en,0.4524,0.6791,0.529,53.613,0.4591,0.6765,0.533,54.99,0.45575,0.6778,0.531,54.301500000000004

@@ -42,3 +42,16 @@
 - 结果摘要（2-seed）：
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00075`
   - `fr_en`：`delta_avg_mrr_mean = -0.00075`
+
+## 2026-03-06 进展补充（v9 fr_en 定向优化）
+
+- 已完成 fr_en 的自动优化流程（pilot -> 自动选优 -> formal）。
+- 新增结果：
+  - `reports/transfer/transfer_adapt_v9_fren_decision.json`
+  - `reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_v8.csv`
+- 结果摘要（fr_en, 2-seed）：
+  - 相比 baseline：`delta_avg_mrr_mean = -0.00025`
+  - 相比 v8 tmmeada：`delta_avg_mrr_mean = +0.00050`
+- 结论：
+  - 负迁移明显缩小，但仍未超过 baseline；后续需要继续轻量调参并补 5-seed。

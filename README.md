@@ -330,3 +330,17 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00075`（稳定正增益）
   - `fr_en`：`delta_avg_mrr_mean = -0.00075`（仍轻微负迁移）
 
+## 22. 阶段更新（2026-03-06）：Transfer-Adapt v9（fr_en 定向优化）
+
+- 执行方式：`pilot(2变体, s42) -> 自动选优 -> formal(s3407)`。
+- 输出文件：
+  - `reports/transfer/transfer_adapt_v9_fren_decision.{md,json}`
+  - `reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_v8.csv`
+  - `reports/transfer/transfer_stage_update_20260306_v9_fren.md`
+- 结果摘要（fr_en, 2-seed）：
+  - 相比 baseline：`delta_avg_mrr_mean = -0.00025`
+  - 相比 v8 tmmeada：`delta_avg_mrr_mean = +0.00050`
+- 结论：
+  - v9 相比 v8 有改善，但尚未反超 baseline。
+
