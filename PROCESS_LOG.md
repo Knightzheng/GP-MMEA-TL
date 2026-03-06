@@ -1009,3 +1009,53 @@
   - reports/transfer/transfer_adapt_v9_fren_decision.md
   - reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_baseline.csv
   - reports/transfer/transfer_adapt_v9_fren_2seed_compare_vs_v8.csv
+
+## 23. 阶段更新（2026-03-06）：Transfer-Adapt v10（fr_en 自动优化完成）
+
+- 新增配置（v10 三分支）：
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v10a_unsup900.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v10b_da0025.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v10c_da0035.yaml`
+- 新增自动化脚本：
+  - `scripts/run_transfer_adapt_v10_fren_auto.py`
+- 自动流程：
+  - pilot（`seed=42`，3 个变体）-> 自动选优 -> formal（`seed=3407`）-> 合并 2-seed -> 汇总对比（vs baseline、vs v9）。
+- pilot 结果（vs baseline，按 `delta_avg_mrr_mean`）：
+  - `v10a_unsup900`: `-0.01050`
+  - `v10b_da0025`: `-0.00100`
+  - `v10c_da0035`: `-0.00100`
+  - 自动选择：`v10b_da0025`
+- 正式 2-seed 结果（fr_en）：
+  - vs baseline：`delta_avg_mrr_mean = -0.00025`，`delta_avg_hits@1_mean = -0.000175`，`delta_avg_hits@10_mean = -0.000175`
+  - vs v9：`delta_avg_mrr_mean = 0.00000`（与 v9 持平）
+- 结果文件：
+  - `reports/transfer/transfer_adapt_v10_fren_decision.{md,json}`
+  - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_v9.csv`
+  - `reports/transfer/transfer_stage_update_20260306_v10_fren.md`
+- 结论：
+  - v10 在 `fr_en` 上未继续提升，当前最优仍可认为与 v9 同水平（且相对 baseline 仍有极小负差）。
+
+## 23b. 2026-03-06 Transfer-Adapt v10 fr_en (ASCII backup summary)
+- Added configs:
+  - configs/transfer_adapt/tmmeada_target_fr_en_v10a_unsup900.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v10b_da0025.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v10c_da0035.yaml
+- Added automation script:
+  - scripts/run_transfer_adapt_v10_fren_auto.py
+- Auto flow:
+  - pilot (seed=42, 3 variants) -> best selection -> formal (seed=3407) -> 2-seed merge and summaries.
+- Pilot deltas vs baseline (delta_avg_mrr_mean):
+  - v10a_unsup900: -0.01050
+  - v10b_da0025: -0.00100
+  - v10c_da0035: -0.00100
+  - selected variant: v10b_da0025
+- Final 2-seed fr_en:
+  - vs baseline: delta_avg_mrr_mean=-0.00025, delta_avg_hits@1_mean=-0.000175, delta_avg_hits@10_mean=-0.000175
+  - vs v9: delta_avg_mrr_mean=0.00000 (tie)
+- Outputs:
+  - reports/transfer/transfer_adapt_v10_fren_decision.md
+  - reports/transfer/transfer_adapt_v10_fren_decision.json
+  - reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_baseline.csv
+  - reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_v9.csv
+  - reports/transfer/transfer_stage_update_20260306_v10_fren.md

@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260305.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260306_v10_fren.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -304,7 +304,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 
 - README 已同步到 transfer-adapt 最新进度（v7）。
 - 新增阶段报告：
-  - `reports/transfer/transfer_stage_update_20260305.md`
+  - `reports/transfer/transfer_stage_update_20260306_v10_fren.md`
 
 ## 20. 阶段更新（2026-03-06）：Transfer-Adapt v8 扩展（s42）
 
@@ -344,3 +344,22 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 结论：
   - v9 相比 v8 有改善，但尚未反超 baseline。
 
+
+## 23. 阶段更新（2026-03-06）：Transfer-Adapt v10（fr_en 自动优化）
+
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v10a_unsup900.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v10b_da0025.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v10c_da0035.yaml`
+- 新增自动化脚本：`scripts/run_transfer_adapt_v10_fren_auto.py`
+- 执行流程：`pilot(3变体,s42) -> 自动选优 -> formal(s3407) -> 2-seed汇总`
+- 自动决策：
+  - best variant：`v10b_da0025`
+  - 决策文件：`reports/transfer/transfer_adapt_v10_fren_decision.md`
+- 最终结果（fr_en, 2-seed）：
+  - vs baseline：`delta_avg_mrr_mean = -0.00025`
+  - vs v9：`delta_avg_mrr_mean = 0.00000`（持平）
+- 对应结果文件：
+  - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_v9.csv`
+  - `reports/transfer/transfer_stage_update_20260306_v10_fren.md`
