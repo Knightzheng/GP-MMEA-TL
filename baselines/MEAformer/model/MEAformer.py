@@ -56,6 +56,7 @@ class MEAformer(nn.Module):
         self.idx_one = torch.ones(self.args.batch_size, dtype=torch.int64).cuda()
         self.idx_double = torch.cat([self.idx_one, self.idx_one]).cuda()
         self.last_num = 1000000000000
+        self.last_il_filter_stats = {}
         # self.idx_one = np.ones(self.args.batch_size, dtype=np.int64)
 
     def _to_cuda_batch(self, batch, device):
@@ -269,22 +270,87 @@ class MEAformer(nn.Module):
             img_dim = kgs["images_list"].shape[1]
         return img_dim
 
+    def _filter_links_by_confidence(self, links, confidences):
+        if len(links) == 0:
+            self.last_il_filter_stats = {
+                "raw_count": 0,
+                "kept_count": 0,
+                "threshold": 0.0,
+                "q_threshold": 0.0,
+                "min_conf": 0.0,
+                "quantile": float(getattr(self.args, "il_confidence_quantile", 0.0)),
+                "fallback_used": 0,
+            }
+            return []
+
+        conf_arr = np.asarray(confidences, dtype=np.float32)
+        q = float(getattr(self.args, "il_confidence_quantile", 0.0))
+        q = min(1.0, max(0.0, q))
+        min_conf = float(getattr(self.args, "il_confidence_min", 0.0))
+        q_thr = float(np.quantile(conf_arr, q)) if q > 0.0 else -1e9
+        threshold = max(min_conf, q_thr)
+
+        kept = [pair for pair, conf in zip(links, conf_arr.tolist()) if conf >= threshold]
+        keep_min = int(getattr(self.args, "il_confidence_keep_min", 0))
+        fallback_used = 0
+        if keep_min > 0 and len(kept) < keep_min and len(links) > 0:
+            top_idx = np.argsort(-conf_arr)[: min(keep_min, len(links))]
+            kept = [links[i] for i in top_idx.tolist()]
+            fallback_used = 1
+
+        self.last_il_filter_stats = {
+            "raw_count": len(links),
+            "kept_count": len(kept),
+            "threshold": float(threshold),
+            "q_threshold": float(q_thr),
+            "min_conf": float(min_conf),
+            "quantile": float(q),
+            "fallback_used": int(fallback_used),
+        }
+        return kept
+
     def Iter_new_links(self, epoch, left_non_train, final_emb, right_non_train, new_links=[]):
         if len(left_non_train) == 0 or len(right_non_train) == 0:
+            self.last_il_filter_stats = {
+                "raw_count": 0,
+                "kept_count": 0,
+                "threshold": 0.0,
+                "q_threshold": 0.0,
+                "min_conf": float(getattr(self.args, "il_confidence_min", 0.0)),
+                "quantile": float(getattr(self.args, "il_confidence_quantile", 0.0)),
+                "fallback_used": 0,
+            }
             return new_links
         distance_list = []
         for i in np.arange(0, len(left_non_train), 1000):
             d = pairwise_distances(final_emb[left_non_train[i:i + 1000]], final_emb[right_non_train])
             distance_list.append(d)
         distance = torch.cat(distance_list, dim=0)
-        preds_l = torch.argmin(distance, dim=1).cpu().numpy().tolist()
+        min_dist_l, preds_l_tensor = torch.min(distance, dim=1)
+        preds_l = preds_l_tensor.cpu().numpy().tolist()
         preds_r = torch.argmin(distance.t(), dim=1).cpu().numpy().tolist()
         del distance_list, distance, final_emb
-        if (epoch + 1) % (self.args.semi_learn_step * 5) == self.args.semi_learn_step:
-            new_links = [(left_non_train[i], right_non_train[p]) for i, p in enumerate(preds_l) if preds_r[p] == i]
-        else:
-            new_links = [(left_non_train[i], right_non_train[p]) for i, p in enumerate(preds_l) if (preds_r[p] == i) and ((left_non_train[i], right_non_train[p]) in new_links)]
 
+        prev_links = set(new_links) if isinstance(new_links, list) else set()
+        links_raw = []
+        conf_raw = []
+        if (epoch + 1) % (self.args.semi_learn_step * 5) == self.args.semi_learn_step:
+            for i, p in enumerate(preds_l):
+                if preds_r[p] != i:
+                    continue
+                links_raw.append((left_non_train[i], right_non_train[p]))
+                conf_raw.append(float(1.0 / (1.0 + float(min_dist_l[i].item()))))
+        else:
+            for i, p in enumerate(preds_l):
+                pair = (left_non_train[i], right_non_train[p])
+                if preds_r[p] != i:
+                    continue
+                if pair not in prev_links:
+                    continue
+                links_raw.append(pair)
+                conf_raw.append(float(1.0 / (1.0 + float(min_dist_l[i].item()))))
+
+        new_links = self._filter_links_by_confidence(links_raw, conf_raw)
         return new_links
 
     def data_refresh(self, logger, train_ill, test_ill_, left_non_train, right_non_train, new_links=[]):

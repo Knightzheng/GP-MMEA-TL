@@ -250,6 +250,15 @@ class Runner:
                 final_emb = self.model.joint_emb_generat()
             final_emb = F.normalize(final_emb)
             self.new_links = self.model.Iter_new_links(self.epoch, self.non_train["left"], final_emb, self.non_train["right"], new_links=self.new_links)
+            stats = getattr(self.model, "last_il_filter_stats", None)
+            if stats is not None and self.args.rank == 0:
+                self.logger.info(
+                    f"[epoch {self.epoch}] il_filter raw={stats.get('raw_count', 0)} "
+                    f"kept={stats.get('kept_count', 0)} "
+                    f"thr={stats.get('threshold', 0.0):.4f} "
+                    f"(q={stats.get('quantile', 0.0):.2f}, q_thr={stats.get('q_threshold', 0.0):.4f}, "
+                    f"min={stats.get('min_conf', 0.0):.4f}, fallback={stats.get('fallback_used', 0)})"
+                )
             if (self.epoch + 1) % (self.args.semi_learn_step * 5) == 0:
                 self.logger.info(f"[epoch {self.epoch}] #links in candidate set: {len(self.new_links)}")
 

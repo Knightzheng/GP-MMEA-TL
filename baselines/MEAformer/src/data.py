@@ -258,13 +258,26 @@ def visual_pivot_induction(args, left_ents, right_ents, img_features, ills, logg
 
     img_sim = l_img_f.mm(r_img_f.t())
     topk = args.unsup_k
-    two_d_indices = get_topk_indices(img_sim, topk * 100)
+    cand_k = max(1, min(int(topk * 100), int(img_sim.numel())))
+    two_d_indices = get_topk_indices(img_sim, cand_k)
+    cand_sims = img_sim[two_d_indices[:, 0], two_d_indices[:, 1]].detach().cpu().numpy()
+    min_sim = float(getattr(args, "unsup_min_sim", -1.0))
+    dyn_q = float(getattr(args, "unsup_dynamic_quantile", 0.0))
+    dyn_q = min(1.0, max(0.0, dyn_q))
+    dyn_thr = -1.0
+    if dyn_q > 0.0 and cand_sims.size > 0:
+        dyn_thr = float(np.quantile(cand_sims, dyn_q))
+    final_thr = max(min_sim, dyn_thr)
     del l_img_f, r_img_f, img_sim
 
     visual_links = []
     used_inds = []
     count = 0
-    for ind in two_d_indices:
+    passed_threshold = 0
+    for ind, sim in zip(two_d_indices, cand_sims):
+        if sim < final_thr:
+            continue
+        passed_threshold += 1
         if left_ents[ind[0]] in used_inds:
             continue
         if right_ents[ind[1]] in used_inds:
@@ -276,11 +289,32 @@ def visual_pivot_induction(args, left_ents, right_ents, img_features, ills, logg
         if count == topk:
             break
 
+    # Fallback: if threshold is too strict, keep filling by rank order.
+    if count < topk:
+        for ind in two_d_indices:
+            if left_ents[ind[0]] in used_inds:
+                continue
+            if right_ents[ind[1]] in used_inds:
+                continue
+            used_inds.append(left_ents[ind[0]])
+            used_inds.append(right_ents[ind[1]])
+            visual_links.append((left_ents[ind[0]], right_ents[ind[1]]))
+            count += 1
+            if count == topk:
+                break
+
     count = 0.0
     for link in visual_links:
         if link in ills:
             count = count + 1
-    logger.info(f"{(count / len(visual_links) * 100):.2f}% in true links")
+    ratio = 0.0 if len(visual_links) == 0 else (count / len(visual_links) * 100)
+    logger.info(
+        f"visual seed filter: topk={topk}, candidate={cand_k}, "
+        f"unsup_min_sim={min_sim:.4f}, unsup_dynamic_q={dyn_q:.2f}, "
+        f"dyn_thr={dyn_thr:.4f}, final_thr={final_thr:.4f}, "
+        f"passed_thr={passed_threshold}, selected={len(visual_links)}"
+    )
+    logger.info(f"{ratio:.2f}% in true links")
     logger.info(f"visual links length: {(len(visual_links))}")
     train_ill = np.array(visual_links, dtype=np.int32)
     return train_ill

@@ -199,8 +199,18 @@ def main():
         cmd.append("--unsup")
     if "unsup_k" in m:
         cmd.extend(["--unsup_k", str(m["unsup_k"])])
+    if "unsup_min_sim" in m:
+        cmd.extend(["--unsup_min_sim", str(m["unsup_min_sim"])])
+    if "unsup_dynamic_quantile" in m:
+        cmd.extend(["--unsup_dynamic_quantile", str(m["unsup_dynamic_quantile"])])
     if "unsup_mode" in m and str(m["unsup_mode"]).strip():
         cmd.extend(["--unsup_mode", str(m["unsup_mode"])])
+    if "il_confidence_min" in m:
+        cmd.extend(["--il_confidence_min", str(m["il_confidence_min"])])
+    if "il_confidence_quantile" in m:
+        cmd.extend(["--il_confidence_quantile", str(m["il_confidence_quantile"])])
+    if "il_confidence_keep_min" in m:
+        cmd.extend(["--il_confidence_keep_min", str(m["il_confidence_keep_min"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):

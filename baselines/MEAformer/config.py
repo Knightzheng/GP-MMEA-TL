@@ -87,6 +87,36 @@ class cfg():
         parser.add_argument("--il_start", type=int, default=500, help="If Il, when to start?")
         parser.add_argument("--unsup", action="store_true", default=False)
         parser.add_argument("--unsup_k", type=int, default=1000, help="|visual seed|")
+        parser.add_argument(
+            "--unsup_min_sim",
+            type=float,
+            default=-1.0,
+            help="minimum similarity for unsupervised visual seeds",
+        )
+        parser.add_argument(
+            "--unsup_dynamic_quantile",
+            type=float,
+            default=0.0,
+            help="dynamic quantile threshold (0~1) on visual-seed candidate similarities",
+        )
+        parser.add_argument(
+            "--il_confidence_min",
+            type=float,
+            default=0.0,
+            help="minimum confidence for IL pseudo links",
+        )
+        parser.add_argument(
+            "--il_confidence_quantile",
+            type=float,
+            default=0.0,
+            help="dynamic quantile threshold (0~1) on IL pseudo-link confidence",
+        )
+        parser.add_argument(
+            "--il_confidence_keep_min",
+            type=int,
+            default=0,
+            help="minimum pseudo links kept by confidence ranking when filtering is too strict",
+        )
 
         # --------- MCLEA -----------
         parser.add_argument("--unsup_mode", type=str, default="img", help="unsup mode", choices=["img", "name", "char"])
