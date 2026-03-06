@@ -1059,3 +1059,31 @@
   - reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_baseline.csv
   - reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_v9.csv
   - reports/transfer/transfer_stage_update_20260306_v10_fren.md
+
+## 24. 2026-03-07 Transfer-Adapt v12 fr_en recovery (ASCII summary)
+- Context:
+  - v11 confidence filtering caused severe fr_en regression (2-seed delta_avg_mrr_mean=-0.06475).
+- Added files:
+  - configs/transfer_adapt/tmmeada_target_fr_en_v12a_recover_v10.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v12b_mild_filter_highkeep.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v12c_mild_filter_da03.yaml
+  - scripts/run_transfer_adapt_v12_fren_auto.py
+- Auto flow:
+  - pilot (3 variants, seed=42) -> select best -> formal (seed=3407) -> 2-seed summaries.
+- Pilot deltas vs baseline (delta_avg_mrr_mean):
+  - v12a_recover_v10: -0.00100
+  - v12b_mild_filter_highkeep: -0.01700
+  - v12c_mild_filter_da03: -0.02200
+- Selected variant:
+  - v12a_recover_v10
+- Final 2-seed fr_en:
+  - vs baseline: delta_avg_mrr_mean=-0.00025
+  - vs v10: delta_avg_mrr_mean=0.00000 (tie)
+- Conclusion:
+  - v12 recovered performance back to v10 level, while mild filtering did not outperform control.
+- Outputs:
+  - reports/transfer/transfer_adapt_v12_fren_decision.md
+  - reports/transfer/transfer_adapt_v12_fren_decision.json
+  - reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_baseline.csv
+  - reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_v10.csv
+  - reports/transfer/transfer_stage_update_20260307_v12_fren.md

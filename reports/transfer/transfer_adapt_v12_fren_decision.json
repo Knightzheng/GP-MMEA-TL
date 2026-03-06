@@ -1,0 +1,39 @@
+{
+  "timestamp": "20260307-051021",
+  "pilot_seed": 42,
+  "formal_seed": 3407,
+  "variants": [
+    {
+      "name": "v12a_recover_v10",
+      "target_config": "configs/transfer_adapt/tmmeada_target_fr_en_v12a_recover_v10.yaml",
+      "pilot_seed": 42,
+      "pilot_stage_root": "transfer/transfer_adapt_v12_fren_pilot_v12a_recover_v10",
+      "pilot_run_dir": "runs\\transfer\\transfer_adapt_v12_fren_pilot_v12a_recover_v10\\target_eval\\20260307-015606-TMMEA-DA-transfer-adapt-v12a-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "delta_avg_mrr_mean_vs_baseline": -0.001000000000000112
+    },
+    {
+      "name": "v12b_mild_filter_highkeep",
+      "target_config": "configs/transfer_adapt/tmmeada_target_fr_en_v12b_mild_filter_highkeep.yaml",
+      "pilot_seed": 42,
+      "pilot_stage_root": "transfer/transfer_adapt_v12_fren_pilot_v12b_mild_filter_highkeep",
+      "pilot_run_dir": "runs\\transfer\\transfer_adapt_v12_fren_pilot_v12b_mild_filter_highkeep\\target_eval\\20260307-024810-TMMEA-DA-transfer-adapt-v12b-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "delta_avg_mrr_mean_vs_baseline": -0.017000000000000126
+    },
+    {
+      "name": "v12c_mild_filter_da03",
+      "target_config": "configs/transfer_adapt/tmmeada_target_fr_en_v12c_mild_filter_da03.yaml",
+      "pilot_seed": 42,
+      "pilot_stage_root": "transfer/transfer_adapt_v12_fren_pilot_v12c_mild_filter_da03",
+      "pilot_run_dir": "runs\\transfer\\transfer_adapt_v12_fren_pilot_v12c_mild_filter_da03\\target_eval\\20260307-033509-TMMEA-DA-transfer-adapt-v12c-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "delta_avg_mrr_mean_vs_baseline": -0.02200000000000002
+    }
+  ],
+  "best_variant": "v12a_recover_v10",
+  "best_variant_target_config": "configs/transfer_adapt/tmmeada_target_fr_en_v12a_recover_v10.yaml",
+  "best_delta_avg_mrr_mean_vs_baseline": -0.001000000000000112,
+  "pilot_run_dir": "runs\\transfer\\transfer_adapt_v12_fren_pilot_v12a_recover_v10\\target_eval\\20260307-015606-TMMEA-DA-transfer-adapt-v12a-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+  "formal_run_dir": "runs\\transfer\\transfer_adapt_v12_fren_formal_v12a_recover_v10\\target_eval\\20260307-041941-TMMEA-DA-transfer-adapt-v12a-target-fr_en-transfer-tgt-DBP15K-fr_en-s3407",
+  "merged_target_root": "runs\\transfer\\transfer_adapt_v12_fren_2seed_v12a_recover_v10\\target_eval",
+  "final_compare_vs_baseline_csv": "reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_baseline.csv",
+  "final_compare_vs_v10_csv": "reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_v10.csv"
+}

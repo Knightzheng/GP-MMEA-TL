@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260306_v10_fren.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260307_v12_fren.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -304,7 +304,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 
 - README 已同步到 transfer-adapt 最新进度（v7）。
 - 新增阶段报告：
-  - `reports/transfer/transfer_stage_update_20260306_v10_fren.md`
+  - `reports/transfer/transfer_stage_update_20260307_v12_fren.md`
 
 ## 20. 阶段更新（2026-03-06）：Transfer-Adapt v8 扩展（s42）
 
@@ -362,4 +362,30 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 对应结果文件：
   - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_baseline.csv`
   - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_v9.csv`
-  - `reports/transfer/transfer_stage_update_20260306_v10_fren.md`
+  - `reports/transfer/transfer_stage_update_20260307_v12_fren.md`
+
+## 24. 阶段更新（2026-03-07）：Transfer-Adapt v12（fr_en 回稳优化）
+
+- 背景：`v11` 的伪标签过滤导致 `fr_en` 明显退化（2-seed `delta_avg_mrr_mean = -0.06475`）。
+- 本阶段新增：
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v12a_recover_v10.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v12b_mild_filter_highkeep.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v12c_mild_filter_da03.yaml`
+  - `scripts/run_transfer_adapt_v12_fren_auto.py`
+- 自动流程：`pilot(3变体,s42) -> 自动选优 -> formal(s3407) -> 2-seed汇总`。
+- 自动决策：
+  - best variant：`v12a_recover_v10`
+  - pilot deltas（vs baseline, `delta_avg_mrr_mean`）：
+    - v12a: `-0.00100`
+    - v12b: `-0.01700`
+    - v12c: `-0.02200`
+- 最终 2-seed（fr_en）：
+  - vs baseline：`delta_avg_mrr_mean = -0.00025`
+  - vs v10：`delta_avg_mrr_mean = 0.00000`（持平）
+- 结论：
+  - `v12` 已恢复到 `v10` 水平，过滤版仍未带来额外增益。
+- 相关文件：
+  - `reports/transfer/transfer_adapt_v12_fren_decision.{md,json}`
+  - `reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_v10.csv`
+  - `reports/transfer/transfer_stage_update_20260307_v12_fren.md`
