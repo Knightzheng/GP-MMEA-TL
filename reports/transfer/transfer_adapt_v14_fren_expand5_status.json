@@ -1,0 +1,59 @@
+{
+  "timestamp": "20260308-004209",
+  "target": "fr_en",
+  "seeds": [
+    42,
+    3407,
+    2026,
+    7,
+    123
+  ],
+  "run_missing": 0,
+  "baseline": {
+    "stage_target_eval": "runs\\transfer\\transfer_adapt_v14_fren_expand5_baseline\\target_eval",
+    "fallback_target_eval": "runs/transfer/transfer_adapt_v8_expand_2seed_baseline/target_eval",
+    "merged_target_eval": "runs/transfer/transfer_adapt_v14_fren_expand5_merged_baseline/target_eval",
+    "initial_selected": {
+      "42": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260305-233633-MEAformer-transfer-adapt-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "3407": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260306-021952-MEAformer-transfer-adapt-target-fr_en-transfer-tgt-DBP15K-fr_en-s3407"
+    },
+    "initial_missing_seeds": [
+      2026,
+      7,
+      123
+    ],
+    "final_selected": {
+      "42": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260305-233633-MEAformer-transfer-adapt-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "3407": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260306-021952-MEAformer-transfer-adapt-target-fr_en-transfer-tgt-DBP15K-fr_en-s3407"
+    },
+    "final_missing_seeds": [
+      2026,
+      7,
+      123
+    ]
+  },
+  "tmmeada": {
+    "stage_target_eval": "runs\\transfer\\transfer_adapt_v14_fren_expand5_tmmeada\\target_eval",
+    "fallback_target_eval": "runs/transfer/transfer_adapt_v14_fren_2seed_v14b_refresh4_da0025/target_eval",
+    "merged_target_eval": "runs/transfer/transfer_adapt_v14_fren_expand5_merged_tmmeada/target_eval",
+    "initial_selected": {
+      "42": "runs\\transfer\\transfer_adapt_v14_fren_2seed_v14b_refresh4_da0025\\target_eval\\20260307-174625-TMMEA-DA-transfer-adapt-v14b-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "3407": "runs\\transfer\\transfer_adapt_v14_fren_2seed_v14b_refresh4_da0025\\target_eval\\20260307-195918-TMMEA-DA-transfer-adapt-v14b-target-fr_en-transfer-tgt-DBP15K-fr_en-s3407"
+    },
+    "initial_missing_seeds": [
+      2026,
+      7,
+      123
+    ],
+    "final_selected": {
+      "42": "runs\\transfer\\transfer_adapt_v14_fren_2seed_v14b_refresh4_da0025\\target_eval\\20260307-174625-TMMEA-DA-transfer-adapt-v14b-target-fr_en-transfer-tgt-DBP15K-fr_en-s42",
+      "3407": "runs\\transfer\\transfer_adapt_v14_fren_2seed_v14b_refresh4_da0025\\target_eval\\20260307-195918-TMMEA-DA-transfer-adapt-v14b-target-fr_en-transfer-tgt-DBP15K-fr_en-s3407"
+    },
+    "final_missing_seeds": [
+      2026,
+      7,
+      123
+    ]
+  },
+  "report_prefix": "reports/transfer/transfer_adapt_v14_fren_expand5_progress"
+}

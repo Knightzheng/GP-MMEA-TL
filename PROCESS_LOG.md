@@ -1147,3 +1147,26 @@
   - vs v13: delta_avg_mrr_mean=+0.01100
 - Conclusion:
   - v14 is the current best fr_en transfer-adapt version and should be extended to 5-seed formal evaluation next.
+
+## 27. 2026-03-08 Transfer-Adapt v14 fr_en expand5 started (ASCII summary)
+- Added resume/expand script:
+  - scripts/run_transfer_adapt_v14_fren_expand5_resume.py
+- Objective:
+  - extend fr_en transfer-adapt from 2-seed to 5-seed: 42,3407,2026,7,123.
+- Pre-check (run-missing=0):
+  - baseline missing seeds: 2026,7,123
+  - tmmeada missing seeds: 2026,7,123
+  - status files:
+    - reports/transfer/transfer_adapt_v14_fren_expand5_status.json
+    - reports/transfer/transfer_adapt_v14_fren_expand5_status.md
+  - progress compare file:
+    - reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv
+- Queue started (run-missing=1):
+  - parent pid: 63212
+  - logs:
+    - runs/transfer/transfer_adapt_v14_fren_expand5/queue_20260308-004223.out.log
+    - runs/transfer/transfer_adapt_v14_fren_expand5/queue_20260308-004223.err.log
+  - observed running stage:
+    - runs/transfer/transfer_adapt_v14_fren_expand5_baseline/source_train/...-s2026/
+- Stage note:
+  - reports/transfer/transfer_stage_update_20260308_v14_expand5_launch.md

@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260308_v14_fren.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260308_v14_expand5_launch.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -444,3 +444,20 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/transfer/transfer_adapt_v14_fren_2seed_compare_vs_baseline.csv`
   - `reports/transfer/transfer_adapt_v14_fren_2seed_compare_vs_v13.csv`
   - `reports/transfer/transfer_stage_update_20260308_v14_fren.md`
+
+## 27. 阶段更新（2026-03-08）：Transfer-Adapt v14 扩展到 5-seed（已启动断点续跑）
+
+- 新增断点续跑脚本：
+  - `scripts/run_transfer_adapt_v14_fren_expand5_resume.py`
+- 目标：
+  - 将 `fr_en` 从 2-seed 扩展到 5-seed：`42,3407,2026,7,123`
+- 脚本特点：
+  - 自动识别已完成 seed（含 fallback 历史目录）
+  - 仅运行缺失 seed（当前缺失：`2026,7,123`）
+  - 每轮完成后自动重建 merged 目录并输出 compare 报表
+- 当前状态文件：
+  - `reports/transfer/transfer_adapt_v14_fren_expand5_status.json`
+  - `reports/transfer/transfer_adapt_v14_fren_expand5_status.md`
+  - `reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv`
+- 启动报告：
+  - `reports/transfer/transfer_stage_update_20260308_v14_expand5_launch.md`
