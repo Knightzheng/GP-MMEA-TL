@@ -61,14 +61,14 @@ def append_process_log(repo_root: Path, lines):
     p.write_text(text, encoding="utf-8")
 
 
-def has_staged_or_unstaged_changes(repo_root: Path) -> bool:
-    proc = run_cmd(["git", "status", "--short"], cwd=repo_root, check=True)
+def has_staged_changes(repo_root: Path) -> bool:
+    proc = run_cmd(["git", "diff", "--cached", "--name-only"], cwd=repo_root, check=True)
     return bool(proc.stdout.strip())
 
 
 def commit_and_push(repo_root: Path, commit_msg: str, add_paths):
     run_cmd(["git", "add", *add_paths], cwd=repo_root, check=True)
-    if not has_staged_or_unstaged_changes(repo_root):
+    if not has_staged_changes(repo_root):
         print("[INFO] no changes to commit.")
         return False
     run_cmd(["git", "commit", "-m", commit_msg], cwd=repo_root, check=True)
