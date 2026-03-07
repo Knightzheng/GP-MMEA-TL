@@ -195,6 +195,8 @@ def main():
         cmd.extend(["--semi_learn_step", str(m["semi_learn_step"])])
     if "il_start" in m:
         cmd.extend(["--il_start", str(m["il_start"])])
+    if "il_refresh_interval" in m:
+        cmd.extend(["--il_refresh_interval", str(m["il_refresh_interval"])])
     if m.get("unsup", False):
         cmd.append("--unsup")
     if "unsup_k" in m:

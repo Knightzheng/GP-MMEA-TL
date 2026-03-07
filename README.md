@@ -117,15 +117,16 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260307_v13_fren.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260308_v14_fren.md`
 
 ## 8. 当前阶段结论（简要）
 
 - 流程层面：baseline 与方法分支均已形成可复现实验链路（配置-运行-汇总-对比-报告）。
-- 结果层面（最新）：在 transfer-adapt 2-seed 设置下，`ja_en` 与 `FBDB15K` 已出现小幅正增益。
+- 结果层面（最新）：在 transfer-adapt 2-seed 设置下，`ja_en`、`FBDB15K`、`fr_en` 已出现正增益。
   - `ja_en`：`delta_avg_mrr_mean = +0.00075`（v6 mixed）
   - `FBDB15K`：`delta_avg_mrr_mean = +0.00075`（v7b formal）
-- 下一步：扩展到 `fr_en` / `FBYG15K` 的同口径 transfer-adapt，并补齐 5-seed 正式统计与误差分析。
+  - `fr_en`：`delta_avg_mrr_mean = +0.01075`（v14b, 2-seed）
+- 下一步：扩展到 `FBYG15K` 与 `5-seed` 正式统计，并补齐误差分析与中期/终稿图表。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -414,3 +415,32 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_baseline.csv`
   - `reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_v12.csv`
   - `reports/transfer/transfer_stage_update_20260307_v13_fren.md`
+
+## 26. 阶段更新（2026-03-08）：Transfer-Adapt v14（fr_en IL 刷新频率优化）
+
+- 目标：优化伪标签更新节奏，降低中后期噪声积累，争取 `fr_en` 可迁移指标实增。
+- 代码改造：
+  - `baselines/MEAformer/config.py`：新增参数 `--il_refresh_interval`
+  - `baselines/MEAformer/main.py`：将伪标签刷新条件从固定 `epoch*10` 改为可配置刷新间隔
+  - `scripts/run_meaformer.py`：支持透传 `il_refresh_interval`
+- 新增配置与自动化：
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v14a_refresh5_da0025.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v14b_refresh4_da0025.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v14c_refresh5_da0030.yaml`
+  - `scripts/run_transfer_adapt_v14_fren_auto.py`
+- 自动流程：`pilot(3变体,s42) -> 自动选优 -> formal(s3407) -> 2-seed汇总`
+- pilot 结果（vs baseline, `delta_avg_mrr_mean`）：
+  - `v14a_refresh5_da0025`: `-0.00100`
+  - `v14b_refresh4_da0025`: `+0.01050`
+  - `v14c_refresh5_da0030`: `-0.00100`
+- 自动选优：`v14b_refresh4_da0025`
+- 最终 2-seed（fr_en）：
+  - vs baseline：`delta_avg_mrr_mean = +0.01075`
+  - vs v13：`delta_avg_mrr_mean = +0.01100`
+- 结论：
+  - `v14` 在 `fr_en` 上取得当前阶段最明显的正增益，后续应优先扩展到 `5-seed` 以验证稳定性。
+- 相关文件：
+  - `reports/transfer/transfer_adapt_v14_fren_decision.{md,json}`
+  - `reports/transfer/transfer_adapt_v14_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v14_fren_2seed_compare_vs_v13.csv`
+  - `reports/transfer/transfer_stage_update_20260308_v14_fren.md`

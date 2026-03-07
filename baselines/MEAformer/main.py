@@ -216,7 +216,8 @@ class Runner:
                 if self.stage == 1 and (self.epoch + 1) % self.args.semi_learn_step == 0 and self.args.il:
                     self.il_for_ea()
 
-                if self.stage == 1 and (self.epoch + 1) % (self.args.semi_learn_step * 10) == 0 and len(self.new_links) != 0 and self.args.il:
+                il_refresh_interval = max(1, int(getattr(self.args, "il_refresh_interval", 10)))
+                if self.stage == 1 and (self.epoch + 1) % (self.args.semi_learn_step * il_refresh_interval) == 0 and len(self.new_links) != 0 and self.args.il:
                     self.il_for_data_ref()
 
                 self.train(_tqdm)

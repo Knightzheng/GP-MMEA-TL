@@ -1115,3 +1115,35 @@
   - reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_baseline.csv
   - reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_v12.csv
   - reports/transfer/transfer_stage_update_20260307_v13_fren.md
+
+## 26. 2026-03-08 Transfer-Adapt v14 fr_en power-loss recovery + finalize (ASCII summary)
+- Power-loss recovery check:
+  - no running python process after reboot.
+  - v14 pilot runs already completed for all three variants.
+  - v14 formal run (`seed=3407`, variant `v14b`) already completed.
+  - interruption point was post-training summarization/decision generation.
+- Code updates for v14:
+  - baselines/MEAformer/config.py: add `--il_refresh_interval`
+  - baselines/MEAformer/main.py: make IL refresh interval configurable
+  - scripts/run_meaformer.py: pass `il_refresh_interval` through runner
+- Added files:
+  - configs/transfer_adapt/tmmeada_target_fr_en_v14a_refresh5_da0025.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v14b_refresh4_da0025.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v14c_refresh5_da0030.yaml
+  - scripts/run_transfer_adapt_v14_fren_auto.py
+- Recovery finalization actions:
+  - built merged 2-seed folder:
+    - runs/transfer/transfer_adapt_v14_fren_2seed_v14b_refresh4_da0025/target_eval
+  - regenerated summaries:
+    - reports/transfer/transfer_adapt_v14_fren_2seed_compare_vs_baseline.csv
+    - reports/transfer/transfer_adapt_v14_fren_2seed_compare_vs_v13.csv
+  - generated decision files:
+    - reports/transfer/transfer_adapt_v14_fren_decision.md
+    - reports/transfer/transfer_adapt_v14_fren_decision.json
+  - generated stage update:
+    - reports/transfer/transfer_stage_update_20260308_v14_fren.md
+- v14 final 2-seed result on fr_en:
+  - vs baseline: delta_avg_mrr_mean=+0.01075
+  - vs v13: delta_avg_mrr_mean=+0.01100
+- Conclusion:
+  - v14 is the current best fr_en transfer-adapt version and should be extended to 5-seed formal evaluation next.

@@ -85,6 +85,12 @@ class cfg():
         parser.add_argument("--il", action="store_true", default=False, help="Iterative learning?")
         parser.add_argument("--semi_learn_step", type=int, default=10, help="If IL, what's the update step?")
         parser.add_argument("--il_start", type=int, default=500, help="If Il, when to start?")
+        parser.add_argument(
+            "--il_refresh_interval",
+            type=int,
+            default=10,
+            help="refresh train links every (semi_learn_step * il_refresh_interval) epochs during IL stage",
+        )
         parser.add_argument("--unsup", action="store_true", default=False)
         parser.add_argument("--unsup_k", type=int, default=1000, help="|visual seed|")
         parser.add_argument(
