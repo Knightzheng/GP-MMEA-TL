@@ -1,0 +1,28 @@
+{
+  "timestamp": "20260307-115939",
+  "tag": "tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42",
+  "source": {
+    "config": "configs\\transfer\\tmmeada_source_zh_en_epoch10.yaml",
+    "tmp_config": "runs\\system\\transfer_tmp\\20260307-115939_tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42\\source_tmmeada_source_zh_en_epoch10.yaml",
+    "stage": "transfer/transfer_adapt_v13_fren_pilot_v13c_hybrid_mild/source_train",
+    "data_choice": "DBP15K",
+    "data_split": "zh_en",
+    "seed": 42,
+    "exp_id": "tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42_src_s42",
+    "model_name_save": "tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42_src_s42_",
+    "resolved_checkpoint": "data\\mmkg\\MEAformer\\save\\MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s42_src_s42_.pkl",
+    "resolved_model_name_save": "MEAformer_DBP15K_zh_en_tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s42_src_s42_"
+  },
+  "targets": [
+    {
+      "config": "configs\\transfer_adapt\\tmmeada_target_fr_en_v13c_hybrid_mild.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260307-115939_tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42\\target_tmmeada_target_fr_en_v13c_hybrid_mild.yaml",
+      "stage": "transfer/transfer_adapt_v13_fren_pilot_v13c_hybrid_mild/target_eval",
+      "data_choice": "DBP15K",
+      "data_split": "fr_en",
+      "seed": 42,
+      "exp_id": "tmmeada_transfer_adapt_v13c_tgt_fr_en_hybrid_mild_tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42_from_DBP15K_zh_en_s42",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260307-115939_tmmeada_transfer_adapt_v13_fren_pilot_v13c_hybrid_mild_s42\\target_tmmeada_target_fr_en_v13c_hybrid_mild.yaml --stage transfer/transfer_adapt_v13_fren_pilot_v13c_hybrid_mild/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    }
+  ]
+}

@@ -1087,3 +1087,31 @@
   - reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_baseline.csv
   - reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_v10.csv
   - reports/transfer/transfer_stage_update_20260307_v12_fren.md
+
+## 25. 2026-03-07 Transfer-Adapt v13 fr_en mild-module optimization (ASCII summary)
+- Goal:
+  - test low-weight source_select / missing_gate variants on top of stable v12 path.
+- Added files:
+  - configs/transfer_adapt/tmmeada_target_fr_en_v13a_source_select_mild.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v13b_missing_gate_mild.yaml
+  - configs/transfer_adapt/tmmeada_target_fr_en_v13c_hybrid_mild.yaml
+  - scripts/run_transfer_adapt_v13_fren_auto.py
+- Auto flow:
+  - pilot (3 variants, seed=42) -> select best -> formal (seed=3407) -> 2-seed summaries.
+- Pilot deltas vs baseline (delta_avg_mrr_mean):
+  - v13a_source_select_mild: -0.00100
+  - v13b_missing_gate_mild: -0.00100
+  - v13c_hybrid_mild: -0.00100
+- Selected variant:
+  - v13a_source_select_mild
+- Final 2-seed fr_en:
+  - vs baseline: delta_avg_mrr_mean=-0.00025
+  - vs v12: delta_avg_mrr_mean=0.00000 (tie)
+- Conclusion:
+  - v13 maintained stable performance but did not improve over v12/v10.
+- Outputs:
+  - reports/transfer/transfer_adapt_v13_fren_decision.md
+  - reports/transfer/transfer_adapt_v13_fren_decision.json
+  - reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_baseline.csv
+  - reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_v12.csv
+  - reports/transfer/transfer_stage_update_20260307_v13_fren.md

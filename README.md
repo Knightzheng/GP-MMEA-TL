@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260307_v12_fren.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260307_v13_fren.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -304,7 +304,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 
 - README 已同步到 transfer-adapt 最新进度（v7）。
 - 新增阶段报告：
-  - `reports/transfer/transfer_stage_update_20260307_v12_fren.md`
+  - `reports/transfer/transfer_stage_update_20260307_v13_fren.md`
 
 ## 20. 阶段更新（2026-03-06）：Transfer-Adapt v8 扩展（s42）
 
@@ -362,7 +362,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 对应结果文件：
   - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_baseline.csv`
   - `reports/transfer/transfer_adapt_v10_fren_2seed_compare_vs_v9.csv`
-  - `reports/transfer/transfer_stage_update_20260307_v12_fren.md`
+  - `reports/transfer/transfer_stage_update_20260307_v13_fren.md`
 
 ## 24. 阶段更新（2026-03-07）：Transfer-Adapt v12（fr_en 回稳优化）
 
@@ -388,4 +388,29 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/transfer/transfer_adapt_v12_fren_decision.{md,json}`
   - `reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_baseline.csv`
   - `reports/transfer/transfer_adapt_v12_fren_2seed_compare_vs_v10.csv`
-  - `reports/transfer/transfer_stage_update_20260307_v12_fren.md`
+  - `reports/transfer/transfer_stage_update_20260307_v13_fren.md`
+
+## 25. 阶段更新（2026-03-07）：Transfer-Adapt v13（fr_en 轻量模块优化）
+
+- 目标：在 `v12` 回稳基础上，验证低权重 `source_select` / `missing_gate` 是否能带来增益。
+- 新增文件：
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v13a_source_select_mild.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v13b_missing_gate_mild.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fr_en_v13c_hybrid_mild.yaml`
+  - `scripts/run_transfer_adapt_v13_fren_auto.py`
+- 自动流程：`pilot(3变体,s42) -> 自动选优 -> formal(s3407) -> 2-seed汇总`。
+- pilot 结果（vs baseline, `delta_avg_mrr_mean`）：
+  - `v13a_source_select_mild`: `-0.00100`
+  - `v13b_missing_gate_mild`: `-0.00100`
+  - `v13c_hybrid_mild`: `-0.00100`
+- 选优：`v13a_source_select_mild`
+- 最终 2-seed（fr_en）：
+  - vs baseline：`delta_avg_mrr_mean = -0.00025`
+  - vs v12：`delta_avg_mrr_mean = 0.00000`（持平）
+- 结论：
+  - v13 与 v12/v10 持平，未出现新增益。
+- 相关文件：
+  - `reports/transfer/transfer_adapt_v13_fren_decision.{md,json}`
+  - `reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_v13_fren_2seed_compare_vs_v12.csv`
+  - `reports/transfer/transfer_stage_update_20260307_v13_fren.md`
