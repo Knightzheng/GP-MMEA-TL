@@ -217,6 +217,7 @@ def main():
             "reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.md",
             "reports/transfer/transfer_adapt_v14_fren_expand5_status.json",
             "reports/transfer/transfer_adapt_v14_fren_expand5_status.md",
+            "reports/transfer/transfer_run_card_*v14_fren_expand5*.json",
             "reports/transfer/transfer_stage_update_20260308_v14_expand5_final.md",
             "PROCESS_LOG.md",
         ],
