@@ -1170,3 +1170,9 @@
     - runs/transfer/transfer_adapt_v14_fren_expand5_baseline/source_train/...-s2026/
 - Stage note:
   - reports/transfer/transfer_stage_update_20260308_v14_expand5_launch.md
+
+## 28. 2026-03-08 v14 fr_en expand5 auto-finalized (ASCII summary)
+- monitored queue completed, then rebuilt final merged summaries.
+- file: reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv
+- file: reports/transfer/transfer_stage_update_20260308_v14_expand5_final.md
+- next step decided: launch FBYG expand5 resume queue.
