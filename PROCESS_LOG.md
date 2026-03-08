@@ -1176,3 +1176,13 @@
 - file: reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv
 - file: reports/transfer/transfer_stage_update_20260308_v14_expand5_final.md
 - next step decided: launch FBYG expand5 resume queue.
+
+## 29. 2026-03-08 FBYG expand5 launched after v14 finalize (ASCII summary)
+- added resume script: scripts/run_transfer_adapt_fbyg_expand5_resume.py
+- generated pre-check status:
+  - reports/transfer/transfer_adapt_fbyg_expand5_status.json
+  - reports/transfer/transfer_adapt_fbyg_expand5_status.md
+- launched queue logs:
+  - runs/transfer/transfer_adapt_fbyg_expand5/queue_20260308-182720.out.log
+  - runs/transfer/transfer_adapt_fbyg_expand5/queue_20260308-182720.err.log
+- stage note: reports/transfer/transfer_stage_update_20260308_fbyg_expand5_launch.md
