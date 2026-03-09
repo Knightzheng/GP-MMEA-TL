@@ -502,3 +502,28 @@
 - 让仓库首页结论与最新正式结果保持一致；
 - 让中期/终稿引用路径从“启动状态”切换到“完成状态”；
 - 补齐 `FBYG15K` 收官报告，形成完整证据链闭环。
+
+## 12. 2026-03-09 追加记录（主结果表与误差分桶分析）
+
+本次追加操作（对应“继续下一步：主表与分析”）：
+
+1. 新增自动生成脚本：
+   - `scripts/make_transfer_main_and_bucket_report.py`
+2. 生成 4 目标统一主结果表：
+   - `reports/transfer/transfer_adapt_main_results_4target.csv`
+   - `reports/transfer/transfer_adapt_main_results_4target.md`
+3. 生成分桶分析结果：
+   - `reports/transfer/transfer_adapt_error_bucket_summary.csv`
+   - `reports/transfer/transfer_adapt_error_bucket_summary.md`
+4. 新增阶段报告：
+   - `reports/transfer/transfer_stage_update_20260309_main_table_bucket.md`
+5. 更新 `README.md`：
+   - 最新阶段报告链接切换到 `transfer_stage_update_20260309_main_table_bucket.md`；
+   - 当前阶段结论增加“2-seed/5-seed 置信度说明”；
+   - 追加“阶段更新（2026-03-09）”记录主表与分桶分析产物。
+
+本次追加的直接作用：
+
+- 把零散的 transfer-adapt 结果收敛为“可直接进论文主表”的统一格式；
+- 给出可追溯、可复算的误差分桶统计口径（场景/置信度/难度）；
+- 为下一步“补齐 ja_en/FBDB15K 的 5-seed”提供明确基线。
