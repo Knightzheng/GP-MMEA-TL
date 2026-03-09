@@ -481,3 +481,24 @@
 
 - 本文件为“阶段全流程总记录”，后续如继续实验，建议以追加方式更新本文件底部，不覆盖历史内容。
 - 若论文附录需要“按实验编号逐条列出”，可基于 `runs/**/run_card.md` 自动生成二级附录。
+
+## 11. 2026-03-09 追加记录（程序结束后的文档收口）
+
+本次追加操作（对应“程序结束后更新记录与 README”）：
+
+1. 核对运行状态：确认项目下无进行中的 `python.exe` 训练进程。
+2. 确认 `FBYG expand5` 已完整结束：
+   - `reports/transfer/transfer_adapt_fbyg_expand5_status.md` 显示 `final_missing_seeds=[]`。
+   - `reports/transfer/transfer_adapt_fbyg_expand5_progress_compare_vs_baseline.csv` 已产出 5-seed 对比结果。
+3. 新增阶段完成报告：
+   - `reports/transfer/transfer_stage_update_20260309_fbyg_expand5_final.md`。
+4. 更新 `README.md`：
+   - “最新迁移阶段报告”指向 `transfer_stage_update_20260309_fbyg_expand5_final.md`；
+   - “当前阶段结论”改为使用 `fr_en / FBYG15K` 的 5-seed 正式结果；
+   - 追加“阶段更新（2026-03-09）”说明 expand5 收官状态与关键结果。
+
+本次追加的直接作用：
+
+- 让仓库首页结论与最新正式结果保持一致；
+- 让中期/终稿引用路径从“启动状态”切换到“完成状态”；
+- 补齐 `FBYG15K` 收官报告，形成完整证据链闭环。

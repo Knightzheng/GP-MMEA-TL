@@ -117,16 +117,17 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260308_v14_expand5_launch.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260309_fbyg_expand5_final.md`
 
 ## 8. 当前阶段结论（简要）
 
 - 流程层面：baseline 与方法分支均已形成可复现实验链路（配置-运行-汇总-对比-报告）。
-- 结果层面（最新）：在 transfer-adapt 2-seed 设置下，`ja_en`、`FBDB15K`、`fr_en` 已出现正增益。
+- 结果层面（最新）：在 transfer-adapt 的正式统计中，`ja_en`、`FBDB15K`、`fr_en`、`FBYG15K` 均出现正增益。
   - `ja_en`：`delta_avg_mrr_mean = +0.00075`（v6 mixed）
   - `FBDB15K`：`delta_avg_mrr_mean = +0.00075`（v7b formal）
-  - `fr_en`：`delta_avg_mrr_mean = +0.01075`（v14b, 2-seed）
-- 下一步：扩展到 `FBYG15K` 与 `5-seed` 正式统计，并补齐误差分析与中期/终稿图表。
+  - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`（v8, 5-seed）
+- 下一步：补齐“统一 5-seed 口径”的跨目标主表、误差分桶分析与终稿图表。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -461,3 +462,18 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv`
 - 启动报告：
   - `reports/transfer/transfer_stage_update_20260308_v14_expand5_launch.md`
+
+## 28. 阶段更新（2026-03-09）：Transfer-Adapt expand5 收官（fr_en + FBYG15K）
+
+- 已完成 `fr_en(v14b)` 与 `FBYG15K(v8)` 的 5-seed 正式统计（`42,3407,2026,7,123`）。
+- 完成状态文件：
+  - `reports/transfer/transfer_adapt_v14_fren_expand5_status.{md,json}`
+  - `reports/transfer/transfer_adapt_fbyg_expand5_status.{md,json}`
+- 最终 compare 文件：
+  - `reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv`
+  - `reports/transfer/transfer_adapt_fbyg_expand5_progress_compare_vs_baseline.csv`
+- 核心结果（5-seed）：
+  - `fr_en`：`delta_avg_mrr_mean = +0.01210`
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`
+- 新增阶段报告：
+  - `reports/transfer/transfer_stage_update_20260309_fbyg_expand5_final.md`
