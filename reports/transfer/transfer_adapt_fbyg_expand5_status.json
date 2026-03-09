@@ -1,5 +1,5 @@
 {
-  "timestamp": "20260308-182720",
+  "timestamp": "20260309-080542",
   "target": "FBYG15K",
   "seeds": [
     42,
@@ -8,7 +8,7 @@
     7,
     123
   ],
-  "run_missing": 0,
+  "run_missing": 1,
   "baseline": {
     "stage_target_eval": "runs\\transfer\\transfer_adapt_fbyg_expand5_baseline\\target_eval",
     "fallback_target_eval": "runs/transfer/transfer_adapt_v8_expand_2seed_baseline/target_eval",
@@ -24,13 +24,12 @@
     ],
     "final_selected": {
       "42": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260306-002756-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s42",
-      "3407": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260306-031137-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s3407"
+      "3407": "runs\\transfer\\transfer_adapt_v8_expand_2seed_baseline\\target_eval\\20260306-031137-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s3407",
+      "2026": "runs\\transfer\\transfer_adapt_fbyg_expand5_baseline\\target_eval\\20260308-211722-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s2026",
+      "7": "runs\\transfer\\transfer_adapt_fbyg_expand5_baseline\\target_eval\\20260309-014831-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s7",
+      "123": "runs\\transfer\\transfer_adapt_fbyg_expand5_baseline\\target_eval\\20260309-054817-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s123"
     },
-    "final_missing_seeds": [
-      2026,
-      7,
-      123
-    ]
+    "final_missing_seeds": []
   },
   "tmmeada": {
     "stage_target_eval": "runs\\transfer\\transfer_adapt_fbyg_expand5_tmmeada\\target_eval",
@@ -47,13 +46,12 @@
     ],
     "final_selected": {
       "42": "runs\\transfer\\transfer_adapt_v8_expand_2seed_tmmeada\\target_eval\\20260306-013639-TMMEA-DA-transfer-adapt-v8-target-fbyg15k-transfer-tgt-FBYG15K-norm-s42",
-      "3407": "runs\\transfer\\transfer_adapt_v8_expand_2seed_tmmeada\\target_eval\\20260306-041721-TMMEA-DA-transfer-adapt-v8-target-fbyg15k-transfer-tgt-FBYG15K-norm-s3407"
+      "3407": "runs\\transfer\\transfer_adapt_v8_expand_2seed_tmmeada\\target_eval\\20260306-041721-TMMEA-DA-transfer-adapt-v8-target-fbyg15k-transfer-tgt-FBYG15K-norm-s3407",
+      "2026": "runs\\transfer\\transfer_adapt_fbyg_expand5_tmmeada\\target_eval\\20260308-233900-TMMEA-DA-transfer-adapt-v8-target-fbyg15k-transfer-tgt-FBYG15K-norm-s2026",
+      "7": "runs\\transfer\\transfer_adapt_fbyg_expand5_tmmeada\\target_eval\\20260309-034823-TMMEA-DA-transfer-adapt-v8-target-fbyg15k-transfer-tgt-FBYG15K-norm-s7",
+      "123": "runs\\transfer\\transfer_adapt_fbyg_expand5_tmmeada\\target_eval\\20260309-074737-TMMEA-DA-transfer-adapt-v8-target-fbyg15k-transfer-tgt-FBYG15K-norm-s123"
     },
-    "final_missing_seeds": [
-      2026,
-      7,
-      123
-    ]
+    "final_missing_seeds": []
   },
   "report_prefix": "reports/transfer/transfer_adapt_fbyg_expand5_progress"
 }
