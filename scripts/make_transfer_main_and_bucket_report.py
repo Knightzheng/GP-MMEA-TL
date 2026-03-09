@@ -12,25 +12,35 @@ SOURCE_SPECS = [
         "target": "ja_en",
         "scenario": "cross_lingual",
         "method_variant": "v6_mixed",
-        "source_csv": REPORT_DIR / "transfer_adapt_v6_mixed_compare_vs_baseline.csv",
+        "source_csv_candidates": [
+            REPORT_DIR / "transfer_adapt_v6_mixed_ja_expand5_compare_vs_baseline.csv",
+            REPORT_DIR / "transfer_adapt_v6_mixed_compare_vs_baseline.csv",
+        ],
     },
     {
         "target": "FBDB15K",
         "scenario": "cross_graph",
         "method_variant": "v7b_formal",
-        "source_csv": REPORT_DIR / "transfer_adapt_v7_fbdb_compare_vs_baseline.csv",
+        "source_csv_candidates": [
+            REPORT_DIR / "transfer_adapt_v7_fbdb_expand5_compare_vs_baseline.csv",
+            REPORT_DIR / "transfer_adapt_v7_fbdb_compare_vs_baseline.csv",
+        ],
     },
     {
         "target": "fr_en",
         "scenario": "cross_lingual",
         "method_variant": "v14b_refresh4_da0025_expand5",
-        "source_csv": REPORT_DIR / "transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv",
+        "source_csv_candidates": [
+            REPORT_DIR / "transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv",
+        ],
     },
     {
         "target": "FBYG15K",
         "scenario": "cross_graph",
         "method_variant": "v8_mild_da_expand5",
-        "source_csv": REPORT_DIR / "transfer_adapt_fbyg_expand5_progress_compare_vs_baseline.csv",
+        "source_csv_candidates": [
+            REPORT_DIR / "transfer_adapt_fbyg_expand5_progress_compare_vs_baseline.csv",
+        ],
     },
 ]
 
@@ -61,6 +71,15 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
         raise FileNotFoundError(f"Missing csv: {path}")
     with path.open("r", encoding="utf-8") as f:
         return list(csv.DictReader(f))
+
+
+def resolve_source_csv(candidates: List[Path]) -> Path:
+    for p in candidates:
+        if p.exists():
+            return p
+    raise FileNotFoundError(
+        "No available source csv in candidates: " + ", ".join(str(x) for x in candidates)
+    )
 
 
 def find_row(rows: List[Dict[str, str]], target: str) -> Dict[str, str]:
@@ -96,7 +115,8 @@ def mean(values: List[float]) -> float:
 def build_main_rows() -> List[Dict[str, object]]:
     out = []
     for spec in SOURCE_SPECS:
-        rows = read_csv_rows(spec["source_csv"])
+        source_csv = resolve_source_csv(spec["source_csv_candidates"])
+        rows = read_csv_rows(source_csv)
         row = find_row(rows, spec["target"])
         b_runs = int(float(row["baseline_num_runs"]))
         m_runs = int(float(row["tmmeada_num_runs"]))
@@ -121,7 +141,7 @@ def build_main_rows() -> List[Dict[str, object]]:
             "baseline_avg_mr_mean": to_float(row["baseline_avg_mr_mean"]),
             "tmmeada_avg_mr_mean": to_float(row["tmmeada_avg_mr_mean"]),
             "delta_avg_mr_mean": to_float(row["delta_avg_mr_mean"]),
-            "source_compare_csv": str(spec["source_csv"].relative_to(ROOT)).replace("\\", "/"),
+            "source_compare_csv": str(source_csv.relative_to(ROOT)).replace("\\", "/"),
         }
         out.append(main_row)
     return out
