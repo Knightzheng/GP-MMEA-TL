@@ -1,11 +1,20 @@
 import argparse
 import json
+import re
 import shutil
 import subprocess
 from datetime import datetime
 from pathlib import Path
 
 import yaml
+
+
+L2R_RE = re.compile(
+    r"Ep (?:Test|[0-9]+) \| l2r: acc of top \[1, 10, 50\] = \[(?P<h1>[0-9.]+)\s+(?P<h10>[0-9.]+)\s+(?P<h50>[0-9.]+)\s*\], mr = (?P<mr>[0-9.]+), mrr = (?P<mrr>[0-9.]+)"
+)
+R2L_RE = re.compile(
+    r"Ep (?:Test|[0-9]+) \| r2l: acc of top \[1, 10, 50\] = \[(?P<h1>[0-9.]+)\s+(?P<h10>[0-9.]+)\s+(?P<h50>[0-9.]+)\s*\], mr = (?P<mr>[0-9.]+), mrr = (?P<mrr>[0-9.]+)"
+)
 
 
 def now_ts() -> str:
@@ -35,9 +44,30 @@ def infer_seed_target(run_dir: Path):
         return None
 
 
-def latest_run_for_seed_target_in_target_eval(target_eval_dir: Path, seed: int, target: str):
+def has_complete_eval_metrics(log_path: Path) -> bool:
+    if not log_path.exists():
+        return False
+    text = log_path.read_text(encoding="utf-8", errors="replace")
+    l2r_ok = False
+    r2l_ok = False
+    for line in text.splitlines():
+        if L2R_RE.search(line):
+            l2r_ok = True
+        if R2L_RE.search(line):
+            r2l_ok = True
+    return l2r_ok and r2l_ok
+
+
+def is_complete_target_eval_run(run_dir: Path) -> bool:
+    parsed = infer_seed_target(run_dir)
+    if parsed is None:
+        return False
+    return has_complete_eval_metrics(run_dir / "log.txt")
+
+
+def matching_runs_for_seed_target_in_target_eval(target_eval_dir: Path, seed: int, target: str):
     if not target_eval_dir.exists():
-        return None
+        return []
     cands = []
     for run_dir in target_eval_dir.iterdir():
         if not run_dir.is_dir():
@@ -48,23 +78,22 @@ def latest_run_for_seed_target_in_target_eval(target_eval_dir: Path, seed: int, 
         s, t = parsed
         if s == seed and t == target:
             cands.append(run_dir)
-    if not cands:
-        return None
-    cands.sort(key=lambda p: p.stat().st_mtime, reverse=True)
-    return cands[0]
+    return cands
 
 
 def latest_run_for_seed_target_from_roots(target_eval_roots, seed: int, target: str):
     cands = []
     for root in target_eval_roots:
         p = Path(root)
-        run_dir = latest_run_for_seed_target_in_target_eval(p, seed, target)
-        if run_dir is not None:
-            cands.append(run_dir)
+        cands.extend(matching_runs_for_seed_target_in_target_eval(p, seed, target))
+    complete = [x for x in cands if is_complete_target_eval_run(x)]
+    if complete:
+        complete.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+        return complete[0]
     if not cands:
         return None
-    cands.sort(key=lambda p: p.stat().st_mtime, reverse=True)
-    return cands[0]
+    # There are matching runs, but none has complete eval metrics.
+    return None
 
 
 def resolve_source_model_name(seed: int, tmmeada: bool) -> str:

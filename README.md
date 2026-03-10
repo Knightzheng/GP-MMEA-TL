@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260309_main_table_bucket.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260309_ja_fbdb_expand5_final.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -127,7 +127,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `FBDB15K`：`delta_avg_mrr_mean = +0.00075`（v7b formal）
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`（v8, 5-seed）
-- 置信度说明：`ja_en/FBDB15K` 当前为 2-seed，`fr_en/FBYG15K` 为 5-seed。
+- 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
 - 下一步：补齐 `ja_en` 与 `FBDB15K` 的 5-seed 扩展，并将 4 目标统一为同口径主表后用于终稿主结果章节。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
@@ -496,3 +496,10 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `delta_avg_mr_mean = -9.080300`
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260309_main_table_bucket.md`
+
+## 30. 阶段更新（2026-03-09）：ja_en + FBDB15K 扩展收口
+
+- 扩展脚本：`scripts/run_transfer_adapt_ja_fbdb_expand5_next.py`
+- 通用断点续跑：`scripts/run_transfer_adapt_expand5_resume_generic.py`
+- 自动汇总主表与分桶：`scripts/make_transfer_main_and_bucket_report.py`
+- 最终阶段报告：`reports/transfer/transfer_stage_update_20260309_ja_fbdb_expand5_final.md`

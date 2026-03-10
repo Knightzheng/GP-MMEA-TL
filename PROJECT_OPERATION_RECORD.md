@@ -527,3 +527,16 @@
 - 把零散的 transfer-adapt 结果收敛为“可直接进论文主表”的统一格式；
 - 给出可追溯、可复算的误差分桶统计口径（场景/置信度/难度）；
 - 为下一步“补齐 ja_en/FBDB15K 的 5-seed”提供明确基线。
+
+## 13. 2026-03-09 追加记录（ja_en + FBDB15K expand5 自动收口）
+
+本次追加操作：
+
+1. 恢复并完成 `ja_en + FBDB15K` 的 expand5 队列（缺失 seed 自动补跑）。
+2. 自动刷新 4目标统一主结果表与误差分桶分析。
+3. 自动更新 README 与阶段报告链接。
+4. 将本阶段结果与脚本改动提交并同步到 GitHub `sort` 分支。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260309_ja_fbdb_expand5_final.md`

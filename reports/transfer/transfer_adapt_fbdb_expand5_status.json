@@ -1,0 +1,57 @@
+{
+  "timestamp": "20260310-225922",
+  "target": "FBDB15K",
+  "seeds": [
+    42,
+    3407,
+    2026,
+    7,
+    123
+  ],
+  "run_missing": 1,
+  "baseline": {
+    "stage_target_eval": "runs\\transfer\\transfer_adapt_fbdb_expand5_baseline\\target_eval",
+    "fallback_target_eval": "runs/transfer/transfer_adapt_pilot/target_eval",
+    "merged_target_eval": "runs/transfer/transfer_adapt_fbdb_expand5_merged_baseline/target_eval",
+    "initial_selected": {
+      "42": "runs\\transfer\\transfer_adapt_pilot\\target_eval\\20260304-235807-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42",
+      "3407": "runs\\transfer\\transfer_adapt_pilot\\target_eval\\20260305-011633-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s3407"
+    },
+    "initial_missing_seeds": [
+      2026,
+      7,
+      123
+    ],
+    "final_selected": {
+      "42": "runs\\transfer\\transfer_adapt_pilot\\target_eval\\20260304-235807-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42",
+      "3407": "runs\\transfer\\transfer_adapt_pilot\\target_eval\\20260305-011633-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s3407",
+      "2026": "runs\\transfer\\transfer_adapt_fbdb_expand5_baseline\\target_eval\\20260310-114730-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s2026",
+      "7": "runs\\transfer\\transfer_adapt_fbdb_expand5_baseline\\target_eval\\20260310-160541-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s7",
+      "123": "runs\\transfer\\transfer_adapt_fbdb_expand5_baseline\\target_eval\\20260310-203554-MEAformer-transfer-adapt-target-fbdb15k-transfer-tgt-FBDB15K-norm-s123"
+    },
+    "final_missing_seeds": []
+  },
+  "tmmeada": {
+    "stage_target_eval": "runs\\transfer\\transfer_adapt_fbdb_expand5_tmmeada\\target_eval",
+    "fallback_target_eval": "runs/transfer/transfer_adapt_v7_fbdb_formal_v7b/target_eval",
+    "merged_target_eval": "runs/transfer/transfer_adapt_fbdb_expand5_merged_tmmeada/target_eval",
+    "initial_selected": {
+      "42": "runs\\transfer\\transfer_adapt_v7_fbdb_formal_v7b\\target_eval\\20260305-214537-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42",
+      "3407": "runs\\transfer\\transfer_adapt_v7_fbdb_formal_v7b\\target_eval\\20260305-215928-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s3407"
+    },
+    "initial_missing_seeds": [
+      2026,
+      7,
+      123
+    ],
+    "final_selected": {
+      "42": "runs\\transfer\\transfer_adapt_v7_fbdb_formal_v7b\\target_eval\\20260305-214537-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s42",
+      "3407": "runs\\transfer\\transfer_adapt_v7_fbdb_formal_v7b\\target_eval\\20260305-215928-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s3407",
+      "2026": "runs\\transfer\\transfer_adapt_fbdb_expand5_tmmeada\\target_eval\\20260310-140455-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s2026",
+      "7": "runs\\transfer\\transfer_adapt_fbdb_expand5_tmmeada\\target_eval\\20260310-182200-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s7",
+      "123": "runs\\transfer\\transfer_adapt_fbdb_expand5_tmmeada\\target_eval\\20260310-223930-TMMEA-DA-transfer-adapt-v7b-target-fbdb15k-transfer-tgt-FBDB15K-norm-s123"
+    },
+    "final_missing_seeds": []
+  },
+  "report_prefix": "reports/transfer/transfer_adapt_v7_fbdb_expand5"
+}
