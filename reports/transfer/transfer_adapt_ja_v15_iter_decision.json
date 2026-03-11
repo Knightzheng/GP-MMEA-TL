@@ -1,0 +1,91 @@
+{
+  "timestamp": "20260311-183843",
+  "variant_results": {
+    "v15_full5": {
+      "delta_avg_mrr_mean": 0.0121,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_ja_v15_expand5_compare_vs_baseline.csv",
+      "selected_seeds": [
+        7,
+        42,
+        123,
+        2026,
+        3407
+      ],
+      "matched_compare_seeds": [
+        7,
+        42,
+        123,
+        2026,
+        3407
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": []
+    },
+    "v15_pilot2": {
+      "delta_avg_mrr_mean": 0.013250000000000095,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_ja_v15_pilot2seed_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "matched_compare_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true
+    },
+    "v15a_pilot2": {
+      "delta_avg_mrr_mean": null,
+      "compare_csv": null,
+      "selected_seeds": [],
+      "matched_compare_seeds": [],
+      "missing_seeds": [
+        42,
+        2026
+      ],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": false,
+      "skipped_by_flag": true
+    },
+    "v15b_pilot2": {
+      "delta_avg_mrr_mean": null,
+      "compare_csv": null,
+      "selected_seeds": [],
+      "matched_compare_seeds": [],
+      "missing_seeds": [
+        42,
+        2026
+      ],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": false,
+      "skipped_by_flag": true
+    },
+    "v15c_pilot2": {
+      "delta_avg_mrr_mean": null,
+      "compare_csv": null,
+      "selected_seeds": [],
+      "matched_compare_seeds": [],
+      "missing_seeds": [
+        42,
+        2026
+      ],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": false,
+      "skipped_by_flag": true
+    }
+  },
+  "decision": {
+    "best_variant_pilot2": "v15",
+    "best_delta_avg_mrr_mean": 0.013250000000000095,
+    "v15_delta_avg_mrr_mean": 0.013250000000000095,
+    "improve_over_v15": 0.0,
+    "expanded_variant_to_full5": null
+  }
+}

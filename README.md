@@ -117,18 +117,18 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260309_ja_fbdb_expand5_final.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`
 
 ## 8. 当前阶段结论（简要）
 
 - 流程层面：baseline 与方法分支均已形成可复现实验链路（配置-运行-汇总-对比-报告）。
 - 结果层面（最新）：在当前 4 目标主结果表中，`ja_en`、`FBDB15K`、`fr_en`、`FBYG15K` 均为正增益。
-  - `ja_en`：`delta_avg_mrr_mean = +0.00075`（v6 mixed）
-  - `FBDB15K`：`delta_avg_mrr_mean = +0.00075`（v7b formal）
+  - `ja_en`：`delta_avg_mrr_mean = +0.01210`（v15 refresh4 da0025, 5-seed）
+  - `FBDB15K`：`delta_avg_mrr_mean = +0.00080`（v7b formal）
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`（v8, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
-- 下一步：补齐 `ja_en` 与 `FBDB15K` 的 5-seed 扩展，并将 4 目标统一为同口径主表后用于终稿主结果章节。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，可在 `ja_en v15` 基线之上再尝试轻量变体。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -503,3 +503,20 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 通用断点续跑：`scripts/run_transfer_adapt_expand5_resume_generic.py`
 - 自动汇总主表与分桶：`scripts/make_transfer_main_and_bucket_report.py`
 - 最终阶段报告：`reports/transfer/transfer_stage_update_20260309_ja_fbdb_expand5_final.md`
+
+## 31. 阶段更新（2026-03-11）：ja_en v15 正式 5-seed 完成
+
+- 完成 `ja_en v15` 的缺失 seeds 补跑：`3407, 7, 123`
+- 最终 5-seed compare：
+  - `reports/transfer/transfer_adapt_ja_v15_expand5_compare_vs_baseline.csv`
+- 最终结果（ja_en）：
+  - `delta_avg_hits@1_mean = +0.01094`
+  - `delta_avg_hits@10_mean = +0.01410`
+  - `delta_avg_mrr_mean = +0.01210`
+- 新增恢复与收口文件：
+  - `reports/transfer/transfer_stage_update_20260311_ja_v15_takeover.md`
+  - `reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`
+- 同步修复：
+  - `scripts/summarize_transfer_formal.py` 仅统计 `[DONE] return_code=0` 的完整 run
+  - `scripts/run_transfer_adapt_expand5_resume_generic.py` 与相关续跑脚本改为跳过中断 run
+  - `scripts/make_transfer_main_and_bucket_report.py` 将 `ja_en` 主表条目切换到 `v15`

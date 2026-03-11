@@ -1186,3 +1186,37 @@
   - runs/transfer/transfer_adapt_fbyg_expand5/queue_20260308-182720.out.log
   - runs/transfer/transfer_adapt_fbyg_expand5/queue_20260308-182720.err.log
 - stage note: reports/transfer/transfer_stage_update_20260308_fbyg_expand5_launch.md
+
+## 30. 2026-03-11 ja_en v15 full5 finalized (ASCII summary)
+- Context:
+  - uncommitted `ja_en v15` branch existed after previous session crash.
+  - completed pilot seeds: `42, 2026`; interrupted seed: `3407`.
+- Recovery/code fixes:
+  - added `scripts/transfer_adapt_utils.py`
+  - updated `scripts/run_transfer_adapt_ja_v15_pilot.py`
+  - updated `scripts/run_transfer_adapt_ja_v15_iter_queue.py`
+  - updated `scripts/summarize_transfer_formal.py`
+  - updated `scripts/run_transfer_adapt_expand5_resume_generic.py`
+  - updated `scripts/run_transfer_adapt_v14_fren_expand5_resume.py`
+  - updated `scripts/run_transfer_adapt_fbyg_expand5_resume.py`
+- Key fix:
+  - only logs with `[DONE] return_code=0` are counted as completed runs.
+- Completed missing `ja_en v15` seeds:
+  - `3407`
+  - `7`
+  - `123`
+- Final `ja_en v15` 5-seed:
+  - compare file: `reports/transfer/transfer_adapt_ja_v15_expand5_compare_vs_baseline.csv`
+  - delta_avg_hits@1_mean = `+0.01094`
+  - delta_avg_hits@10_mean = `+0.01410`
+  - delta_avg_mrr_mean = `+0.01210`
+- Main-table update:
+  - `scripts/make_transfer_main_and_bucket_report.py` switched `ja_en` source to `v15_refresh4_da0025_expand5`
+  - refreshed:
+    - `reports/transfer/transfer_adapt_main_results_4target.csv`
+    - `reports/transfer/transfer_adapt_main_results_4target.md`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.csv`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.md`
+- New reports:
+  - `reports/transfer/transfer_stage_update_20260311_ja_v15_takeover.md`
+  - `reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`

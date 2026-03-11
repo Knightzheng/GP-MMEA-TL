@@ -1,0 +1,6 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260304-221002-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-DBP15K-ja_en-s42,DBP15K,ja_en,ja_en,0.4321,0.6561,0.509,78.454,0.4256,0.6585,0.506,76.16,0.42884999999999995,0.6573,0.5075000000000001,77.30699999999999
+20260305-003102-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-DBP15K-ja_en-s3407,DBP15K,ja_en,ja_en,0.4345,0.6587,0.511,65.636,0.4313,0.6568,0.507,65.501,0.4329,0.6577500000000001,0.509,65.5685
+20260309-132501-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-DBP15K-ja_en-s2026,DBP15K,ja_en,ja_en,0.4336,0.6498,0.508,91.629,0.4287,0.6475,0.505,91.695,0.43115000000000003,0.64865,0.5065,91.662
+20260310-014653-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-DBP15K-ja_en-s7,DBP15K,ja_en,ja_en,0.4348,0.6543,0.509,70.489,0.4333,0.6528,0.508,69.729,0.43405000000000005,0.6535500000000001,0.5085,70.10900000000001
+20260310-064559-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-DBP15K-ja_en-s123,DBP15K,ja_en,ja_en,0.4337,0.6558,0.51,74.807,0.4292,0.6568,0.508,75.731,0.43145,0.6563000000000001,0.509,75.269

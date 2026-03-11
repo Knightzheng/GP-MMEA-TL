@@ -1,0 +1,6 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260311-010054-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-DBP15K-ja_en-s42,DBP15K,ja_en,ja_en,0.4428,0.671,0.521,68.368,0.4425,0.6742,0.522,66.823,0.44265,0.6726000000000001,0.5215000000000001,67.59549999999999
+20260311-022024-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-DBP15K-ja_en-s2026,DBP15K,ja_en,ja_en,0.4462,0.662,0.521,80.367,0.4391,0.6595,0.517,80.624,0.44265,0.66075,0.519,80.49549999999999
+20260311-141959-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-DBP15K-ja_en-s3407,DBP15K,ja_en,ja_en,0.4456,0.6755,0.524,55.958,0.4429,0.6717,0.521,57.215,0.44425000000000003,0.6736,0.5225,56.5865
+20260311-153322-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-DBP15K-ja_en-s7,DBP15K,ja_en,ja_en,0.4457,0.6666,0.521,63.546,0.4383,0.6676,0.515,63.247,0.442,0.6671,0.518,63.3965
+20260311-170134-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-DBP15K-ja_en-s123,DBP15K,ja_en,ja_en,0.4419,0.6717,0.52,65.006,0.4412,0.6683,0.52,66.072,0.44155,0.6699999999999999,0.52,65.539

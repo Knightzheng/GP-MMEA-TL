@@ -15,6 +15,7 @@ L2R_RE = re.compile(
 R2L_RE = re.compile(
     r"Ep (?:Test|[0-9]+) \| r2l: acc of top \[1, 10, 50\] = \[(?P<h1>[0-9.]+)\s+(?P<h10>[0-9.]+)\s+(?P<h50>[0-9.]+)\s*\], mr = (?P<mr>[0-9.]+), mrr = (?P<mrr>[0-9.]+)"
 )
+RETURN_CODE_OK_MARKER = "[DONE] return_code=0"
 
 
 def now_ts() -> str:
@@ -48,6 +49,8 @@ def has_complete_eval_metrics(log_path: Path) -> bool:
     if not log_path.exists():
         return False
     text = log_path.read_text(encoding="utf-8", errors="replace")
+    if RETURN_CODE_OK_MARKER not in text:
+        return False
     l2r_ok = False
     r2l_ok = False
     for line in text.splitlines():

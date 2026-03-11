@@ -11,8 +11,9 @@ SOURCE_SPECS = [
     {
         "target": "ja_en",
         "scenario": "cross_lingual",
-        "method_variant": "v6_mixed",
+        "method_variant": "v15_refresh4_da0025_expand5",
         "source_csv_candidates": [
+            REPORT_DIR / "transfer_adapt_ja_v15_expand5_compare_vs_baseline.csv",
             REPORT_DIR / "transfer_adapt_v6_mixed_ja_expand5_compare_vs_baseline.csv",
             REPORT_DIR / "transfer_adapt_v6_mixed_compare_vs_baseline.csv",
         ],
@@ -194,8 +195,8 @@ def write_main_md(rows: List[Dict[str, object]], out_md: Path) -> None:
     lines.append("")
     lines.append("## Notes")
     lines.append("")
-    lines.append("- `ja_en` and `FBDB15K` currently use 2-seed formal snapshots.")
-    lines.append("- `fr_en` and `FBYG15K` already use 5-seed formal snapshots.")
+    lines.append("- All 4 targets currently use 5-seed formal snapshots.")
+    lines.append("- `ja_en` now uses the refreshed `v15_refresh4_da0025_expand5` result.")
     out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 

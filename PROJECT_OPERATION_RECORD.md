@@ -540,3 +540,34 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260309_ja_fbdb_expand5_final.md`
+
+## 14. 2026-03-11 追加记录（ja_en v15 正式收口）
+
+本次追加操作：
+
+1. 接管并核查 `ja_en v15` 未提交实验分支，确认已有 `s42/s2026` 完成、`s3407` 中断。
+2. 修复 transfer-adapt 恢复/汇总口径：
+   - 仅将 `[DONE] return_code=0` 的 run 视为完成；
+   - 续跑与汇总时只选择“按 seed 去重后的最新完整 run”。
+3. 补跑 `ja_en v15` 缺失 seeds：
+   - `3407`
+   - `7`
+   - `123`
+4. 刷新 `ja_en v15` 决策与正式 compare 文件：
+   - `reports/transfer/transfer_adapt_ja_v15_iter_decision.{md,json}`
+   - `reports/transfer/transfer_adapt_ja_v15_expand5_compare_vs_baseline.{csv,md}`
+5. 更新 4目标统一主结果表与误差分桶分析，将 `ja_en` 主表条目切换为 `v15_refresh4_da0025_expand5`。
+6. 更新 `README.md`、`PROCESS_LOG.md` 与本记录，并准备同步 GitHub。
+
+关键结果：
+
+- `ja_en v15`（5-seed）：
+  - `delta_avg_hits@1_mean = +0.01094`
+  - `delta_avg_hits@10_mean = +0.01410`
+  - `delta_avg_mrr_mean = +0.01210`
+- 当前 4目标主表均为 `5-seed` 正式正增益。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260311_ja_v15_takeover.md`
+- `reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`

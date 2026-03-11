@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 import yaml
+from transfer_adapt_utils import is_complete_target_eval_run
 
 
 def now_ts() -> str:
@@ -61,10 +62,13 @@ def latest_run_for_seed_target_from_roots(target_eval_roots, seed: int, target: 
         run_dir = latest_run_for_seed_target_in_target_eval(p, seed, target)
         if run_dir is not None:
             cands.append(run_dir)
+    complete = [run_dir for run_dir in cands if is_complete_target_eval_run(run_dir)]
+    if complete:
+        complete.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+        return complete[0]
     if not cands:
         return None
-    cands.sort(key=lambda p: p.stat().st_mtime, reverse=True)
-    return cands[0]
+    return None
 
 
 def resolve_source_model_name(seed: int, tmmeada: bool) -> str:
