@@ -1,0 +1,64 @@
+{
+  "timestamp": "20260311-221103",
+  "target": "FBDB15K",
+  "pilot_seeds": [
+    42,
+    2026
+  ],
+  "full_seeds": [
+    42,
+    3407,
+    2026,
+    7,
+    123
+  ],
+  "run_missing": 1,
+  "reference_compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v7_fbdb_expand5_compare_vs_baseline.csv",
+  "reference_delta_avg_mrr_mean": 0.0007999999999999986,
+  "expand_threshold": 0.0005,
+  "variant_results": {
+    "v16a_pilot": {
+      "delta_avg_mrr_mean": -0.0017500000000000016,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v16_fbdb_pilot_v16a_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true
+    },
+    "v16b_pilot": {
+      "delta_avg_mrr_mean": -0.0020000000000000018,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v16_fbdb_pilot_v16b_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true
+    },
+    "v16c_pilot": {
+      "delta_avg_mrr_mean": -0.0027500000000000024,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v16_fbdb_pilot_v16c_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true
+    }
+  },
+  "decision": {
+    "best_variant_pilot": "v16a",
+    "best_delta_avg_mrr_mean": -0.0017500000000000016,
+    "improve_over_current_ref": -0.00255,
+    "reference_delta_avg_mrr_mean": 0.0007999999999999986,
+    "expanded_variant_to_full5": null
+  }
+}

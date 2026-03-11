@@ -1,0 +1,117 @@
+[RUN] D:\Anaconda_envs\envs\bysj-meaformer\python.exe main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice FBDB15K --data_split norm --data_rate 0.3 --epoch 10 --lr 0.0003 --hidden_units 64,64,64 --save_model 0 --batch_size 32 --csls_k 3 --random_seed 2026 --exp_name BYSJ_TMMEA_DA_transfer_adapt_v16b_target_FBDB15K_tmmeada_transfer_adapt_v16_fbdb_v16b_s2026_from_DBP15K_zh_en --exp_id tmmeada_transfer_adapt_v16b_tgt_FBDB15K_refresh4_strict_tmmeada_transfer_adapt_v16_fbdb_v16b_s2026_from_DBP15K_zh_en_s2026 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau 0.1 --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_adapt_FBDB15K_expand5_s2026_src_s2026_ --transfer_non_strict 1 --transfer_skip_keys multimodal_encoder.entity_emb.weight --transfer_verbose 1 --use_domain_align 1 --domain_align_weight 0.025 --use_source_select 0 --source_select_weight 0.0 --source_select_temp 1.0 --use_missing_gate 0 --missing_align_weight 0.0 --domain_align_margin 0.0 --domain_align_neg_weight 0.0 --il --semi_learn_step 1 --il_start 2 --il_refresh_interval 4 --unsup --unsup_k 800 --unsup_min_sim -1.0 --unsup_dynamic_quantile 0.2 --unsup_mode img --il_confidence_min 0.0 --il_confidence_quantile 0.35 --il_confidence_keep_min 100 --csls
+�����﷨����ȷ��
+�����﷨����ȷ��
+INFO - 03/11/26 22:47:48 - 0:00:00 - ============ Initialized logger ============
+INFO - 03/11/26 22:47:48 - 0:00:00 - The experiment will be stored in D:\code\codes\cursor\BYSJ_zyf\data\mmkg\dump/0311-BYSJ_TMMEA_DA_transfer_adapt_v16b_target_FBDB15K_tmmeada_transfer_adapt_v16_fbdb_v16b_s2026_from_DBP15K_zh_en\MEAformer_FBDB15K_0.3_tmmeada_transfer_adapt_v16b_tgt_FBDB15K_refresh4_strict_tmmeada_transfer_adapt_v16_fbdb_v16b_s2026_from_DBP15K_zh_en_s2026
+
+INFO - 03/11/26 22:47:48 - 0:00:00 - Running command: python main.py --gpu 0 --eval_epoch 1 --only_test 0 --model_name MEAformer --data_choice FBDB15K --data_split norm --data_rate '0.3' --epoch 10 --lr '0.0003' --hidden_units '64,64,64' --save_model 0 --batch_size 32 --csls_k 3 --random_seed 2026 --exp_name BYSJ_TMMEA_DA_transfer_adapt_v16b_target_FBDB15K_tmmeada_transfer_adapt_v16_fbdb_v16b_s2026_from_DBP15K_zh_en --exp_id tmmeada_transfer_adapt_v16b_tgt_FBDB15K_refresh4_strict_tmmeada_transfer_adapt_v16_fbdb_v16b_s2026_from_DBP15K_zh_en_s2026 --workers 1 --dist 0 --accumulation_steps 1 --scheduler cos --attr_dim 64 --img_dim 64 --name_dim 64 --char_dim 64 --hidden_size 64 --tau '0.1' --structure_encoder gat --num_attention_heads 1 --num_hidden_layers 1 --use_surface 0 --use_intermediate 0 --replay 0 --model_name_save MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_adapt_FBDB15K_expand5_s2026_src_s2026_ --transfer_non_strict 1 --transfer_skip_keys 'multimodal_encoder.entity_emb.weight' --transfer_verbose 1 --use_domain_align 1 --domain_align_weight '0.025' --use_source_select 0 --source_select_weight '0.0' --source_select_temp '1.0' --use_missing_gate 0 --missing_align_weight '0.0' --domain_align_margin '0.0' --domain_align_neg_weight '0.0' --il --semi_learn_step 1 --il_start 2 --il_refresh_interval 4 --unsup --unsup_k 800 --unsup_min_sim '-1.0' --unsup_dynamic_quantile '0.2' --unsup_mode img --il_confidence_min '0.0' --il_confidence_quantile '0.35' --il_confidence_keep_min 100 --csls
+
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\main.py:41: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler()
+INFO - 03/11/26 22:47:50 - 0:00:02 - 94.56% entities have images
+INFO - 03/11/26 22:47:50 - 0:00:02 - image feature shape:(27793, 4096)
+INFO - 03/11/26 22:47:55 - 0:00:07 - visual seed filter: topk=800, candidate=80000, unsup_min_sim=-1.0000, unsup_dynamic_q=0.20, dyn_thr=0.7159, final_thr=0.7159, passed_thr=7405, selected=800
+INFO - 03/11/26 22:47:55 - 0:00:07 - 4.25% in true links
+INFO - 03/11/26 22:47:55 - 0:00:07 - visual links length: 800
+INFO - 03/11/26 22:47:55 - 0:00:07 - #left entity : 14951, #right entity: 12842
+INFO - 03/11/26 22:47:55 - 0:00:07 - #left entity not in train set: 14151, #right entity not in train set: 12042
+INFO - 03/11/26 22:47:56 - 0:00:08 - relation feature shape:(27793, 1000)
+INFO - 03/11/26 22:47:56 - 0:00:08 - attribute feature shape:(27793, 341)
+INFO - 03/11/26 22:47:56 - 0:00:08 - -----dataset summary-----
+INFO - 03/11/26 22:47:56 - 0:00:08 - dataset:		 D:\code\codes\cursor\BYSJ_zyf\data\mmkg\FBDB15K\norm
+INFO - 03/11/26 22:47:56 - 0:00:08 - triple num:	 691241
+INFO - 03/11/26 22:47:56 - 0:00:08 - entity num:	 27793
+INFO - 03/11/26 22:47:56 - 0:00:08 - relation num:	 1624
+INFO - 03/11/26 22:47:56 - 0:00:08 - train ill num:	 800 	 test ill num:	 8993
+INFO - 03/11/26 22:47:56 - 0:00:08 - -------------------------
+D:\code\codes\cursor\BYSJ_zyf\baselines\MEAformer\src\utils.py:237: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:655.)
+  return torch.sparse.FloatTensor(indices, values, shape)
+INFO - 03/11/26 22:47:58 - 0:00:10 - [transfer_load] loaded=27 skipped_by_name=1 skipped_shape=2 skipped_missing=2 missing_after_load=3 unexpected_after_load=0
+INFO - 03/11/26 22:47:58 - 0:00:10 - [transfer_load] shape_mismatch_preview=[{'key': 'multimodal_encoder.att_fc.weight', 'source': (64, 1000), 'target': (64, 341)}, {'key': 'multimodal_encoder.img_fc.weight', 'source': (64, 2048), 'target': (64, 4096)}]
+INFO - 03/11/26 22:47:58 - 0:00:10 - loading model [MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_adapt_FBDB15K_expand5_s2026_src_s2026_.pkl] done!
+INFO - 03/11/26 22:47:58 - 0:00:10 - total params num: 2195974
+INFO - 03/11/26 22:47:58 - 0:00:10 - warmup_steps: 7
+INFO - 03/11/26 22:47:58 - 0:00:10 - total_steps: 50
+INFO - 03/11/26 22:47:58 - 0:00:10 - weight_decay: 0.0001
+loading raw data...
+highest sim: 1.000000238418579 lowest sim: 0.7059903740882874
+getting a sparse tensor r_adj...
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+Train | Ep [0/10] Step [26/50] LR [0.00019] Loss 1252.46044 :   0%|          | 0/10 [00:48<?, ?it/s]INFO - 03/11/26 22:48:53 - 0:01:05 - Ep 0 | l2r: acc of top [1, 10, 50] = [0.0076 0.0376 0.1099], mr = 1411.065, mrr = 0.020, Loss = 1252.4604
+INFO - 03/11/26 22:48:53 - 0:01:05 - Ep 0 | r2l: acc of top [1, 10, 50] = [0.0087 0.0404 0.107 ], mr = 1435.112, mrr = 0.022, Loss = 1252.4604
+INFO - 03/11/26 22:48:53 - 0:01:05 - Best model update in Ep 0: MRR from [0.0] --> [0.0203689751662086] ...
+
+Train | Ep [0/10] Step [26/50] LR [0.00019] Loss 1252.46044 :  10%|��         | 1/10 [00:53<08:04, 53.88s/it]
+Train | Ep [1/10] Step [51/50] LR [0.00000] Loss 811.56537 :  10%|��         | 1/10 [01:39<08:04, 53.88s/it] INFO - 03/11/26 22:49:44 - 0:01:55 - Ep 1 | l2r: acc of top [1, 10, 50] = [0.0091 0.0393 0.1185], mr = 1298.348, mrr = 0.022, Loss = 811.5654
+INFO - 03/11/26 22:49:44 - 0:01:55 - Ep 1 | r2l: acc of top [1, 10, 50] = [0.0099 0.0421 0.1142], mr = 1325.632, mrr = 0.023, Loss = 811.5654
+INFO - 03/11/26 22:49:44 - 0:01:55 - Best model update in Ep 1: MRR from [0.0203689751662086] --> [0.021950798541410958] ...
+
+Train | Ep [1/10] Step [51/50] LR [0.00000] Loss 811.56537 :  20%|����        | 2/10 [01:44<06:55, 51.93s/it]INFO - 03/11/26 22:49:44 - 0:01:55 - warmup_steps: 90
+INFO - 03/11/26 22:49:44 - 0:01:55 - total_steps: 600
+INFO - 03/11/26 22:49:44 - 0:01:55 - weight_decay: 0.0001
+INFO - 03/11/26 22:49:44 - 0:01:55 - load from the best model before IL...
+INFO - 03/11/26 22:49:44 - 0:01:55 -  --------------------- Test result ---------------------
+INFO - 03/11/26 22:49:50 - 0:02:02 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.0091 0.0393 0.1185], mr = 1298.348, mrr = 0.022, Loss = 811.5654
+INFO - 03/11/26 22:49:50 - 0:02:02 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.0099 0.0421 0.1142], mr = 1325.632, mrr = 0.023, Loss = 811.5654
+INFO - 03/11/26 22:49:50 - 0:02:02 - [epoch 2] il_filter raw=0 kept=0 thr=0.0000 (q=0.35, q_thr=0.0000, min=0.0000, fallback=0)
+
+Train | Ep [2/10] Step [26/600] LR [0.00002] Loss 770.51993 :  20%|����        | 2/10 [02:36<06:55, 51.93s/it]INFO - 03/11/26 22:50:40 - 0:02:52 - Ep 2 | l2r: acc of top [1, 10, 50] = [0.0092 0.0403 0.1185], mr = 1296.792, mrr = 0.022, Loss = 770.5199
+INFO - 03/11/26 22:50:40 - 0:02:52 - Ep 2 | r2l: acc of top [1, 10, 50] = [0.0097 0.0414 0.1145], mr = 1323.746, mrr = 0.023, Loss = 770.5199
+INFO - 03/11/26 22:50:40 - 0:02:52 - Best model update in Ep 2: MRR from [0.021950798541410958] --> [0.02215994393370689] ...
+
+Train | Ep [2/10] Step [26/600] LR [0.00002] Loss 770.51993 :  30%|������       | 3/10 [02:40<06:16, 53.84s/it]INFO - 03/11/26 22:50:40 - 0:02:52 - [epoch 3] il_filter raw=0 kept=0 thr=0.0000 (q=0.35, q_thr=0.0000, min=0.0000, fallback=0)
+
+Train | Ep [3/10] Step [51/600] LR [0.00003] Loss 752.33074 :  30%|������       | 3/10 [03:26<06:16, 53.84s/it]INFO - 03/11/26 22:51:30 - 0:03:42 - Ep 3 | l2r: acc of top [1, 10, 50] = [0.0093 0.0406 0.1174], mr = 1296.919, mrr = 0.022, Loss = 752.3307
+INFO - 03/11/26 22:51:30 - 0:03:42 - Ep 3 | r2l: acc of top [1, 10, 50] = [0.009  0.0416 0.1165], mr = 1317.724, mrr = 0.023, Loss = 752.3307
+INFO - 03/11/26 22:51:30 - 0:03:42 - Best model update in Ep 3: MRR from [0.02215994393370689] --> [0.022287191462472482] ...
+
+Train | Ep [3/10] Step [51/600] LR [0.00003] Loss 752.33074 :  40%|��������      | 4/10 [03:31<05:15, 52.57s/it]INFO - 03/11/26 22:51:31 - 0:03:42 - [epoch 4] il_filter raw=0 kept=0 thr=0.0000 (q=0.35, q_thr=0.0000, min=0.0000, fallback=0)
+INFO - 03/11/26 22:51:31 - 0:03:42 - [epoch 4] #links in candidate set: 0
+
+Train | Ep [4/10] Step [76/600] LR [0.00005] Loss 718.21230 :  40%|��������      | 4/10 [04:16<05:15, 52.57s/it]INFO - 03/11/26 22:52:20 - 0:04:32 - Ep 4 | l2r: acc of top [1, 10, 50] = [0.0085 0.0414 0.1162], mr = 1289.769, mrr = 0.022, Loss = 718.2123
+INFO - 03/11/26 22:52:20 - 0:04:32 - Ep 4 | r2l: acc of top [1, 10, 50] = [0.0091 0.0414 0.1176], mr = 1305.704, mrr = 0.023, Loss = 718.2123
+
+Train | Ep [4/10] Step [76/600] LR [0.00005] Loss 718.21230 :  50%|����������     | 5/10 [04:21<04:17, 51.58s/it]INFO - 03/11/26 22:52:20 - 0:04:32 - [epoch 5] il_filter raw=1210 kept=786 thr=0.5477 (q=0.35, q_thr=0.5477, min=0.0000, fallback=0)
+
+Train | Ep [5/10] Step [101/600] LR [0.00006] Loss 677.58478 :  50%|����������     | 5/10 [05:06<04:17, 51.58s/it]INFO - 03/11/26 22:53:11 - 0:05:23 - Ep 5 | l2r: acc of top [1, 10, 50] = [0.0082 0.0416 0.1175], mr = 1289.803, mrr = 0.022, Loss = 677.5848
+INFO - 03/11/26 22:53:11 - 0:05:23 - Ep 5 | r2l: acc of top [1, 10, 50] = [0.0083 0.0428 0.1178], mr = 1302.684, mrr = 0.022, Loss = 677.5848
+
+Train | Ep [5/10] Step [101/600] LR [0.00006] Loss 677.58478 :  60%|������������    | 6/10 [05:11<03:24, 51.23s/it]INFO - 03/11/26 22:53:11 - 0:05:23 - [epoch 6] il_filter raw=639 kept=415 thr=0.5679 (q=0.35, q_thr=0.5679, min=0.0000, fallback=0)
+
+Train | Ep [6/10] Step [126/600] LR [0.00006] Loss 647.17091 :  60%|������������    | 6/10 [05:57<03:24, 51.23s/it]INFO - 03/11/26 22:54:02 - 0:06:14 - Ep 6 | l2r: acc of top [1, 10, 50] = [0.008  0.0411 0.1179], mr = 1303.643, mrr = 0.022, Loss = 647.1709
+INFO - 03/11/26 22:54:02 - 0:06:14 - Ep 6 | r2l: acc of top [1, 10, 50] = [0.0081 0.0424 0.117 ], mr = 1317.075, mrr = 0.022, Loss = 647.1709
+
+Train | Ep [6/10] Step [126/600] LR [0.00006] Loss 647.17091 :  70%|��������������   | 7/10 [06:02<02:33, 51.16s/it]INFO - 03/11/26 22:54:02 - 0:06:14 - [epoch 7] il_filter raw=369 kept=240 thr=0.5862 (q=0.35, q_thr=0.5862, min=0.0000, fallback=0)
+INFO - 03/11/26 22:54:02 - 0:06:14 - #new_links_select:240
+INFO - 03/11/26 22:54:02 - 0:06:14 - train_ill.shape:(1040, 2)
+INFO - 03/11/26 22:54:02 - 0:06:14 - #true_links: 6
+INFO - 03/11/26 22:54:02 - 0:06:14 - true link ratio: 2.5%
+INFO - 03/11/26 22:54:02 - 0:06:14 - #entity not in train set: 13911 (left) 11802 (right)
+
+Train | Ep [7/10] Step [159/600] LR [0.00006] Loss 786.55704 :  70%|��������������   | 7/10 [07:05<02:33, 51.16s/it]INFO - 03/11/26 22:55:09 - 0:07:21 - Ep 7 | l2r: acc of top [1, 10, 50] = [0.0097 0.0454 0.1284], mr = 1287.742, mrr = 0.024, Loss = 786.5570
+INFO - 03/11/26 22:55:09 - 0:07:21 - Ep 7 | r2l: acc of top [1, 10, 50] = [0.0091 0.0474 0.1255], mr = 1298.473, mrr = 0.024, Loss = 786.5570
+INFO - 03/11/26 22:55:09 - 0:07:21 - Best model update in Ep 7: MRR from [0.022287191462472482] --> [0.023952818659464865] ...
+
+Train | Ep [7/10] Step [159/600] LR [0.00006] Loss 786.55704 :  80%|����������������  | 8/10 [07:10<01:52, 56.35s/it]INFO - 03/11/26 22:55:09 - 0:07:21 - [epoch 8] il_filter raw=0 kept=0 thr=0.0000 (q=0.35, q_thr=0.0000, min=0.0000, fallback=0)
+
+Train | Ep [8/10] Step [192/600] LR [0.00005] Loss 733.35204 :  80%|����������������  | 8/10 [08:10<01:52, 56.35s/it]INFO - 03/11/26 22:56:14 - 0:08:26 - Ep 8 | l2r: acc of top [1, 10, 50] = [0.0101 0.045  0.1292], mr = 1281.336, mrr = 0.024, Loss = 733.3520
+INFO - 03/11/26 22:56:14 - 0:08:26 - Ep 8 | r2l: acc of top [1, 10, 50] = [0.0098 0.0491 0.1267], mr = 1290.826, mrr = 0.025, Loss = 733.3520
+INFO - 03/11/26 22:56:14 - 0:08:26 - Best model update in Ep 8: MRR from [0.023952818659464865] --> [0.02442176166361062] ...
+
+Train | Ep [8/10] Step [192/600] LR [0.00005] Loss 733.35204 :  90%|������������������ | 9/10 [08:14<00:58, 58.95s/it]INFO - 03/11/26 22:56:14 - 0:08:26 - [epoch 9] il_filter raw=0 kept=0 thr=0.0000 (q=0.35, q_thr=0.0000, min=0.0000, fallback=0)
+INFO - 03/11/26 22:56:14 - 0:08:26 - [epoch 9] #links in candidate set: 0
+
+Train | Ep [9/10] Step [225/600] LR [0.00005] Loss 704.87825 :  90%|������������������ | 9/10 [09:15<00:58, 58.95s/it]INFO - 03/11/26 22:57:19 - 0:09:31 - Ep 9 | l2r: acc of top [1, 10, 50] = [0.0103 0.0468 0.1304], mr = 1281.113, mrr = 0.025, Loss = 704.8783
+INFO - 03/11/26 22:57:19 - 0:09:31 - Ep 9 | r2l: acc of top [1, 10, 50] = [0.0097 0.0489 0.1307], mr = 1289.209, mrr = 0.025, Loss = 704.8783
+INFO - 03/11/26 22:57:19 - 0:09:31 - Best model update in Ep 9: MRR from [0.02442176166361062] --> [0.024993048605941103] ...
+
+Train | Ep [9/10] Step [225/600] LR [0.00005] Loss 704.87825 : 100%|��������������������| 10/10 [09:19<00:00, 60.89s/it]
+Train | Ep [9/10] Step [225/600] LR [0.00005] Loss 704.87825 : 100%|��������������������| 10/10 [09:19<00:00, 56.00s/it]
+INFO - 03/11/26 22:57:19 - 0:09:31 - load from the best model before final testing ...
+INFO - 03/11/26 22:57:19 - 0:09:31 -  --------------------- Test result ---------------------
+INFO - 03/11/26 22:57:26 - 0:09:37 - Ep 9 | l2r: acc of top [1, 10, 50] = [0.0103 0.0468 0.1304], mr = 1281.113, mrr = 0.025, Loss = 704.8783
+INFO - 03/11/26 22:57:26 - 0:09:37 - Ep 9 | r2l: acc of top [1, 10, 50] = [0.0097 0.0489 0.1307], mr = 1289.209, mrr = 0.025, Loss = 704.8783
+INFO - 03/11/26 22:57:26 - 0:09:37 - min loss 704.8782501220703
+INFO - 03/11/26 22:57:26 - 0:09:37 - done!
+[DONE] return_code=0

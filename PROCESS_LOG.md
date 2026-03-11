@@ -1220,3 +1220,44 @@
 - New reports:
   - `reports/transfer/transfer_stage_update_20260311_ja_v15_takeover.md`
   - `reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`
+
+## 31. 2026-03-11 Transfer-Adapt v16 FBDB pilot queue launched (ASCII summary)
+- Goal:
+  - Optimize `FBDB15K` where current gain is small (`delta_avg_mrr_mean=+0.0008` in v7 expand5).
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v16a_refresh4_balanced.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v16b_refresh4_strict.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v16c_refresh5_srcsel.yaml`
+- Added automation script:
+  - `scripts/run_transfer_adapt_v16_fbdb_iter_queue.py`
+  - flow: `2-seed pilot (v16a/v16b/v16c) -> auto pick best -> expand to 5-seed only if pilot improves over v7 by threshold`
+- Dry-run check completed:
+  - `D:\Anaconda_envs\envs\bysj-main\python.exe scripts/run_transfer_adapt_v16_fbdb_iter_queue.py --run-missing 0`
+- Queue started:
+  - process/log root: `runs/transfer/iter_queue`
+  - logs:
+    - `runs/transfer/iter_queue/fbdb_v16_iter_20260311-221101.out.log`
+    - `runs/transfer/iter_queue/fbdb_v16_iter_20260311-221101.err.log`
+  - observed running target stage:
+    - `runs/transfer/transfer_adapt_v16_fbdb_pilot_v16a/target_eval/`
+
+## 32. 2026-03-11 Transfer-Adapt v16 FBDB finalized (ASCII summary)
+- Queue completion:
+  - finished with decision outputs (no runtime crash).
+  - key files:
+    - `reports/transfer/transfer_adapt_v16_fbdb_iter_decision.json`
+    - `reports/transfer/transfer_adapt_v16_fbdb_iter_decision.md`
+- Pilot setting:
+  - seeds: `42, 2026`
+  - variants: `v16a, v16b, v16c`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - v16a: `-0.00175`
+  - v16b: `-0.00200`
+  - v16c: `-0.00275`
+- Decision:
+  - best pilot variant: `v16a`
+  - reference (`v7 expand5`): `+0.0008`
+  - improve_over_ref: `-0.00255`
+  - `expanded_variant_to_full5 = None`
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260311_v16_fbdb_final.md`
