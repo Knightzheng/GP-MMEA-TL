@@ -651,3 +651,54 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
+
+## 17. 2026-03-12 追加记录（FBYG15K v19/v20 pilot，主表保持 v8）
+
+本次追加操作：
+
+1. 在迁移加载链路中新增前缀级过滤能力：
+   - `baselines/MEAformer/config.py`
+   - `baselines/MEAformer/main.py`
+   - `scripts/run_meaformer.py`
+   - `scripts/run_transfer_train_eval.py`
+2. 补强源模型解析逻辑，使 `scripts/transfer_adapt_utils.py` 可以回收已有 `transfer_adapt_*` 源检查点。
+3. 新增 `FBYG15K v19` 三个 pilot 配置与自动脚本：
+   - `tmmeada_target_fbyg15k_v19a_late_il_strict`
+   - `tmmeada_target_fbyg15k_v19b_late_il_skiprel`
+   - `tmmeada_target_fbyg15k_v19c_late_il_skiprel_skipfusion`
+   - `scripts/run_transfer_adapt_v19_fbyg_iter_queue.py`
+4. 发现 `v19` 的 `il_start=8` 与当前 fresh-proposal 周期错位，导致 IL 实际接近关闭。
+5. 在此基础上新增 `FBYG15K v20` 两个对齐周期的 pilot 配置与自动脚本：
+   - `tmmeada_target_fbyg15k_v20a_aligned_il_skiprel_skipfusion`
+   - `tmmeada_target_fbyg15k_v20b_aligned_il_q90_skiprel_skipfusion`
+   - `scripts/run_transfer_adapt_v20_fbyg_iter_queue.py`
+6. 完成 `v19` 与 `v20` 的 `2-seed pilot` 全流程，并生成决策与 compare 文件。
+7. 更新 `README.md`、`PROCESS_LOG.md` 与最新阶段报告链接，但保持主结果表不切换。
+
+关键结果：
+
+- 当前参考主表版本：`FBYG15K v8_mild_da_expand5`
+  - `5-seed delta_avg_mrr_mean = +0.00110`
+- `v19` pilot（`2-seed`, vs baseline）：
+  - `v19a = -0.00225`
+  - `v19b = -0.00250`
+  - `v19c = +0.00100`
+- `v20` pilot（`2-seed`, vs baseline）：
+  - `v20a = +0.00050`
+  - `v20b = +0.00050`
+
+关键诊断：
+
+- `v19` 主要验证了“更保守的迁移加载”，因为其 `late IL` 与 fresh-proposal 周期错位；
+- `v20` 对齐周期后，`epoch 5` 虽出现大量 IL 候选，但到 `epoch 9` 实际注入只剩 `1` 条链接，且真值率为 `0.0%`；
+- 这表明 `FBYG15K` 的下一步瓶颈在 IL 生成/刷新机制本身，而不是继续压 `quantile` 或继续追加 `skip keys/prefixes`。
+
+本次追加的直接作用：
+
+- 排除了 `FBYG15K` 上继续做轻量 `IL schedule / transfer-skip` 搜索的必要性；
+- 保留了当前最优正式版本 `v8`，避免以 pilot 偶然波动替换主表；
+- 为后续是否继续做 `FBYG15K` 方法优化，提供了明确而可复现的负结果证据链。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`

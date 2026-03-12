@@ -96,6 +96,11 @@ def main():
         default="multimodal_encoder.entity_emb.weight",
         help="comma-separated state_dict keys skipped in target load",
     )
+    parser.add_argument(
+        "--transfer-skip-prefixes",
+        default="",
+        help="comma-separated state_dict key prefixes skipped in target load",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -220,6 +225,8 @@ def main():
         target_m["model_name_save"] = source_ckpt_name
         target_m["transfer_non_strict"] = 1
         target_m["transfer_skip_keys"] = args.transfer_skip_keys
+        if args.transfer_skip_prefixes.strip():
+            target_m["transfer_skip_prefixes"] = args.transfer_skip_prefixes
         target_m["transfer_verbose"] = 1
         if args.target_epoch is not None:
             target_m["epoch"] = int(args.target_epoch)

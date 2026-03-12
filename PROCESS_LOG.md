@@ -1332,3 +1332,44 @@
   - the main gain comes from cleaner initial visual seeds rather than more DA-weight tuning
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
+
+## 35. 2026-03-12 Transfer-Adapt v19/v20 FBYG pilot finalized (ASCII summary)
+- Goal:
+  - continue optimizing `FBYG15K` beyond current `v8` main-table result (`5-seed delta_avg_mrr_mean=+0.00110`).
+- Code changes:
+  - added prefix-level transfer filtering:
+    - `baselines/MEAformer/config.py`
+    - `baselines/MEAformer/main.py`
+    - `scripts/run_meaformer.py`
+    - `scripts/run_transfer_train_eval.py`
+  - improved source-checkpoint resolver:
+    - `scripts/transfer_adapt_utils.py`
+- Added automation:
+  - `scripts/run_transfer_adapt_v19_fbyg_iter_queue.py`
+  - `scripts/run_transfer_adapt_v20_fbyg_iter_queue.py`
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v19a_late_il_strict.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v19b_late_il_skiprel.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v19c_late_il_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v20a_aligned_il_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v20b_aligned_il_q90_skiprel_skipfusion.yaml`
+- v19 pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v19a = -0.00225`
+  - `v19b = -0.00250`
+  - `v19c = +0.00100`
+- v19 diagnostic:
+  - `il_start=8` was misaligned with the current 5-epoch fresh-proposal cycle, so late IL was effectively disabled.
+  - `v19c` showed that `skip rel_fc + skip fusion` reduces negative transfer, but still did not beat `v8`.
+- v20 pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v20a = +0.00050`
+  - `v20b = +0.00050`
+- v20 diagnostic:
+  - aligned IL (`il_start=5`) produced many early candidates at epoch 5 (`raw≈2140-2247`),
+    but collapsed to only `1` injected link by epoch 9.
+  - final injected link true ratio was `0.0%` for both seeds in both `v20a/v20b`.
+- Decision:
+  - keep `FBYG15K` main-table version unchanged: `v8_mild_da_expand5`
+  - do not expand `v19/v20` to `5-seed`
+  - if future optimization continues on `FBYG15K`, focus on the IL generation/refresh mechanism itself rather than more schedule/skip-key tuning
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`

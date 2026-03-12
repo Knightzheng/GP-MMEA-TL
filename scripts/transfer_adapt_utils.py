@@ -119,16 +119,33 @@ def resolve_source_model_name(seed: int, tmmeada: bool = False) -> str:
             "MEAformer_DBP15K_zh_en_"
             f"tmmeada_transfer_src_zh_en_epoch10_tmmeada_transfer_formal_s{seed}_src_s{seed}_.pkl"
         )
-        pattern = f"*tmmeada_transfer_formal_s{seed}*src_s{seed}*.pkl"
+        patterns = [
+            f"*tmmeada_transfer_formal_s{seed}*src_s{seed}*.pkl",
+            f"*tmmeada_transfer_adapt*_s{seed}*src_s{seed}*.pkl",
+            f"*transfer_adapt*_s{seed}*src_s{seed}*.pkl",
+            f"*transfer_src_zh_en_epoch10*src_s{seed}*.pkl",
+        ]
     else:
         exact = save_dir / (
             "MEAformer_DBP15K_zh_en_"
             f"transfer_src_zh_en_epoch10_baseline_transfer_formal_s{seed}_src_s{seed}_.pkl"
         )
-        pattern = f"*baseline_transfer_formal_s{seed}*src_s{seed}*.pkl"
+        patterns = [
+            f"*baseline_transfer_formal_s{seed}*src_s{seed}*.pkl",
+            f"*baseline_transfer_adapt*_s{seed}*src_s{seed}*.pkl",
+            f"*transfer_src_zh_en_epoch10*src_s{seed}*.pkl",
+        ]
 
     if exact.exists():
         return exact.stem
 
-    matches = sorted(save_dir.glob(pattern), key=lambda p: p.stat().st_mtime, reverse=True)
-    return matches[0].stem if matches else ""
+    seen = set()
+    matches = []
+    for pattern in patterns:
+        for path in sorted(save_dir.glob(pattern), key=lambda p: p.stat().st_mtime, reverse=True):
+            if path not in seen:
+                seen.add(path)
+                matches.append(path)
+        if matches:
+            return matches[0].stem
+    return ""

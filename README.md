@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -128,8 +128,10 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`（v8, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
-- 方法优化最新判断：`FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，优先补写 `P1` 的消融与误差分析，而不是继续做轻量调参搜索。
+- 方法优化最新判断：
+  - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
+  - `FBYG15K` 的 `v19/v20` pilot 未超过 `v8`，当前主表版本仍保持 `v8_mild_da_expand5`。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 应优先改 IL 生成/刷新机制，而不是继续做 `il_start / quantile / skip keys` 级别的轻量搜索。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -574,3 +576,35 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `FBDB15K` 的收益主因是更干净的初始 visual seeds，而不是继续调 `DA weight`。
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
+
+## 34. 阶段更新（2026-03-12）：FBYG15K v19/v20 pilot 完成，主表保持 v8
+
+- 目标：继续优化 `FBYG15K`，验证“更严格的 IL 控制”与“更保守的迁移加载”是否能超过当前主表版本 `v8`。
+- 新增迁移加载能力：
+  - `baselines/MEAformer/config.py` / `baselines/MEAformer/main.py`
+  - 支持 `transfer_skip_prefixes`
+- 新增自动化：
+  - `scripts/run_transfer_adapt_v19_fbyg_iter_queue.py`
+  - `scripts/run_transfer_adapt_v20_fbyg_iter_queue.py`
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v19a_late_il_strict.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v19b_late_il_skiprel.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v19c_late_il_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v20a_aligned_il_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v20b_aligned_il_q90_skiprel_skipfusion.yaml`
+- `v19` pilot（2-seed, vs baseline）：
+  - `v19a = -0.00225`
+  - `v19b = -0.00250`
+  - `v19c = +0.00100`
+- `v20` pilot（2-seed, vs baseline）：
+  - `v20a = +0.00050`
+  - `v20b = +0.00050`
+- 关键诊断：
+  - `v19` 的 `late IL` 与当前 fresh-proposal 周期错位，实际近似“关闭 IL”；
+  - `v20` 对齐周期后虽然产生了大量早期候选，但最终注入链接在 `epoch 9` 只剩 `1` 条，且真值率为 `0.0%`。
+- 结论：
+  - `FBYG15K` 当前最佳版本仍为 `v8_mild_da_expand5`（`5-seed delta_avg_mrr_mean = +0.00110`）
+  - `v19/v20` 不扩展到 `5-seed`，主表不切换
+  - 若继续优化，应改 IL 机制本身，而不是继续做轻量调度/跳过项搜索
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`

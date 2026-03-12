@@ -492,16 +492,24 @@ class Runner:
             current_state = model.state_dict()
             skip_keys = set()
             raw_skip = getattr(self.args, "transfer_skip_keys", "")
+            skip_prefixes = []
             if isinstance(raw_skip, str) and len(raw_skip.strip()) > 0:
                 skip_keys = {x.strip() for x in raw_skip.split(",") if len(x.strip()) > 0}
+            raw_skip_prefixes = getattr(self.args, "transfer_skip_prefixes", "")
+            if isinstance(raw_skip_prefixes, str) and len(raw_skip_prefixes.strip()) > 0:
+                skip_prefixes = [x.strip() for x in raw_skip_prefixes.split(",") if len(x.strip()) > 0]
 
             filtered_state = {}
             skipped_by_name = []
+            skipped_by_prefix = []
             skipped_shape = []
             skipped_missing = []
             for key, value in loaded_state.items():
                 if key in skip_keys:
                     skipped_by_name.append(key)
+                    continue
+                if any(key.startswith(prefix) for prefix in skip_prefixes):
+                    skipped_by_prefix.append(key)
                     continue
                 if key not in current_state:
                     skipped_missing.append(key)
@@ -522,11 +530,15 @@ class Runner:
                 self.logger.info(
                     f"[transfer_load] loaded={len(filtered_state)} "
                     f"skipped_by_name={len(skipped_by_name)} "
+                    f"skipped_by_prefix={len(skipped_by_prefix)} "
                     f"skipped_shape={len(skipped_shape)} "
                     f"skipped_missing={len(skipped_missing)} "
                     f"missing_after_load={len(load_result.missing_keys)} "
                     f"unexpected_after_load={len(load_result.unexpected_keys)}"
                 )
+                if len(skipped_by_prefix) > 0:
+                    preview = skipped_by_prefix[:8]
+                    self.logger.info(f"[transfer_load] skipped_prefix_preview={preview}")
                 if len(skipped_shape) > 0:
                     preview = skipped_shape[:8]
                     self.logger.info(f"[transfer_load] shape_mismatch_preview={preview}")

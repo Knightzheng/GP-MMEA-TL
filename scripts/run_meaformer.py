@@ -165,6 +165,8 @@ def main():
         cmd.extend(["--transfer_non_strict", str(m["transfer_non_strict"])])
     if "transfer_skip_keys" in m and str(m["transfer_skip_keys"]).strip():
         cmd.extend(["--transfer_skip_keys", str(m["transfer_skip_keys"])])
+    if "transfer_skip_prefixes" in m and str(m["transfer_skip_prefixes"]).strip():
+        cmd.extend(["--transfer_skip_prefixes", str(m["transfer_skip_prefixes"])])
     if "transfer_verbose" in m:
         cmd.extend(["--transfer_verbose", str(m["transfer_verbose"])])
     if "use_domain_align" in m:

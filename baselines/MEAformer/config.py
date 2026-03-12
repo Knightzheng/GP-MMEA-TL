@@ -51,6 +51,12 @@ class cfg():
             help="comma-separated state_dict keys to skip when transfer_non_strict=1",
         )
         parser.add_argument(
+            "--transfer_skip_prefixes",
+            type=str,
+            default="",
+            help="comma-separated state_dict key prefixes to skip when transfer_non_strict=1",
+        )
+        parser.add_argument(
             "--transfer_verbose",
             type=int,
             default=1,

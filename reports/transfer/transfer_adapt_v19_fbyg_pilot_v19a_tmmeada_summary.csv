@@ -1,0 +1,3 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260312-105456-TMMEA-DA-transfer-adapt-v19a-target-fbyg15k-transfer-tgt-FBYG15K-norm-s42,FBYG15K,norm,FBYG15K,0.0356,0.0945,0.057,1046.519,0.0362,0.0935,0.057,1074.161,0.0359,0.094,0.057,1060.3400000000001
+20260312-111157-TMMEA-DA-transfer-adapt-v19a-target-fbyg15k-transfer-tgt-FBYG15K-norm-s2026,FBYG15K,norm,FBYG15K,0.0355,0.0843,0.055,1183.315,0.0341,0.0851,0.053,1194.072,0.0348,0.0847,0.054,1188.6934999999999
