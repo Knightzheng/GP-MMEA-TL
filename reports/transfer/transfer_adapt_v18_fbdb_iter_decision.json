@@ -1,0 +1,71 @@
+{
+  "timestamp": "20260312-040831",
+  "target": "FBDB15K",
+  "pilot_seeds": [
+    42,
+    2026
+  ],
+  "full_seeds": [
+    42,
+    3407,
+    2026,
+    7,
+    123
+  ],
+  "run_missing": 1,
+  "reference_compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v7_fbdb_expand5_compare_vs_baseline.csv",
+  "reference_delta_avg_mrr_mean": 0.0007999999999999986,
+  "expand_threshold": 0.0008,
+  "variant_results": {
+    "v18a_pilot": {
+      "delta_avg_mrr_mean": 0.0075,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v18_fbdb_pilot_v18a_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true,
+      "transfer_skip_keys": "multimodal_encoder.entity_emb.weight"
+    },
+    "v18b_pilot": {
+      "delta_avg_mrr_mean": 0.006999999999999999,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v18_fbdb_pilot_v18b_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true,
+      "transfer_skip_keys": "multimodal_encoder.entity_emb.weight"
+    },
+    "v18c_pilot": {
+      "delta_avg_mrr_mean": 0.008,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v18_fbdb_pilot_v18c_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true,
+      "transfer_skip_keys": "multimodal_encoder.entity_emb.weight,multimodal_encoder.rel_fc.weight,multimodal_encoder.rel_fc.bias"
+    }
+  },
+  "decision": {
+    "best_variant_pilot": "v18c",
+    "best_delta_avg_mrr_mean": 0.008,
+    "improve_over_current_ref": 0.0072000000000000015,
+    "reference_delta_avg_mrr_mean": 0.0007999999999999986,
+    "expanded_variant_to_full5": "v18c",
+    "expanded_variant_full5_delta_avg_mrr_mean": 0.008299999999999998,
+    "expanded_variant_full5_compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v18_fbdb_v18c_expand5_compare_vs_baseline.csv",
+    "expanded_variant_full5_missing_seeds": [],
+    "expanded_variant_full5_baseline_compare_missing_seeds": []
+  }
+}

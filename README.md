@@ -117,18 +117,19 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
 
 ## 8. 当前阶段结论（简要）
 
 - 流程层面：baseline 与方法分支均已形成可复现实验链路（配置-运行-汇总-对比-报告）。
 - 结果层面（最新）：在当前 4 目标主结果表中，`ja_en`、`FBDB15K`、`fr_en`、`FBYG15K` 均为正增益。
   - `ja_en`：`delta_avg_mrr_mean = +0.01210`（v15 refresh4 da0025, 5-seed）
-  - `FBDB15K`：`delta_avg_mrr_mean = +0.00080`（v7b formal）
+  - `FBDB15K`：`delta_avg_mrr_mean = +0.00830`（v18c bipartite late_il skiprel, 5-seed）
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`（v8, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，可在 `ja_en v15` 基线之上再尝试轻量变体。
+- 方法优化最新判断：`FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，优先补写 `P1` 的消融与误差分析，而不是继续做轻量调参搜索。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -520,3 +521,56 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `scripts/summarize_transfer_formal.py` 仅统计 `[DONE] return_code=0` 的完整 run
   - `scripts/run_transfer_adapt_expand5_resume_generic.py` 与相关续跑脚本改为跳过中断 run
   - `scripts/make_transfer_main_and_bucket_report.py` 将 `ja_en` 主表条目切换到 `v15`
+
+## 32. 阶段更新（2026-03-12）：FBDB15K v17 噪声控制 pilot 完成
+
+- 目标：验证 `FBDB15K` 的下一步优化是否应优先抑制伪标签噪声，而不是继续微调 `domain_align_weight`。
+- 新增配置与自动化：
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v17a_no_il_balanced.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v17b_late_il_strict.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v17c_late_il_skiprel.yaml`
+  - `scripts/run_transfer_adapt_v17_fbdb_iter_queue.py`
+- pilot 结果（vs baseline，`delta_avg_mrr_mean`）：
+  - `v17a`: `-0.00800`
+  - `v17b`: `-0.00850`
+  - `v17c`: `-0.00775`
+- 诊断：
+  - `v17` 初始 visual seeds 真值率提升到约 `5.67%`，但仍明显偏低；
+  - `v17b/v17c` 的严格晚启 IL 在日志中 `raw=0 kept=0`，说明瓶颈已经前移到初始 seeds，而不是 IL 调度。
+- 结论：
+  - `FBDB15K` 继续做 `P0` 风格调参意义不大；
+  - 下一步应直接进入 `P1`，改 `baselines/MEAformer/src/data.py::visual_pivot_induction` 的伪种子生成机制。
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260312_v17_fbdb_noise_control.md`
+
+## 33. 阶段更新（2026-03-12）：FBDB15K v18 bipartite seeds 正式 5-seed 完成
+
+- 目标：将 `FBDB15K` 从 `P0` 的配置调参切换到 `P1` 的伪种子质量改造，并验证是否能够稳定超过当前主表版本。
+- 核心代码改造：
+  - `baselines/MEAformer/src/data.py`：新增 `mutual nearest + margin + no fallback + unsup_k_max`
+  - `baselines/MEAformer/config.py`：新增对应命令行参数
+  - `scripts/run_meaformer.py`：新增参数透传
+- 新增配置与自动化：
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v18a_bipartite_no_il.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v18b_bipartite_late_il.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v18c_bipartite_late_il_skiprel.yaml`
+  - `scripts/run_transfer_adapt_v18_fbdb_iter_queue.py`
+- 关键中间证据：
+  - 初始 visual seeds 真值率从 `v17` 的约 `5.67%` 提升到 `v18` 的约 `15.67%`
+- pilot 结果（vs baseline，`delta_avg_mrr_mean`）：
+  - `v18a`: `+0.00750`
+  - `v18b`: `+0.00700`
+  - `v18c`: `+0.00800`
+- 自动选优并扩展：
+  - `best_variant_pilot = v18c`
+  - `expanded_variant_to_full5 = v18c`
+- 最终 5-seed（FBDB15K）：
+  - `delta_avg_hits@1_mean = +0.00454`
+  - `delta_avg_hits@10_mean = +0.01568`
+  - `delta_avg_mrr_mean = +0.00830`
+  - `delta_avg_mr_mean = -206.81670`
+- 结论：
+  - `v18c` 明显优于旧主表版本 `v7b (+0.0008)`，应作为新的 `FBDB15K` 主表版本。
+  - `FBDB15K` 的收益主因是更干净的初始 visual seeds，而不是继续调 `DA weight`。
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`

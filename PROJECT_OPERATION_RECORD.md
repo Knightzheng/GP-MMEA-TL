@@ -571,3 +571,83 @@
 
 - `reports/transfer/transfer_stage_update_20260311_ja_v15_takeover.md`
 - `reports/transfer/transfer_stage_update_20260311_ja_v15_final.md`
+
+## 15. 2026-03-12 追加记录（FBDB15K v17 噪声控制 pilot）
+
+本次追加操作：
+
+1. 重新评估 `FBDB15K` 的优化方向，确认不再继续围绕 `domain_align_weight` 做微调。
+2. 新增 `v17` 三个 `2-seed pilot` 变体并完成自动汇总：
+   - `v17a_no_il_balanced`
+   - `v17b_late_il_strict`
+   - `v17c_late_il_skiprel`
+3. 新增自动脚本：
+   - `scripts/run_transfer_adapt_v17_fbdb_iter_queue.py`
+4. 生成 `v17` 决策与对比文件：
+   - `reports/transfer/transfer_adapt_v17_fbdb_iter_decision.{md,json}`
+   - `reports/transfer/transfer_adapt_v17_fbdb_pilot_v17a_compare_vs_baseline.{csv,md}`
+   - `reports/transfer/transfer_adapt_v17_fbdb_pilot_v17b_compare_vs_baseline.{csv,md}`
+   - `reports/transfer/transfer_adapt_v17_fbdb_pilot_v17c_compare_vs_baseline.{csv,md}`
+5. 更新 `README.md`、`PROCESS_LOG.md` 与阶段报告链接，记录 `v17` 结论。
+
+关键结果：
+
+- 参考主表版本：`FBDB15K v7b`（`5-seed delta_avg_mrr_mean = +0.0008`）
+- `v17` pilot（`2-seed`, vs baseline）：
+  - `v17a = -0.00800`
+  - `v17b = -0.00850`
+  - `v17c = -0.00775`
+- `v17b/v17c` 在严格晚启 IL 设置下均未产生有效新伪链接（日志为 `il_filter raw=0 kept=0`）。
+
+本次追加的直接作用：
+
+- 用一次完整的 `P0` 验证，排除了“继续压缩 IL 注入量即可修复 FBDB”的路径；
+- 明确将下一步优化切换到 `P1`：修改 `visual_pivot_induction` 的选种机制；
+- 避免继续在 `FBDB15K` 上消耗时间做低收益的 `DA weight` 与轻量配置搜索。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260312_v17_fbdb_noise_control.md`
+
+## 16. 2026-03-12 追加记录（FBDB15K v18 bipartite seeds 正式收口）
+
+本次追加操作：
+
+1. 在 `baselines/MEAformer/src/data.py` 中重写 `visual_pivot_induction` 的可选分支，引入：
+   - `mutual nearest` 过滤
+   - `margin` 过滤
+   - `unsup_no_fallback`
+   - `unsup_k_max`
+2. 在 `baselines/MEAformer/config.py` 中新增相应命令行参数，并在 `scripts/run_meaformer.py` 中补齐透传。
+3. 新增 `v18` 三个 `FBDB15K` pilot 配置：
+   - `v18a_bipartite_no_il`
+   - `v18b_bipartite_late_il`
+   - `v18c_bipartite_late_il_skiprel`
+4. 新增自动脚本：
+   - `scripts/run_transfer_adapt_v18_fbdb_iter_queue.py`
+5. 完成 `2-seed pilot -> 自动选优 -> 5-seed expand` 全流程。
+6. 生成 `v18` 决策、pilot compare、formal compare 文件，并将 `FBDB15K` 主表版本切换为 `v18c`。
+7. 刷新 4目标统一主结果表与误差分桶分析。
+
+关键结果：
+
+- `v18` 初始 visual seeds 真值率约为 `15.67%`，明显高于 `v17` 的约 `5.67%`。
+- `v18` pilot（`2-seed`, vs baseline）：
+  - `v18a = +0.00750`
+  - `v18b = +0.00700`
+  - `v18c = +0.00800`
+- `v18c` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00454`
+  - `delta_avg_hits@10_mean = +0.01568`
+  - `delta_avg_mrr_mean = +0.00830`
+  - `delta_avg_mr_mean = -206.81670`
+
+本次追加的直接作用：
+
+- 验证 `P1` 路线正确，将 `FBDB15K` 从“边际小正增益”提升为“稳定明显正增益”；
+- 将 `FBDB15K` 主表版本从 `v7b` 切换为 `v18c`；
+- 证明 `FBDB15K` 的主要瓶颈在伪种子生成，而不是继续做 `DA weight` 或轻量 IL 调参。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`

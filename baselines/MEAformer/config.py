@@ -94,6 +94,12 @@ class cfg():
         parser.add_argument("--unsup", action="store_true", default=False)
         parser.add_argument("--unsup_k", type=int, default=1000, help="|visual seed|")
         parser.add_argument(
+            "--unsup_k_max",
+            type=int,
+            default=0,
+            help="maximum number of visual seeds kept after quality filtering; 0 means use unsup_k",
+        )
+        parser.add_argument(
             "--unsup_min_sim",
             type=float,
             default=-1.0,
@@ -104,6 +110,26 @@ class cfg():
             type=float,
             default=0.0,
             help="dynamic quantile threshold (0~1) on visual-seed candidate similarities",
+        )
+        parser.add_argument(
+            "--unsup_use_bipartite_filter",
+            type=int,
+            default=0,
+            choices=[0, 1],
+            help="use mutual-nearest bipartite filtering for unsupervised visual seeds",
+        )
+        parser.add_argument(
+            "--unsup_margin_min",
+            type=float,
+            default=0.0,
+            help="minimum mutual-nearest margin for unsupervised visual seeds",
+        )
+        parser.add_argument(
+            "--unsup_no_fallback",
+            type=int,
+            default=0,
+            choices=[0, 1],
+            help="disable rank-based fallback when quality filters return fewer visual seeds than unsup_k",
         )
         parser.add_argument(
             "--il_confidence_min",

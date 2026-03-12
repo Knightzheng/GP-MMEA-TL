@@ -252,71 +252,201 @@ def load_word_char_features(node_size, word2vec_path, args, logger):
 
 
 def visual_pivot_induction(args, left_ents, right_ents, img_features, ills, logger):
+    def build_legacy_visual_links(sim_mat, topk, min_sim, dyn_q):
+        cand_k = max(1, min(int(topk * 100), int(sim_mat.numel())))
+        two_d_indices = get_topk_indices(sim_mat, cand_k)
+        cand_sims = sim_mat[two_d_indices[:, 0], two_d_indices[:, 1]].detach().cpu().numpy()
+        dyn_thr = -1.0
+        if dyn_q > 0.0 and cand_sims.size > 0:
+            dyn_thr = float(np.quantile(cand_sims, dyn_q))
+        final_thr = max(min_sim, dyn_thr)
 
-    l_img_f = img_features[left_ents]  # left images
-    r_img_f = img_features[right_ents]  # right images
+        visual_links = []
+        used_inds = set()
+        passed_threshold = 0
+        for ind, sim in zip(two_d_indices, cand_sims):
+            if sim < final_thr:
+                continue
+            passed_threshold += 1
+            left_id = left_ents[ind[0]]
+            right_id = right_ents[ind[1]]
+            if left_id in used_inds or right_id in used_inds:
+                continue
+            used_inds.add(left_id)
+            used_inds.add(right_id)
+            visual_links.append((left_id, right_id))
+            if len(visual_links) == topk:
+                break
 
+        fallback_added = 0
+        if len(visual_links) < topk:
+            for ind in two_d_indices:
+                left_id = left_ents[ind[0]]
+                right_id = right_ents[ind[1]]
+                if left_id in used_inds or right_id in used_inds:
+                    continue
+                used_inds.add(left_id)
+                used_inds.add(right_id)
+                visual_links.append((left_id, right_id))
+                fallback_added += 1
+                if len(visual_links) == topk:
+                    break
+
+        return {
+            "visual_links": visual_links,
+            "candidate_count": cand_k,
+            "dyn_thr": dyn_thr,
+            "final_thr": final_thr,
+            "passed_threshold": passed_threshold,
+            "fallback_added": fallback_added,
+            "filter_mode": "legacy_global_topk",
+            "quality_thr": final_thr,
+        }
+
+    def build_bipartite_visual_links(sim_mat, topk, min_sim, dyn_q, margin_min, no_fallback, topk_max):
+        h_size, w_size = sim_mat.shape
+        row_topn = min(2, w_size)
+        col_topn = min(2, h_size)
+        row_vals, row_idx = torch.topk(sim_mat, k=row_topn, dim=1)
+        col_vals, col_idx = torch.topk(sim_mat, k=col_topn, dim=0)
+
+        candidate_rows = []
+        candidate_rights = []
+        candidate_sims = []
+        candidate_margins = []
+        candidate_quality = []
+        for row in range(h_size):
+            col = int(row_idx[row, 0].item())
+            if int(col_idx[0, col].item()) != row:
+                continue
+            best_sim = float(row_vals[row, 0].item())
+            row_second = float(row_vals[row, 1].item()) if row_topn > 1 else -1.0
+            col_second = float(col_vals[1, col].item()) if col_topn > 1 else -1.0
+            margin = min(best_sim - row_second, best_sim - col_second)
+            candidate_rows.append(row)
+            candidate_rights.append(col)
+            candidate_sims.append(best_sim)
+            candidate_margins.append(margin)
+            candidate_quality.append(best_sim + margin)
+
+        candidate_count = len(candidate_rows)
+        dyn_thr = -1.0
+        if dyn_q > 0.0 and candidate_quality:
+            dyn_thr = float(np.quantile(np.array(candidate_quality, dtype=np.float32), dyn_q))
+        quality_thr = dyn_thr if dyn_q > 0.0 else -1.0
+
+        filtered = []
+        for row, col, sim, margin, quality in zip(
+            candidate_rows,
+            candidate_rights,
+            candidate_sims,
+            candidate_margins,
+            candidate_quality,
+        ):
+            if sim < min_sim:
+                continue
+            if margin < margin_min:
+                continue
+            if quality < quality_thr:
+                continue
+            filtered.append((quality, sim, margin, row, col))
+
+        filtered.sort(key=lambda x: (x[0], x[1], x[2]), reverse=True)
+        selected_cap = topk
+        if topk_max > 0:
+            selected_cap = min(selected_cap, topk_max)
+        selected_target = topk
+        if topk_max > 0:
+            selected_target = min(selected_target, topk_max)
+        visual_links = [
+            (left_ents[row], right_ents[col]) for _, _, _, row, col in filtered[:selected_cap]
+        ]
+        fallback_added = 0
+        if (not no_fallback) and len(visual_links) < selected_target:
+            legacy = build_legacy_visual_links(sim_mat, selected_target, min_sim, dyn_q)
+            existing = set(visual_links)
+            for link in legacy["visual_links"]:
+                if link in existing:
+                    continue
+                visual_links.append(link)
+                existing.add(link)
+                fallback_added += 1
+                if len(visual_links) == selected_target:
+                    break
+
+        final_thr = max(min_sim, quality_thr if dyn_q > 0.0 else -1.0)
+        return {
+            "visual_links": visual_links,
+            "candidate_count": candidate_count,
+            "dyn_thr": dyn_thr,
+            "final_thr": final_thr,
+            "passed_threshold": len(filtered),
+            "fallback_added": fallback_added,
+            "filter_mode": "mutual_nearest_margin",
+            "quality_thr": quality_thr,
+            "margin_min": margin_min,
+            "mutual_candidates": candidate_count,
+        }
+
+    l_img_f = img_features[left_ents]
+    r_img_f = img_features[right_ents]
     img_sim = l_img_f.mm(r_img_f.t())
-    topk = args.unsup_k
-    cand_k = max(1, min(int(topk * 100), int(img_sim.numel())))
-    two_d_indices = get_topk_indices(img_sim, cand_k)
-    cand_sims = img_sim[two_d_indices[:, 0], two_d_indices[:, 1]].detach().cpu().numpy()
+
+    topk = int(getattr(args, "unsup_k", 1000))
+    topk_max = int(getattr(args, "unsup_k_max", 0))
     min_sim = float(getattr(args, "unsup_min_sim", -1.0))
     dyn_q = float(getattr(args, "unsup_dynamic_quantile", 0.0))
     dyn_q = min(1.0, max(0.0, dyn_q))
-    dyn_thr = -1.0
-    if dyn_q > 0.0 and cand_sims.size > 0:
-        dyn_thr = float(np.quantile(cand_sims, dyn_q))
-    final_thr = max(min_sim, dyn_thr)
+    use_bipartite_filter = bool(int(getattr(args, "unsup_use_bipartite_filter", 0)))
+    margin_min = float(getattr(args, "unsup_margin_min", 0.0))
+    no_fallback = bool(int(getattr(args, "unsup_no_fallback", 0)))
+
+    if use_bipartite_filter:
+        result = build_bipartite_visual_links(
+            img_sim,
+            topk=topk,
+            min_sim=min_sim,
+            dyn_q=dyn_q,
+            margin_min=margin_min,
+            no_fallback=no_fallback,
+            topk_max=topk_max,
+        )
+    else:
+        result = build_legacy_visual_links(
+            img_sim,
+            topk=topk,
+            min_sim=min_sim,
+            dyn_q=dyn_q,
+        )
+
     del l_img_f, r_img_f, img_sim
 
-    visual_links = []
-    used_inds = []
-    count = 0
-    passed_threshold = 0
-    for ind, sim in zip(two_d_indices, cand_sims):
-        if sim < final_thr:
-            continue
-        passed_threshold += 1
-        if left_ents[ind[0]] in used_inds:
-            continue
-        if right_ents[ind[1]] in used_inds:
-            continue
-        used_inds.append(left_ents[ind[0]])
-        used_inds.append(right_ents[ind[1]])
-        visual_links.append((left_ents[ind[0]], right_ents[ind[1]]))
-        count += 1
-        if count == topk:
-            break
-
-    # Fallback: if threshold is too strict, keep filling by rank order.
-    if count < topk:
-        for ind in two_d_indices:
-            if left_ents[ind[0]] in used_inds:
-                continue
-            if right_ents[ind[1]] in used_inds:
-                continue
-            used_inds.append(left_ents[ind[0]])
-            used_inds.append(right_ents[ind[1]])
-            visual_links.append((left_ents[ind[0]], right_ents[ind[1]]))
-            count += 1
-            if count == topk:
-                break
-
+    visual_links = result["visual_links"]
     count = 0.0
     for link in visual_links:
         if link in ills:
             count = count + 1
     ratio = 0.0 if len(visual_links) == 0 else (count / len(visual_links) * 100)
     logger.info(
-        f"visual seed filter: topk={topk}, candidate={cand_k}, "
+        f"visual seed filter: topk={topk}, selected_cap={topk_max if topk_max > 0 else topk}, "
+        f"candidate={result['candidate_count']}, mode={result['filter_mode']}, "
         f"unsup_min_sim={min_sim:.4f}, unsup_dynamic_q={dyn_q:.2f}, "
-        f"dyn_thr={dyn_thr:.4f}, final_thr={final_thr:.4f}, "
-        f"passed_thr={passed_threshold}, selected={len(visual_links)}"
+        f"dyn_thr={result['dyn_thr']:.4f}, final_thr={result['final_thr']:.4f}, "
+        f"passed_thr={result['passed_threshold']}, fallback_added={result['fallback_added']}, "
+        f"selected={len(visual_links)}"
     )
+    if use_bipartite_filter:
+        logger.info(
+            f"visual seed mutual stats: mutual_candidates={result.get('mutual_candidates', 0)}, "
+            f"margin_min={margin_min:.4f}, quality_thr={result.get('quality_thr', -1.0):.4f}, "
+            f"no_fallback={int(no_fallback)}"
+        )
     logger.info(f"{ratio:.2f}% in true links")
     logger.info(f"visual links length: {(len(visual_links))}")
-    train_ill = np.array(visual_links, dtype=np.int32)
+    if len(visual_links) == 0:
+        train_ill = np.empty((0, 2), dtype=np.int32)
+    else:
+        train_ill = np.array(visual_links, dtype=np.int32)
     return train_ill
 
 

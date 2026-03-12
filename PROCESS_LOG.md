@@ -1261,3 +1261,74 @@
   - `expanded_variant_to_full5 = None`
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260311_v16_fbdb_final.md`
+
+## 33. 2026-03-12 Transfer-Adapt v17 FBDB noise-control pilot finalized (ASCII summary)
+- Goal:
+  - validate whether reducing pseudo-label injection is a better next step for `FBDB15K` than more `domain_align_weight` tuning.
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v17a_no_il_balanced.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v17b_late_il_strict.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v17c_late_il_skiprel.yaml`
+- Added automation script:
+  - `scripts/run_transfer_adapt_v17_fbdb_iter_queue.py`
+- Pilot setting:
+  - seeds: `42, 2026`
+  - variants: `v17a, v17b, v17c`
+  - reference (`v7 expand5`): `delta_avg_mrr_mean=+0.0008`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v17a`: `-0.00800`
+  - `v17b`: `-0.00850`
+  - `v17c`: `-0.00775`
+- Diagnostic evidence:
+  - initial visual-seed true-link ratio improved from `3.78%` (`v16a s42`) to `5.67%` (`v17 s42`), but remained too low.
+  - `v17b/v17c` strict late-IL runs showed `il_filter raw=0 kept=0` at epochs `8/9`.
+  - `v17c` skip-rel transfer was slightly better than `v17b`, but still far below current `v7`.
+- Decision:
+  - `best_variant_pilot = v17c`
+  - `improve_over_current_ref = -0.00855`
+  - `expanded_variant_to_full5 = None`
+- Conclusion:
+  - stop `P0`-style config-only search on `FBDB15K`
+  - next step should move to `P1`: modify `baselines/MEAformer/src/data.py::visual_pivot_induction`
+    with mutual-nearest / margin / no-fallback seed filtering.
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260312_v17_fbdb_noise_control.md`
+
+## 34. 2026-03-12 Transfer-Adapt v18 FBDB bipartite-seed full5 finalized (ASCII summary)
+- Goal:
+  - move from `P0` config-only tuning to `P1` pseudo-seed quality improvement on `FBDB15K`.
+- Code changes:
+  - `baselines/MEAformer/src/data.py`
+    - add optional `mutual nearest + margin` visual-seed filtering
+    - add `unsup_no_fallback`
+    - add `unsup_k_max`
+  - `baselines/MEAformer/config.py`
+    - add new `unsup_*` CLI arguments
+  - `scripts/run_meaformer.py`
+    - pass new `unsup_*` arguments through the runner
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v18a_bipartite_no_il.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v18b_bipartite_late_il.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbdb15k_v18c_bipartite_late_il_skiprel.yaml`
+- Added automation script:
+  - `scripts/run_transfer_adapt_v18_fbdb_iter_queue.py`
+- Key diagnostic evidence:
+  - initial visual-seed true-link ratio improved from about `5.67%` (`v17`) to about `15.67%` (`v18`)
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v18a`: `+0.00750`
+  - `v18b`: `+0.00700`
+  - `v18c`: `+0.00800`
+- Decision:
+  - `best_variant_pilot = v18c`
+  - `improve_over_current_ref = +0.00720`
+  - auto-expanded to `5-seed`
+- Full-5 result (`v18c`, vs baseline):
+  - `delta_avg_hits@1_mean = +0.00454`
+  - `delta_avg_hits@10_mean = +0.01568`
+  - `delta_avg_mrr_mean = +0.00830`
+  - `delta_avg_mr_mean = -206.81670`
+- Conclusion:
+  - `FBDB15K` main-table version should switch from `v7b` to `v18c`
+  - the main gain comes from cleaner initial visual seeds rather than more DA-weight tuning
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
