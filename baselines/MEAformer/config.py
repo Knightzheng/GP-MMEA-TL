@@ -155,6 +155,30 @@ class cfg():
             default=0,
             help="minimum pseudo links kept by confidence ranking when filtering is too strict",
         )
+        parser.add_argument(
+            "--il_margin_min",
+            type=float,
+            default=0.0,
+            help="minimum confidence-margin for IL pseudo links",
+        )
+        parser.add_argument(
+            "--il_quality_quantile",
+            type=float,
+            default=0.0,
+            help="dynamic quantile threshold (0~1) on IL pseudo-link quality score",
+        )
+        parser.add_argument(
+            "--il_topk_max",
+            type=int,
+            default=0,
+            help="maximum pseudo links kept after IL quality filtering; 0 means no cap",
+        )
+        parser.add_argument(
+            "--il_margin_weight",
+            type=float,
+            default=1.0,
+            help="weight of confidence-margin term in IL quality score",
+        )
 
         # --------- MCLEA -----------
         parser.add_argument("--unsup_mode", type=str, default="img", help="unsup mode", choices=["img", "name", "char"])

@@ -270,76 +270,123 @@ class MEAformer(nn.Module):
             img_dim = kgs["images_list"].shape[1]
         return img_dim
 
-    def _filter_links_by_confidence(self, links, confidences):
-        if len(links) == 0:
-            self.last_il_filter_stats = {
-                "raw_count": 0,
-                "kept_count": 0,
-                "threshold": 0.0,
-                "q_threshold": 0.0,
-                "min_conf": 0.0,
-                "quantile": float(getattr(self.args, "il_confidence_quantile", 0.0)),
-                "fallback_used": 0,
-            }
+    def _empty_il_filter_stats(self):
+        return {
+            "raw_count": 0,
+            "kept_count": 0,
+            "threshold": 0.0,
+            "q_threshold": 0.0,
+            "min_conf": float(getattr(self.args, "il_confidence_min", 0.0)),
+            "quantile": float(getattr(self.args, "il_confidence_quantile", 0.0)),
+            "fallback_used": 0,
+            "margin_min": float(getattr(self.args, "il_margin_min", 0.0)),
+            "quality_quantile": float(getattr(self.args, "il_quality_quantile", 0.0)),
+            "quality_q_threshold": 0.0,
+            "topk_max": int(getattr(self.args, "il_topk_max", 0)),
+            "topk_applied": 0,
+        }
+
+    def _filter_links_by_confidence(self, candidates):
+        if len(candidates) == 0:
+            self.last_il_filter_stats = self._empty_il_filter_stats()
             return []
 
-        conf_arr = np.asarray(confidences, dtype=np.float32)
+        conf_arr = np.asarray([c["confidence"] for c in candidates], dtype=np.float32)
+        margin_arr = np.asarray([c["margin"] for c in candidates], dtype=np.float32)
+        quality_arr = np.asarray([c["quality"] for c in candidates], dtype=np.float32)
         q = float(getattr(self.args, "il_confidence_quantile", 0.0))
         q = min(1.0, max(0.0, q))
         min_conf = float(getattr(self.args, "il_confidence_min", 0.0))
+        margin_min = float(getattr(self.args, "il_margin_min", 0.0))
+        quality_q = float(getattr(self.args, "il_quality_quantile", 0.0))
+        quality_q = min(1.0, max(0.0, quality_q))
+        topk_max = max(0, int(getattr(self.args, "il_topk_max", 0)))
         q_thr = float(np.quantile(conf_arr, q)) if q > 0.0 else -1e9
         threshold = max(min_conf, q_thr)
+        quality_q_thr = float(np.quantile(quality_arr, quality_q)) if quality_q > 0.0 else -1e9
 
-        kept = [pair for pair, conf in zip(links, conf_arr.tolist()) if conf >= threshold]
+        kept = []
+        for cand in candidates:
+            if cand["confidence"] < threshold:
+                continue
+            if cand["margin"] < margin_min:
+                continue
+            if cand["quality"] < quality_q_thr:
+                continue
+            kept.append(cand)
+
+        kept.sort(key=lambda x: (x["quality"], x["confidence"], x["margin"]), reverse=True)
+        topk_applied = 0
+        if topk_max > 0 and len(kept) > topk_max:
+            kept = kept[:topk_max]
+            topk_applied = 1
+
         keep_min = int(getattr(self.args, "il_confidence_keep_min", 0))
         fallback_used = 0
-        if keep_min > 0 and len(kept) < keep_min and len(links) > 0:
-            top_idx = np.argsort(-conf_arr)[: min(keep_min, len(links))]
-            kept = [links[i] for i in top_idx.tolist()]
+        if keep_min > 0 and len(kept) < keep_min and len(candidates) > 0:
+            ranked = sorted(candidates, key=lambda x: (x["quality"], x["confidence"], x["margin"]), reverse=True)
+            fallback_cap = min(keep_min, len(ranked))
+            if topk_max > 0:
+                fallback_cap = min(fallback_cap, topk_max)
+            kept = ranked[:fallback_cap]
             fallback_used = 1
 
         self.last_il_filter_stats = {
-            "raw_count": len(links),
+            "raw_count": len(candidates),
             "kept_count": len(kept),
             "threshold": float(threshold),
             "q_threshold": float(q_thr),
             "min_conf": float(min_conf),
             "quantile": float(q),
             "fallback_used": int(fallback_used),
+            "margin_min": float(margin_min),
+            "quality_quantile": float(quality_q),
+            "quality_q_threshold": float(quality_q_thr),
+            "topk_max": int(topk_max),
+            "topk_applied": int(topk_applied),
         }
-        return kept
+        return [cand["pair"] for cand in kept]
 
-    def Iter_new_links(self, epoch, left_non_train, final_emb, right_non_train, new_links=[]):
+    def Iter_new_links(self, epoch, left_non_train, final_emb, right_non_train, new_links=None):
+        if new_links is None:
+            new_links = []
         if len(left_non_train) == 0 or len(right_non_train) == 0:
-            self.last_il_filter_stats = {
-                "raw_count": 0,
-                "kept_count": 0,
-                "threshold": 0.0,
-                "q_threshold": 0.0,
-                "min_conf": float(getattr(self.args, "il_confidence_min", 0.0)),
-                "quantile": float(getattr(self.args, "il_confidence_quantile", 0.0)),
-                "fallback_used": 0,
-            }
+            self.last_il_filter_stats = self._empty_il_filter_stats()
             return new_links
         distance_list = []
         for i in np.arange(0, len(left_non_train), 1000):
             d = pairwise_distances(final_emb[left_non_train[i:i + 1000]], final_emb[right_non_train])
             distance_list.append(d)
         distance = torch.cat(distance_list, dim=0)
-        min_dist_l, preds_l_tensor = torch.min(distance, dim=1)
-        preds_l = preds_l_tensor.cpu().numpy().tolist()
-        preds_r = torch.argmin(distance.t(), dim=1).cpu().numpy().tolist()
+        row_topn = min(2, distance.shape[1])
+        col_topn = min(2, distance.shape[0])
+        row_vals, row_idx = torch.topk(distance, k=row_topn, dim=1, largest=False)
+        col_vals, col_idx = torch.topk(distance, k=col_topn, dim=0, largest=False)
+        preds_l = row_idx[:, 0].cpu().numpy().tolist()
+        preds_r = col_idx[0, :].cpu().numpy().tolist()
+        min_dist_l = row_vals[:, 0]
         del distance_list, distance, final_emb
 
         prev_links = set(new_links) if isinstance(new_links, list) else set()
-        links_raw = []
-        conf_raw = []
+        candidates = []
+        margin_weight = float(getattr(self.args, "il_margin_weight", 1.0))
         if (epoch + 1) % (self.args.semi_learn_step * 5) == self.args.semi_learn_step:
             for i, p in enumerate(preds_l):
                 if preds_r[p] != i:
                     continue
-                links_raw.append((left_non_train[i], right_non_train[p]))
-                conf_raw.append(float(1.0 / (1.0 + float(min_dist_l[i].item()))))
+                best_conf = float(1.0 / (1.0 + float(min_dist_l[i].item())))
+                row_second_conf = float(1.0 / (1.0 + float(row_vals[i, 1].item()))) if row_topn > 1 else 0.0
+                col_second_conf = float(1.0 / (1.0 + float(col_vals[1, p].item()))) if col_topn > 1 else 0.0
+                margin = max(0.0, min(best_conf - row_second_conf, best_conf - col_second_conf))
+                quality = best_conf + margin_weight * margin
+                candidates.append(
+                    {
+                        "pair": (left_non_train[i], right_non_train[p]),
+                        "confidence": best_conf,
+                        "margin": margin,
+                        "quality": quality,
+                    }
+                )
         else:
             for i, p in enumerate(preds_l):
                 pair = (left_non_train[i], right_non_train[p])
@@ -347,13 +394,26 @@ class MEAformer(nn.Module):
                     continue
                 if pair not in prev_links:
                     continue
-                links_raw.append(pair)
-                conf_raw.append(float(1.0 / (1.0 + float(min_dist_l[i].item()))))
+                best_conf = float(1.0 / (1.0 + float(min_dist_l[i].item())))
+                row_second_conf = float(1.0 / (1.0 + float(row_vals[i, 1].item()))) if row_topn > 1 else 0.0
+                col_second_conf = float(1.0 / (1.0 + float(col_vals[1, p].item()))) if col_topn > 1 else 0.0
+                margin = max(0.0, min(best_conf - row_second_conf, best_conf - col_second_conf))
+                quality = best_conf + margin_weight * margin
+                candidates.append(
+                    {
+                        "pair": pair,
+                        "confidence": best_conf,
+                        "margin": margin,
+                        "quality": quality,
+                    }
+                )
 
-        new_links = self._filter_links_by_confidence(links_raw, conf_raw)
+        new_links = self._filter_links_by_confidence(candidates)
         return new_links
 
-    def data_refresh(self, logger, train_ill, test_ill_, left_non_train, right_non_train, new_links=[]):
+    def data_refresh(self, logger, train_ill, test_ill_, left_non_train, right_non_train, new_links=None):
+        if new_links is None:
+            new_links = []
         if len(new_links) != 0 and (len(left_non_train) != 0 and len(right_non_train) != 0):
             new_links_select = new_links
             train_ill = np.vstack((train_ill, np.array(new_links_select)))

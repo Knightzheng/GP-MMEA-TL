@@ -1,0 +1,70 @@
+{
+  "timestamp": "20260312-233553",
+  "target": "FBYG15K",
+  "pilot_seeds": [
+    42,
+    2026
+  ],
+  "full_seeds": [
+    42,
+    3407,
+    2026,
+    7,
+    123
+  ],
+  "run_missing": 1,
+  "reference_compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v21_fbyg_v21a_expand5_compare_vs_baseline.csv",
+  "reference_delta_avg_mrr_mean": 0.0015999999999999973,
+  "expand_threshold": 0.0003,
+  "variant_results": {
+    "v22a_pilot": {
+      "delta_avg_mrr_mean": 0.0005000000000000004,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v22_fbyg_pilot_v22a_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true,
+      "transfer_skip_keys": "multimodal_encoder.entity_emb.weight,multimodal_encoder.rel_fc.weight,multimodal_encoder.rel_fc.bias",
+      "transfer_skip_prefixes": "multimodal_encoder.fusion."
+    },
+    "v22b_pilot": {
+      "delta_avg_mrr_mean": 0.0012500000000000011,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v22_fbyg_pilot_v22b_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true,
+      "transfer_skip_keys": "multimodal_encoder.entity_emb.weight,multimodal_encoder.rel_fc.weight,multimodal_encoder.rel_fc.bias",
+      "transfer_skip_prefixes": "multimodal_encoder.fusion."
+    },
+    "v22c_pilot": {
+      "delta_avg_mrr_mean": 0.0012500000000000011,
+      "compare_csv": "D:\\code\\codes\\cursor\\BYSJ_zyf\\reports\\transfer\\transfer_adapt_v22_fbyg_pilot_v22c_compare_vs_baseline.csv",
+      "selected_seeds": [
+        42,
+        2026
+      ],
+      "missing_seeds": [],
+      "baseline_missing_seeds": [],
+      "baseline_compare_missing_seeds": [],
+      "is_complete_pilot": true,
+      "transfer_skip_keys": "multimodal_encoder.entity_emb.weight,multimodal_encoder.rel_fc.weight,multimodal_encoder.rel_fc.bias",
+      "transfer_skip_prefixes": "multimodal_encoder.fusion."
+    }
+  },
+  "decision": {
+    "best_variant_pilot": "v22b",
+    "best_delta_avg_mrr_mean": 0.0012500000000000011,
+    "improve_over_current_ref": -0.00034999999999999615,
+    "reference_delta_avg_mrr_mean": 0.0015999999999999973,
+    "expanded_variant_to_full5": null
+  }
+}

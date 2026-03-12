@@ -751,3 +751,60 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`
+
+## 19. 2026-03-13 追加记录（FBYG15K v22 quality-filter pilot，主表保持 v21）
+
+本次追加操作：
+
+1. 基于 `v21` 结果继续优化 `FBYG15K`，把方向从“更快注入 fresh-IL”推进到“提高 fresh-IL 候选质量”。
+2. 在 `baselines/MEAformer` 中新增 `IL` 质量优先过滤参数：
+   - `il_margin_min`
+   - `il_quality_quantile`
+   - `il_topk_max`
+   - `il_margin_weight`
+3. 在 `baselines/MEAformer/model/MEAformer.py` 中重写 `Iter_new_links` 的过滤逻辑：
+   - 为互选候选计算 `confidence / confidence margin / quality`
+   - 支持按 `margin + quality + topk cap` 过滤
+4. 新增 `FBYG15K v22` 三个 pilot 配置与自动脚本：
+   - `tmmeada_target_fbyg15k_v22a_fresh_il_quality_top200`
+   - `tmmeada_target_fbyg15k_v22b_fresh_il_quality_top100`
+   - `tmmeada_target_fbyg15k_v22c_fresh_il_quality_top300`
+   - `scripts/run_transfer_adapt_v22_fbyg_iter_queue.py`
+5. 完成 `2-seed pilot -> 自动选优 -> 是否扩展 full5` 全流程。
+6. 生成 `v22` 决策、compare 与 run-card 文件。
+7. 更新 `README.md`、`PROCESS_LOG.md` 与最新阶段报告链接，但保持主结果表不切换。
+
+关键结果：
+
+- 当前参考主表版本：`FBYG15K v21a_fresh_il_q80_skiprel_skipfusion_expand5`
+  - `5-seed delta_avg_mrr_mean = +0.00160`
+- `v22` pilot（`2-seed`, vs baseline）：
+  - `v22a = +0.00050`
+  - `v22b = +0.00125`
+  - `v22c = +0.00125`
+- 自动决策：
+  - `best_variant_pilot = v22b`
+  - `improve_over_current_ref = -0.00035`
+  - 未达到扩展阈值，不扩展到 `5-seed`
+
+关键诊断：
+
+- `v22a`：`kept=200`，真值率 `3.5% / 1.5%`
+- `v22b`：`kept=100`，真值率 `6.0% / 1.0%`
+- `v22c`：`kept=300`，真值率 `2.7% / 1.0%`
+
+这表明：
+
+- 静态质量过滤确实能显著提高个别 seed 的伪链接精度；
+- 但跨 seed 稳定性不够，精度提升没有稳定转化为更好的最终 `MRR`；
+- `FBYG15K` 的后续优化不应再继续做静态 `filter/cap` 网格，而应转向分阶段或自适应注入。
+
+本次追加的直接作用：
+
+- 排除了 `FBYG15K` 上继续做静态 `IL quality threshold / topk cap` 搜索的必要性；
+- 保留 `v21` 作为当前最优正式主表版本；
+- 为后续如果继续优化 `FBYG15K`，提供了明确的“下一步不该怎么做”的负结果证据链。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`

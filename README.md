@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -130,8 +130,8 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
-  - `FBYG15K` 的 `v21` fresh-IL 路线已验证有效，当前主表版本切换为 `v21a_fresh_il_q80_skiprel_skipfusion_expand5`。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 应优先继续提升 fresh-IL 候选质量，而不是回到 `v19/v20` 那类晚启 IL 的轻量搜索。
+  - `FBYG15K` 的 `v21` 仍是当前最优正式版本；新增 `v22` 质量过滤 pilot 未超过 `v21`。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 应转向“分阶段/自适应注入”而不是继续做静态质量阈值搜索。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -639,3 +639,32 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 若继续优化，应继续提升 fresh-IL 候选质量，而不是回到晚启 IL 的轻量搜索
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`
+
+## 36. 阶段更新（2026-03-13）：FBYG15K v22 quality-filter pilot 完成，主表保持 v21
+
+- 目标：在 `v21` 的 fresh-IL 立即注入基础上，继续验证“静态质量过滤 + topk cap”是否能进一步提升 `FBYG15K`。
+- 新增代码能力：
+  - `baselines/MEAformer/config.py`
+  - `baselines/MEAformer/model/MEAformer.py`
+  - `baselines/MEAformer/main.py`
+  - `scripts/run_meaformer.py`
+  - 支持 `il_margin_min / il_quality_quantile / il_topk_max / il_margin_weight`
+- 新增自动化：
+  - `scripts/run_transfer_adapt_v22_fbyg_iter_queue.py`
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v22a_fresh_il_quality_top200.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v22b_fresh_il_quality_top100.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v22c_fresh_il_quality_top300.yaml`
+- `v22` pilot（2-seed, vs baseline）：
+  - `v22a = +0.00050`
+  - `v22b = +0.00125`
+  - `v22c = +0.00125`
+- 关键诊断：
+  - `v22b` 在 `seed=42` 上将伪链接真值率提升到 `6.0%`，但 `seed=2026` 仍只有 `1.0%`；
+  - 说明静态质量过滤能提升部分 seed 的精度，但跨 seed 稳定性不足。
+- 结论：
+  - `FBYG15K` 当前主表版本保持 `v21a_fresh_il_q80_skiprel_skipfusion_expand5`
+  - `v22` 不扩展到 `5-seed`
+  - 若继续优化，应转向分阶段/自适应注入，而不是继续做静态 filter/cap 搜索
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`

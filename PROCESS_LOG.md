@@ -1414,3 +1414,44 @@
     - `reports/transfer/transfer_adapt_error_bucket_summary.md`
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`
+
+## 37. 2026-03-13 Transfer-Adapt v22 FBYG quality-filter pilot finalized (ASCII summary)
+- Goal:
+  - test whether static IL quality filtering can outperform current `FBYG15K v21` full5 result.
+- Code changes:
+  - `baselines/MEAformer/config.py`
+    - add `il_margin_min`, `il_quality_quantile`, `il_topk_max`, `il_margin_weight`
+  - `baselines/MEAformer/model/MEAformer.py`
+    - compute mutual-candidate `confidence`, `margin`, and `quality`
+    - filter by `confidence + margin + quality quantile + topk cap`
+  - `baselines/MEAformer/main.py`
+    - extend IL log output with quality-filter statistics
+  - `scripts/run_meaformer.py`
+    - pass new IL quality arguments through the runner
+- Added automation:
+  - `scripts/run_transfer_adapt_v22_fbyg_iter_queue.py`
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v22a_fresh_il_quality_top200.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v22b_fresh_il_quality_top100.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v22c_fresh_il_quality_top300.yaml`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v22a = +0.00050`
+  - `v22b = +0.00125`
+  - `v22c = +0.00125`
+- Decision:
+  - `best_variant_pilot = v22b`
+  - `reference_v21_full5 = +0.00160`
+  - `improve_over_ref = -0.00035`
+  - no `5-seed` expansion
+- Diagnostics:
+  - `v22a`: `200` injected links, true-link ratio `3.5% / 1.5%` on seeds `42 / 2026`
+  - `v22b`: `100` injected links, true-link ratio `6.0% / 1.0%` on seeds `42 / 2026`
+  - `v22c`: `300` injected links, true-link ratio `2.7% / 1.0%` on seeds `42 / 2026`
+  - static quality filtering improved precision on `seed=42`, but remained unstable across seeds and did not beat `v21`
+- Main-table decision:
+  - keep `FBYG15K` main-table version unchanged: `v21a_fresh_il_q80_skiprel_skipfusion_expand5`
+- Next-step implication:
+  - stop static `quality/filter/cap` grid search on `FBYG15K`
+  - if further optimization continues, move to staged or adaptive IL injection instead
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`

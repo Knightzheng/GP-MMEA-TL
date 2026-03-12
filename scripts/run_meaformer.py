@@ -223,6 +223,14 @@ def main():
         cmd.extend(["--il_confidence_quantile", str(m["il_confidence_quantile"])])
     if "il_confidence_keep_min" in m:
         cmd.extend(["--il_confidence_keep_min", str(m["il_confidence_keep_min"])])
+    if "il_margin_min" in m:
+        cmd.extend(["--il_margin_min", str(m["il_margin_min"])])
+    if "il_quality_quantile" in m:
+        cmd.extend(["--il_quality_quantile", str(m["il_quality_quantile"])])
+    if "il_topk_max" in m:
+        cmd.extend(["--il_topk_max", str(m["il_topk_max"])])
+    if "il_margin_weight" in m:
+        cmd.extend(["--il_margin_weight", str(m["il_margin_weight"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):
