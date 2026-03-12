@@ -702,3 +702,52 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`
+
+## 18. 2026-03-12 追加记录（FBYG15K v21 fresh-IL full5，主表切换）
+
+本次追加操作：
+
+1. 基于 `v19/v20` 的诊断，转向验证 `FBYG15K` 上的 fresh-IL 立即注入路线，目标是修复“候选在注入前塌缩”的问题。
+2. 新增 `FBYG15K v21` 三个 pilot 配置与自动脚本：
+   - `tmmeada_target_fbyg15k_v21a_fresh_il_q80_skiprel_skipfusion`
+   - `tmmeada_target_fbyg15k_v21b_fresh_il_q90_skiprel_skipfusion`
+   - `tmmeada_target_fbyg15k_v21c_fresh_il_q95_skiprel_skipfusion`
+   - `scripts/run_transfer_adapt_v21_fbyg_iter_queue.py`
+3. 完成 `2-seed pilot -> 自动选优 -> 5-seed expand` 全流程。
+4. 新增 `v21` 决策、pilot compare、formal compare 与 run-card 文件。
+5. 刷新 `scripts/make_transfer_main_and_bucket_report.py` 的 `FBYG15K` 主表入口，将主结果切换到 `v21a full5`。
+6. 更新 `README.md`、`PROCESS_LOG.md` 与最新阶段报告链接。
+
+关键结果：
+
+- 当前旧参考主表版本：`FBYG15K v8_mild_da_expand5`
+  - `5-seed delta_avg_mrr_mean = +0.00110`
+- `v21` pilot（`2-seed`, vs baseline）：
+  - `v21a = +0.00200`
+  - `v21b = +0.00100`
+  - `v21c = +0.00100`
+- 自动决策：
+  - `best_variant_pilot = v21a`
+  - `improve_over_current_ref = +0.00090`
+  - 达到扩展阈值后自动扩展到 `5-seed`
+- `v21a` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00141`
+  - `delta_avg_hits@10_mean = +0.00193`
+  - `delta_avg_mrr_mean = +0.00160`
+  - `delta_avg_mr_mean = -35.84720`
+
+关键诊断：
+
+- `v21a` 的 fresh-IL 立即注入，避免了 `v20` 中“候选到最终只剩 1 条链接”的塌缩问题；
+- `5-seed` 日志中，新增链接规模稳定在 `397 ~ 450` 条，真值率约 `1.8% ~ 2.5%`；
+- 这说明 `FBYG15K` 的小幅正式增益可以通过“及时注入 fresh proposals”获得，但后续若继续优化，重点仍应放在候选质量而非继续做晚启 IL 网格搜索。
+
+本次追加的直接作用：
+
+- 将 `FBYG15K` 主表版本从 `v8` 切换为 `v21a`；
+- 把 `FBYG15K` 的 `5-seed delta_avg_mrr_mean` 从 `+0.00110` 提升到 `+0.00160`；
+- 保持统一 4 目标主结果表继续为 `5-seed` 全正增益状态。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`

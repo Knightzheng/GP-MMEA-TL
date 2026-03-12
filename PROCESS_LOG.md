@@ -1373,3 +1373,44 @@
   - if future optimization continues on `FBYG15K`, focus on the IL generation/refresh mechanism itself rather than more schedule/skip-key tuning
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`
+
+## 36. 2026-03-12 Transfer-Adapt v21 FBYG fresh-IL full5 finalized (ASCII summary)
+- Goal:
+  - fix the `v20` failure mode where IL candidates collapsed before final injection on `FBYG15K`.
+- Added automation:
+  - `scripts/run_transfer_adapt_v21_fbyg_iter_queue.py`
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v21a_fresh_il_q80_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v21b_fresh_il_q90_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v21c_fresh_il_q95_skiprel_skipfusion.yaml`
+- Shared setup:
+  - `il_start=5`
+  - `il_refresh_interval=1`
+  - `transfer_skip_keys=entity_emb + rel_fc`
+  - `transfer_skip_prefixes=multimodal_encoder.fusion.`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v21a = +0.00200`
+  - `v21b = +0.00100`
+  - `v21c = +0.00100`
+- Decision:
+  - `best_variant_pilot = v21a`
+  - `improve_over_v8_ref = +0.00090`
+  - auto-expanded to `5-seed`
+- Full-5 result (`v21a`, vs baseline):
+  - `delta_avg_hits@1_mean = +0.00141`
+  - `delta_avg_hits@10_mean = +0.00193`
+  - `delta_avg_mrr_mean = +0.00160`
+  - `delta_avg_mr_mean = -35.84720`
+- Diagnostics:
+  - fresh-IL injection no longer collapsed to a single final link.
+  - across 5 seeds, `#new_links_select` stayed in the `397-450` range.
+  - observed true-link ratio was about `1.8% ~ 2.5%`, still noisy but enough to beat `v8`.
+- Main-table update:
+  - switch `FBYG15K` row from `v8_mild_da_expand5` to `v21a_fresh_il_q80_skiprel_skipfusion_expand5`
+  - refresh:
+    - `reports/transfer/transfer_adapt_main_results_4target.csv`
+    - `reports/transfer/transfer_adapt_main_results_4target.md`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.csv`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.md`
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`

@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -126,12 +126,12 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `ja_en`：`delta_avg_mrr_mean = +0.01210`（v15 refresh4 da0025, 5-seed）
   - `FBDB15K`：`delta_avg_mrr_mean = +0.00830`（v18c bipartite late_il skiprel, 5-seed）
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
-  - `FBYG15K`：`delta_avg_mrr_mean = +0.00110`（v8, 5-seed）
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00160`（v21a fresh_il q80 skiprel skipfusion, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
-  - `FBYG15K` 的 `v19/v20` pilot 未超过 `v8`，当前主表版本仍保持 `v8_mild_da_expand5`。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 应优先改 IL 生成/刷新机制，而不是继续做 `il_start / quantile / skip keys` 级别的轻量搜索。
+  - `FBYG15K` 的 `v21` fresh-IL 路线已验证有效，当前主表版本切换为 `v21a_fresh_il_q80_skiprel_skipfusion_expand5`。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 应优先继续提升 fresh-IL 候选质量，而不是回到 `v19/v20` 那类晚启 IL 的轻量搜索。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -608,3 +608,34 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 若继续优化，应改 IL 机制本身，而不是继续做轻量调度/跳过项搜索
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260312_fbyg_v19_v20_pilot.md`
+
+## 35. 阶段更新（2026-03-12）：FBYG15K v21 fresh-IL full5 完成
+
+- 目标：修复 `v20` 中“IL 候选在注入前塌缩”的失败模式，验证 fresh-IL 立即注入是否能稳定超过当前主表版本。
+- 新增自动化：
+  - `scripts/run_transfer_adapt_v21_fbyg_iter_queue.py`
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v21a_fresh_il_q80_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v21b_fresh_il_q90_skiprel_skipfusion.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v21c_fresh_il_q95_skiprel_skipfusion.yaml`
+- `v21` pilot（2-seed, vs baseline）：
+  - `v21a = +0.00200`
+  - `v21b = +0.00100`
+  - `v21c = +0.00100`
+- 自动决策：
+  - `v21a` 超过当前 `v8` 参考值 `+0.00090`
+  - 达到扩展阈值后自动扩展到 `5-seed`
+- `v21a` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00141`
+  - `delta_avg_hits@10_mean = +0.00193`
+  - `delta_avg_mrr_mean = +0.00160`
+  - `delta_avg_mr_mean = -35.84720`
+- 关键诊断：
+  - `5-seed` 日志中每个 seed 的 fresh-IL 注入规模稳定在 `397-450` 条；
+  - 真值率约 `1.8% ~ 2.5%`，虽然仍低，但已明显优于 `v20` 最终塌缩为 `1` 条链接的失败模式。
+- 结论：
+  - `FBYG15K` 当前主表版本切换为 `v21a_fresh_il_q80_skiprel_skipfusion_expand5`
+  - `5-seed delta_avg_mrr_mean` 从 `+0.00110` 提升到 `+0.00160`
+  - 若继续优化，应继续提升 fresh-IL 候选质量，而不是回到晚启 IL 的轻量搜索
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260312_fbyg_v21_fresh_il_full5.md`
