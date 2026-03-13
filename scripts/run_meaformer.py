@@ -231,6 +231,20 @@ def main():
         cmd.extend(["--il_topk_max", str(m["il_topk_max"])])
     if "il_margin_weight" in m:
         cmd.extend(["--il_margin_weight", str(m["il_margin_weight"])])
+    if "il_fresh_epochs" in m and str(m["il_fresh_epochs"]).strip():
+        cmd.extend(["--il_fresh_epochs", str(m["il_fresh_epochs"])])
+    if "il_confidence_min_schedule" in m and str(m["il_confidence_min_schedule"]).strip():
+        cmd.extend(["--il_confidence_min_schedule", str(m["il_confidence_min_schedule"])])
+    if "il_confidence_quantile_schedule" in m and str(m["il_confidence_quantile_schedule"]).strip():
+        cmd.extend(["--il_confidence_quantile_schedule", str(m["il_confidence_quantile_schedule"])])
+    if "il_confidence_keep_min_schedule" in m and str(m["il_confidence_keep_min_schedule"]).strip():
+        cmd.extend(["--il_confidence_keep_min_schedule", str(m["il_confidence_keep_min_schedule"])])
+    if "il_margin_min_schedule" in m and str(m["il_margin_min_schedule"]).strip():
+        cmd.extend(["--il_margin_min_schedule", str(m["il_margin_min_schedule"])])
+    if "il_quality_quantile_schedule" in m and str(m["il_quality_quantile_schedule"]).strip():
+        cmd.extend(["--il_quality_quantile_schedule", str(m["il_quality_quantile_schedule"])])
+    if "il_topk_max_schedule" in m and str(m["il_topk_max_schedule"]).strip():
+        cmd.extend(["--il_topk_max_schedule", str(m["il_topk_max_schedule"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):

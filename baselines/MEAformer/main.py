@@ -254,7 +254,9 @@ class Runner:
             stats = getattr(self.model, "last_il_filter_stats", None)
             if stats is not None and self.args.rank == 0:
                 msg = (
-                    f"[epoch {self.epoch}] il_filter raw={stats.get('raw_count', 0)} "
+                    f"[epoch {self.epoch}] il_filter phase={stats.get('phase_index', -1)} "
+                    f"fresh={stats.get('fresh_epoch', 0)} "
+                    f"raw={stats.get('raw_count', 0)} "
                     f"kept={stats.get('kept_count', 0)} "
                     f"thr={stats.get('threshold', 0.0):.4f} "
                     f"(q={stats.get('quantile', 0.0):.2f}, q_thr={stats.get('q_threshold', 0.0):.4f}, "

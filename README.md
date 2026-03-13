@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -126,12 +126,12 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `ja_en`：`delta_avg_mrr_mean = +0.01210`（v15 refresh4 da0025, 5-seed）
   - `FBDB15K`：`delta_avg_mrr_mean = +0.00830`（v18c bipartite late_il skiprel, 5-seed）
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
-  - `FBYG15K`：`delta_avg_mrr_mean = +0.00160`（v21a fresh_il q80 skiprel skipfusion, 5-seed）
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00270`（v23b staged fresh_il top400, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
-  - `FBYG15K` 的 `v21` 仍是当前最优正式版本；新增 `v22` 质量过滤 pilot 未超过 `v21`。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 应转向“分阶段/自适应注入”而不是继续做静态质量阈值搜索。
+  - `FBYG15K` 的 staged fresh-IL 路线已验证成功，当前主表版本切换为 `v23b`；`v22` 的静态质量过滤结论被保留为负结果证据。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 可继续沿 staged fresh-IL 做自适应 top-k 或阶段间一致性约束。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -668,3 +668,42 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 若继续优化，应转向分阶段/自适应注入，而不是继续做静态 filter/cap 搜索
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`
+
+## 37. 阶段更新（2026-03-13）：FBYG15K v23 staged fresh-IL full5 完成
+
+- 目标：基于 `v22` 的负结果，验证 `FBYG15K` 上“两阶段 fresh-IL 注入”是否优于 `v21` 的单次 fresh-IL。
+- 新增代码能力：
+  - `baselines/MEAformer/config.py`
+  - `baselines/MEAformer/model/MEAformer.py`
+  - `baselines/MEAformer/main.py`
+  - `scripts/run_meaformer.py`
+  - 支持 `il_fresh_epochs` 与分阶段 `confidence/quantile/margin/topk` 调度
+- 新增自动化：
+  - `scripts/run_transfer_adapt_v23_fbyg_iter_queue.py`
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v23a_staged_fresh_il_top250.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v23b_staged_fresh_il_top400.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v23c_staged_fresh_il_epoch8_top250.yaml`
+- `v23` pilot（2-seed, vs baseline）：
+  - `v23a = +0.00225`
+  - `v23b = +0.00300`
+  - `v23c = +0.00200`
+- 自动决策：
+  - `best_variant_pilot = v23b`
+  - `improve_over_v21_ref = +0.00140`
+  - 自动扩展到 `5-seed`
+- `v23b` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00186`
+  - `delta_avg_hits@10_mean = +0.00460`
+  - `delta_avg_mrr_mean = +0.00270`
+  - `delta_avg_mr_mean = -43.13610`
+- 关键诊断：
+  - `phase 0` 在 `epoch 5` 先注入 `100` 条高精度候选；
+  - `phase 1` 在 `epoch 7` 再补充 `400` 条候选；
+  - staged fresh-IL 比 `v21` 的单次注入更稳定地转化为最终 `MRR` 提升。
+- 结论：
+  - `FBYG15K` 主表版本切换为 `v23b_staged_fresh_il_top400_expand5`
+  - `5-seed delta_avg_mrr_mean` 从 `+0.00160` 提升到 `+0.00270`
+  - 若继续优化，应继续沿 staged fresh-IL 做自适应 top-k 或阶段间约束，而不是回到静态 filter/cap 搜索
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`

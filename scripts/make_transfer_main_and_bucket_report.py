@@ -39,8 +39,9 @@ SOURCE_SPECS = [
     {
         "target": "FBYG15K",
         "scenario": "cross_graph",
-        "method_variant": "v21a_fresh_il_q80_skiprel_skipfusion_expand5",
+        "method_variant": "v23b_staged_fresh_il_top400_expand5",
         "source_csv_candidates": [
+            REPORT_DIR / "transfer_adapt_v23_fbyg_v23b_expand5_compare_vs_baseline.csv",
             REPORT_DIR / "transfer_adapt_v21_fbyg_v21a_expand5_compare_vs_baseline.csv",
             REPORT_DIR / "transfer_adapt_fbyg_expand5_progress_compare_vs_baseline.csv",
         ],
@@ -200,7 +201,7 @@ def write_main_md(rows: List[Dict[str, object]], out_md: Path) -> None:
     lines.append("- All 4 targets currently use 5-seed formal snapshots.")
     lines.append("- `ja_en` now uses the refreshed `v15_refresh4_da0025_expand5` result.")
     lines.append("- `FBDB15K` now uses the refreshed `v18c_bipartite_late_il_skiprel_expand5` result.")
-    lines.append("- `FBYG15K` now uses the refreshed `v21a_fresh_il_q80_skiprel_skipfusion_expand5` result.")
+    lines.append("- `FBYG15K` now uses the refreshed `v23b_staged_fresh_il_top400_expand5` result.")
     out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 

@@ -808,3 +808,63 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`
+
+## 20. 2026-03-13 追加记录（FBYG15K v23 staged fresh-IL full5，主表切换）
+
+本次追加操作：
+
+1. 基于 `v22` 的负结果，正式把 `FBYG15K` 的后续优化方向切到 staged fresh-IL，而不是继续做静态质量阈值搜索。
+2. 在 `MEAformer` 中新增多轮 fresh proposal 与分阶段过滤能力：
+   - `il_fresh_epochs`
+   - `il_confidence_min_schedule`
+   - `il_confidence_quantile_schedule`
+   - `il_confidence_keep_min_schedule`
+   - `il_margin_min_schedule`
+   - `il_quality_quantile_schedule`
+   - `il_topk_max_schedule`
+3. 在 `baselines/MEAformer/model/MEAformer.py` 中加入 phase-aware IL 过滤逻辑，并在日志中输出 `phase/fresh` 标记。
+4. 新增 `FBYG15K v23` 三个 pilot 配置与自动脚本：
+   - `tmmeada_target_fbyg15k_v23a_staged_fresh_il_top250`
+   - `tmmeada_target_fbyg15k_v23b_staged_fresh_il_top400`
+   - `tmmeada_target_fbyg15k_v23c_staged_fresh_il_epoch8_top250`
+   - `scripts/run_transfer_adapt_v23_fbyg_iter_queue.py`
+5. 完成 `2-seed pilot -> 自动选优 -> 5-seed expand` 全流程。
+6. 刷新 `scripts/make_transfer_main_and_bucket_report.py` 的 `FBYG15K` 主表入口，将主结果切换到 `v23b full5`。
+7. 更新 `README.md`、`PROCESS_LOG.md`、主结果表与最新阶段报告链接。
+
+关键结果：
+
+- 当前旧参考主表版本：`FBYG15K v21a_fresh_il_q80_skiprel_skipfusion_expand5`
+  - `5-seed delta_avg_mrr_mean = +0.00160`
+- `v23` pilot（`2-seed`, vs baseline）：
+  - `v23a = +0.00225`
+  - `v23b = +0.00300`
+  - `v23c = +0.00200`
+- 自动决策：
+  - `best_variant_pilot = v23b`
+  - `improve_over_current_ref = +0.00140`
+  - 达到扩展阈值并自动扩展到 `5-seed`
+- `v23b` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00186`
+  - `delta_avg_hits@10_mean = +0.00460`
+  - `delta_avg_mrr_mean = +0.00270`
+  - `delta_avg_mr_mean = -43.13610`
+
+关键诊断：
+
+- `v23b` 采用两阶段 fresh-IL：
+  - `phase 0 (epoch 5)`: 先注入 `100` 条高精度候选
+  - `phase 1 (epoch 7)`: 再补充 `400` 条更大规模候选
+- 5 个 seed 的日志都出现了稳定的两阶段注入模式；
+- 与 `v21` 的单次大注入相比，`v23b` 更好地平衡了“先稳住训练”与“后续再补规模”这两个目标；
+- 这说明 `FBYG15K` 的最优下一步不是继续调单次过滤阈值，而是把候选质量和注入时机拆开处理。
+
+本次追加的直接作用：
+
+- 将 `FBYG15K` 主表版本从 `v21a` 切换为 `v23b`；
+- 把 `FBYG15K` 的 `5-seed delta_avg_mrr_mean` 从 `+0.00160` 提升到 `+0.00270`；
+- 使统一 4 目标主结果表中的 `FBYG15K` 一项进一步稳定上升。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`

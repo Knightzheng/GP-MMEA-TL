@@ -1455,3 +1455,53 @@
   - if further optimization continues, move to staged or adaptive IL injection instead
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260313_fbyg_v22_quality_pilot.md`
+
+## 38. 2026-03-13 Transfer-Adapt v23 FBYG staged fresh-IL full5 finalized (ASCII summary)
+- Goal:
+  - move beyond static `quality/filter/cap` search and test staged fresh-IL on `FBYG15K`.
+- Code changes:
+  - `baselines/MEAformer/config.py`
+    - add `il_fresh_epochs`
+    - add phase-wise schedule args for `confidence/quantile/keep_min/margin/topk`
+  - `baselines/MEAformer/model/MEAformer.py`
+    - add phase-aware fresh-IL trigger logic
+    - allow multiple fresh proposal epochs in one run
+    - apply phase-specific IL filter settings
+  - `baselines/MEAformer/main.py`
+    - extend IL logging with `phase` and `fresh` markers
+  - `scripts/run_meaformer.py`
+    - pass staged-IL arguments through the runner
+- Added automation:
+  - `scripts/run_transfer_adapt_v23_fbyg_iter_queue.py`
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v23a_staged_fresh_il_top250.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v23b_staged_fresh_il_top400.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v23c_staged_fresh_il_epoch8_top250.yaml`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v23a = +0.00225`
+  - `v23b = +0.00300`
+  - `v23c = +0.00200`
+- Decision:
+  - `best_variant_pilot = v23b`
+  - `improve_over_v21_ref = +0.00140`
+  - auto-expanded to `5-seed`
+- Full-5 result (`v23b`, vs baseline):
+  - `delta_avg_hits@1_mean = +0.00186`
+  - `delta_avg_hits@10_mean = +0.00460`
+  - `delta_avg_mrr_mean = +0.00270`
+  - `delta_avg_mr_mean = -43.13610`
+- Diagnostics:
+  - `phase 0` (`epoch 5`) injects `100` higher-precision links first.
+  - `phase 1` (`epoch 7`) injects `400` supplemental links later.
+  - observed per-seed phase-0 true-link ratios: about `1.0% ~ 6.0%`
+  - observed per-seed phase-1 true-link ratios: about `0.8% ~ 3.0%`
+  - this staged route beat the single-shot `v21` route and clearly outperformed `v22` static filtering.
+- Main-table update:
+  - switch `FBYG15K` row from `v21a_fresh_il_q80_skiprel_skipfusion_expand5` to `v23b_staged_fresh_il_top400_expand5`
+  - refresh:
+    - `reports/transfer/transfer_adapt_main_results_4target.csv`
+    - `reports/transfer/transfer_adapt_main_results_4target.md`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.csv`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.md`
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`

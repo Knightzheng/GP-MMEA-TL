@@ -179,6 +179,48 @@ class cfg():
             default=1.0,
             help="weight of confidence-margin term in IL quality score",
         )
+        parser.add_argument(
+            "--il_fresh_epochs",
+            type=str,
+            default="",
+            help="comma-separated absolute epochs that trigger fresh IL proposal rounds; empty keeps legacy behavior",
+        )
+        parser.add_argument(
+            "--il_confidence_min_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise IL minimum confidence values aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_confidence_quantile_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise IL confidence quantiles aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_confidence_keep_min_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise IL keep-min values aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_margin_min_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise IL margin minima aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_quality_quantile_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise IL quality quantiles aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_topk_max_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise IL top-k caps aligned with il_fresh_epochs",
+        )
 
         # --------- MCLEA -----------
         parser.add_argument("--unsup_mode", type=str, default="img", help="unsup mode", choices=["img", "name", "char"])

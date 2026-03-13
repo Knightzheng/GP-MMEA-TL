@@ -284,23 +284,118 @@ class MEAformer(nn.Module):
             "quality_q_threshold": 0.0,
             "topk_max": int(getattr(self.args, "il_topk_max", 0)),
             "topk_applied": 0,
+            "phase_index": -1,
+            "fresh_epoch": 0,
         }
 
-    def _filter_links_by_confidence(self, candidates):
+    def _parse_schedule_values(self, raw_value, cast_fn):
+        if raw_value is None:
+            return []
+        if isinstance(raw_value, (list, tuple)):
+            values = raw_value
+        else:
+            text = str(raw_value).strip()
+            if not text:
+                return []
+            values = [item.strip() for item in text.split(",") if item.strip()]
+        parsed = []
+        for item in values:
+            try:
+                parsed.append(cast_fn(item))
+            except (TypeError, ValueError):
+                continue
+        return parsed
+
+    def _scheduled_il_value(self, base_name, default_value, phase_index, cast_fn):
+        if phase_index is None:
+            return cast_fn(default_value)
+        schedule = self._parse_schedule_values(getattr(self.args, f"{base_name}_schedule", ""), cast_fn)
+        if not schedule:
+            return cast_fn(default_value)
+        idx = min(max(int(phase_index), 0), len(schedule) - 1)
+        return schedule[idx]
+
+    def _fresh_il_phase_index(self, epoch):
+        fresh_epochs = self._parse_schedule_values(getattr(self.args, "il_fresh_epochs", ""), int)
+        if fresh_epochs:
+            for idx, fresh_epoch in enumerate(fresh_epochs):
+                if int(epoch) == int(fresh_epoch):
+                    return idx
+            return None
+        is_legacy_fresh = (epoch + 1) % (self.args.semi_learn_step * 5) == self.args.semi_learn_step
+        return 0 if is_legacy_fresh else None
+
+    def _current_il_filter_cfg(self, phase_index):
+        return {
+            "phase_index": -1 if phase_index is None else int(phase_index),
+            "fresh_epoch": int(phase_index is not None),
+            "min_conf": float(
+                self._scheduled_il_value(
+                    "il_confidence_min",
+                    getattr(self.args, "il_confidence_min", 0.0),
+                    phase_index,
+                    float,
+                )
+            ),
+            "quantile": float(
+                self._scheduled_il_value(
+                    "il_confidence_quantile",
+                    getattr(self.args, "il_confidence_quantile", 0.0),
+                    phase_index,
+                    float,
+                )
+            ),
+            "keep_min": int(
+                self._scheduled_il_value(
+                    "il_confidence_keep_min",
+                    getattr(self.args, "il_confidence_keep_min", 0),
+                    phase_index,
+                    int,
+                )
+            ),
+            "margin_min": float(
+                self._scheduled_il_value(
+                    "il_margin_min",
+                    getattr(self.args, "il_margin_min", 0.0),
+                    phase_index,
+                    float,
+                )
+            ),
+            "quality_quantile": float(
+                self._scheduled_il_value(
+                    "il_quality_quantile",
+                    getattr(self.args, "il_quality_quantile", 0.0),
+                    phase_index,
+                    float,
+                )
+            ),
+            "topk_max": int(
+                self._scheduled_il_value(
+                    "il_topk_max",
+                    getattr(self.args, "il_topk_max", 0),
+                    phase_index,
+                    int,
+                )
+            ),
+        }
+
+    def _filter_links_by_confidence(self, candidates, filter_cfg=None):
         if len(candidates) == 0:
             self.last_il_filter_stats = self._empty_il_filter_stats()
             return []
 
+        if filter_cfg is None:
+            filter_cfg = self._current_il_filter_cfg(phase_index=None)
         conf_arr = np.asarray([c["confidence"] for c in candidates], dtype=np.float32)
         margin_arr = np.asarray([c["margin"] for c in candidates], dtype=np.float32)
         quality_arr = np.asarray([c["quality"] for c in candidates], dtype=np.float32)
-        q = float(getattr(self.args, "il_confidence_quantile", 0.0))
+        q = float(filter_cfg.get("quantile", getattr(self.args, "il_confidence_quantile", 0.0)))
         q = min(1.0, max(0.0, q))
-        min_conf = float(getattr(self.args, "il_confidence_min", 0.0))
-        margin_min = float(getattr(self.args, "il_margin_min", 0.0))
-        quality_q = float(getattr(self.args, "il_quality_quantile", 0.0))
+        min_conf = float(filter_cfg.get("min_conf", getattr(self.args, "il_confidence_min", 0.0)))
+        margin_min = float(filter_cfg.get("margin_min", getattr(self.args, "il_margin_min", 0.0)))
+        quality_q = float(filter_cfg.get("quality_quantile", getattr(self.args, "il_quality_quantile", 0.0)))
         quality_q = min(1.0, max(0.0, quality_q))
-        topk_max = max(0, int(getattr(self.args, "il_topk_max", 0)))
+        topk_max = max(0, int(filter_cfg.get("topk_max", getattr(self.args, "il_topk_max", 0))))
         q_thr = float(np.quantile(conf_arr, q)) if q > 0.0 else -1e9
         threshold = max(min_conf, q_thr)
         quality_q_thr = float(np.quantile(quality_arr, quality_q)) if quality_q > 0.0 else -1e9
@@ -321,7 +416,7 @@ class MEAformer(nn.Module):
             kept = kept[:topk_max]
             topk_applied = 1
 
-        keep_min = int(getattr(self.args, "il_confidence_keep_min", 0))
+        keep_min = int(filter_cfg.get("keep_min", getattr(self.args, "il_confidence_keep_min", 0)))
         fallback_used = 0
         if keep_min > 0 and len(kept) < keep_min and len(candidates) > 0:
             ranked = sorted(candidates, key=lambda x: (x["quality"], x["confidence"], x["margin"]), reverse=True)
@@ -344,6 +439,8 @@ class MEAformer(nn.Module):
             "quality_q_threshold": float(quality_q_thr),
             "topk_max": int(topk_max),
             "topk_applied": int(topk_applied),
+            "phase_index": int(filter_cfg.get("phase_index", -1)),
+            "fresh_epoch": int(filter_cfg.get("fresh_epoch", 0)),
         }
         return [cand["pair"] for cand in kept]
 
@@ -370,7 +467,9 @@ class MEAformer(nn.Module):
         prev_links = set(new_links) if isinstance(new_links, list) else set()
         candidates = []
         margin_weight = float(getattr(self.args, "il_margin_weight", 1.0))
-        if (epoch + 1) % (self.args.semi_learn_step * 5) == self.args.semi_learn_step:
+        fresh_phase_index = self._fresh_il_phase_index(epoch)
+        filter_cfg = self._current_il_filter_cfg(fresh_phase_index)
+        if fresh_phase_index is not None:
             for i, p in enumerate(preds_l):
                 if preds_r[p] != i:
                     continue
@@ -408,7 +507,7 @@ class MEAformer(nn.Module):
                     }
                 )
 
-        new_links = self._filter_links_by_confidence(candidates)
+        new_links = self._filter_links_by_confidence(candidates, filter_cfg=filter_cfg)
         return new_links
 
     def data_refresh(self, logger, train_ill, test_ill_, left_non_train, right_non_train, new_links=None):
