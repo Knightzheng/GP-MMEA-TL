@@ -229,6 +229,12 @@ def main():
         cmd.extend(["--il_quality_quantile", str(m["il_quality_quantile"])])
     if "il_topk_max" in m:
         cmd.extend(["--il_topk_max", str(m["il_topk_max"])])
+    if "il_adaptive_topk" in m:
+        cmd.extend(["--il_adaptive_topk", str(m["il_adaptive_topk"])])
+    if "il_adaptive_topk_scale" in m:
+        cmd.extend(["--il_adaptive_topk_scale", str(m["il_adaptive_topk_scale"])])
+    if "il_adaptive_topk_min" in m:
+        cmd.extend(["--il_adaptive_topk_min", str(m["il_adaptive_topk_min"])])
     if "il_margin_weight" in m:
         cmd.extend(["--il_margin_weight", str(m["il_margin_weight"])])
     if "il_fresh_epochs" in m and str(m["il_fresh_epochs"]).strip():
@@ -245,6 +251,10 @@ def main():
         cmd.extend(["--il_quality_quantile_schedule", str(m["il_quality_quantile_schedule"])])
     if "il_topk_max_schedule" in m and str(m["il_topk_max_schedule"]).strip():
         cmd.extend(["--il_topk_max_schedule", str(m["il_topk_max_schedule"])])
+    if "il_adaptive_topk_scale_schedule" in m and str(m["il_adaptive_topk_scale_schedule"]).strip():
+        cmd.extend(["--il_adaptive_topk_scale_schedule", str(m["il_adaptive_topk_scale_schedule"])])
+    if "il_adaptive_topk_min_schedule" in m and str(m["il_adaptive_topk_min_schedule"]).strip():
+        cmd.extend(["--il_adaptive_topk_min_schedule", str(m["il_adaptive_topk_min_schedule"])])
     if m.get("csls", True):
         cmd.append("--csls")
     if m.get("enable_sota", True):

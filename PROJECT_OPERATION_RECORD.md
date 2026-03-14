@@ -3,7 +3,7 @@
 - 项目：`GP-MMEA-TL`（多模态实体对齐迁移实验）
 - 记录范围：`2026-02-28` 至 `2026-03-14`
 - 当前分支：`main`
-- 当前提交：`be524bc`
+- 当前提交（写入前快照）：`a5eb168`
 - 记录时间：`2026-03-14`
 
 ## 导读（给第一次看这个项目的人）
@@ -49,7 +49,7 @@
 | D. 迁移实验链路 | 2026-03-03 至 2026-03-04 | 建立 `source_train -> target_eval` 流程 | 模型是否具备跨数据集迁移能力 | 迁移实验从 smoke 走到了 formal |
 | E. 跨语言持续优化 | 2026-03-05 至 2026-03-11 | 围绕 `ja_en`、`fr_en` 多轮迭代自适应策略 | 跨语言迁移能否形成稳定正增益 | `ja_en` 和 `fr_en` 最终都得到了明显正增益 |
 | F. `FBDB15K` 攻坚 | 2026-03-11 至 2026-03-12 | 从调权重转向改伪种子质量 | 跨图谱噪声是否才是主要瓶颈 | `v18` 证明更干净的伪种子是关键突破点 |
-| G. `FBYG15K` 攻坚 | 2026-03-12 至 2026-03-14 | 从晚启 IL、静态过滤一路试到 staged fresh-IL 和 strict-source | 怎样在高噪声跨图谱场景里稳定提升 | `v24` 证明 staged fresh-IL 在严格口径下仍有效 |
+| G. `FBYG15K` 攻坚 | 2026-03-12 至 2026-03-14 | 从晚启 IL、静态过滤一路试到 staged fresh-IL、strict-source 与 adaptive top-k | 怎样在高噪声跨图谱场景里稳定提升 | `v24` 证明主线有效，`v25` 说明单纯 adaptive top-k 还不够 |
 | H. 主表与收口 | 持续进行 | 统一 4 目标主表、误差分桶、阶段报告 | 如何把结果整理成能直接写进论文的正式结论 | 当前 4 个目标均为 `5-seed` 正增益 |
 
 截至 `2026-03-14`，当前 4 目标统一主表已经全部是 `5-seed` 正式口径，分别为：
@@ -72,14 +72,14 @@
 
 ## 2. 仓库状态快照（写入本记录时）
 
-- 提交数：`56`（`git rev-list --count HEAD`）
-- 文件总数：`12472`
+- 提交数：`57`（`git rev-list --count HEAD`）
+- 文件总数：`12728`
 - 关键目录文件数：
-  - `scripts/`：`76` 个 `.py`
-  - `configs/`：`123` 个配置文件
-  - `reports/`：`669` 个报告文件
-  - `runs/`：`3121` 个文件；命名为时间戳实验目录的 run 数量 `648`
-- 迁移阶段报告文件（`reports/transfer/`）：`566` 个
+  - `scripts/`：`77` 个 `.py`
+  - `configs/`：`126` 个配置文件
+  - `reports/`：`690` 个报告文件
+  - `runs/`：`3213` 个文件；命名为时间戳实验目录的 run 数量 `833`
+- 迁移阶段报告文件（`reports/transfer/`）：`587` 个
 
 ## 3. 全流程时间线（做了什么操作、做了什么处理）
 
@@ -475,7 +475,9 @@
   - `delta_avg_mrr_mean = +0.008825`
   - `delta_avg_mr_mean = -66.674325`
 - 最新阶段收口报告：
-  - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+  - `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
+- 最新优化判断：
+  - `FBYG15K v25` 已验证 `adaptive top-k` 机制确实工作，但最优 pilot 仍未超过 `v24b`，因此主表保持不变。
 
 ## 7. 异常与恢复记录（关键）
 
@@ -989,3 +991,59 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+
+## 22. 2026-03-14 追加记录（FBYG15K v25 adaptive top-k pilot，主表保持 v24）
+
+本次追加操作：
+
+1. 选取 `FBYG15K` 的最优下一步方向，基于当前主表 `v24b` 继续验证 `phase-2 adaptive top-k`，而不是回到静态 `filter/cap` 搜索。
+2. 在 `baselines/MEAformer/config.py` 中新增分阶段自适应 `top-k` 参数：
+   - `il_adaptive_topk`
+   - `il_adaptive_topk_scale`
+   - `il_adaptive_topk_min`
+   - `il_adaptive_topk_scale_schedule`
+   - `il_adaptive_topk_min_schedule`
+3. 在 `baselines/MEAformer/model/MEAformer.py` 中加入 phase-aware `pre_topk_count` 记录与 `effective_topk` 自适应逻辑。
+4. 在 `baselines/MEAformer/main.py` 中补充 IL 日志输出，记录 `pre_topk/effective_topk/prev_pre_topk` 等信息。
+5. 在 `scripts/run_meaformer.py` 中补齐上述参数透传。
+6. 新增 `FBYG15K v25` 三个 pilot 配置与自动脚本：
+   - `tmmeada_target_fbyg15k_v25a_strictsrc_staged_adaptivetopk_s100`
+   - `tmmeada_target_fbyg15k_v25b_strictsrc_staged_adaptivetopk_s125`
+   - `tmmeada_target_fbyg15k_v25c_strictsrc_staged_adaptivetopk_s100_min300`
+   - `scripts/run_transfer_adapt_v25_fbyg_iter_queue.py`
+7. 完成 `2-seed pilot -> 自动选优 -> 是否扩展 full5` 全流程。
+8. 新增 `v25` 决策、compare、run-card 与阶段报告文件。
+9. 更新 `README.md`、`PROCESS_LOG.md` 与最新阶段报告链接，但保持主结果表不切换。
+
+关键结果：
+
+- 当前参考主表版本：`FBYG15K v24b_strictsrc_staged_fresh_il_top400_expand5`
+  - `5-seed delta_avg_mrr_mean = +0.00280`
+- `v25` pilot（`2-seed`, vs baseline）：
+  - `v25a = +0.00200`
+  - `v25b = +0.00200`
+  - `v25c = +0.00250`
+- 自动决策：
+  - `best_variant_pilot = v25c`
+  - `improve_over_current_ref = -0.00030`
+  - 未达到扩展阈值，不扩展到 `5-seed`
+
+关键诊断：
+
+- 这轮的正面结论不是“最终赢了”，而是 `adaptive top-k` 已在日志中明确生效；
+- `phase 1` 的 `effective_topk` 会根据 `phase 0` 的 `pre_topk_count` 自动变化，例如：
+  - `v25a/s2026`: `prev_pre_topk=200 -> effective_topk=250`
+  - `v25b/s42`: `prev_pre_topk=233 -> effective_topk=291`
+  - `v25c/s42`: `prev_pre_topk=233 -> effective_topk=300`
+  - `v25c/s2026`: `prev_pre_topk=200 -> effective_topk=300`
+- 但最终 `phase 1` 新增链接真值率仍偏低，说明当前瓶颈更可能是“第二阶段候选一致性不足”，而不只是固定 `top-k` 设置过硬。
+
+本次追加的直接作用：
+
+- 验证了 `FBYG15K` 上 `adaptive top-k` 这条机制路线确实可运行、可追溯，不是无效实现；
+- 同时排除了“继续单独扫 adaptive top-k 数值就能稳定超过 `v24b`”的可能性；
+- 为后续如果继续优化 `FBYG15K`，把下一步更明确地推进到 `phase-wise consistency constraints`。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`

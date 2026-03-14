@@ -174,6 +174,25 @@ class cfg():
             help="maximum pseudo links kept after IL quality filtering; 0 means no cap",
         )
         parser.add_argument(
+            "--il_adaptive_topk",
+            type=int,
+            default=0,
+            choices=[0, 1],
+            help="adapt phase-wise IL top-k caps using previous-phase filtered candidate counts",
+        )
+        parser.add_argument(
+            "--il_adaptive_topk_scale",
+            type=float,
+            default=1.0,
+            help="multiplier applied to previous-phase pre-cap kept-count when il_adaptive_topk=1",
+        )
+        parser.add_argument(
+            "--il_adaptive_topk_min",
+            type=int,
+            default=0,
+            help="minimum adaptive top-k cap when il_adaptive_topk=1; 0 keeps only scaled value",
+        )
+        parser.add_argument(
             "--il_margin_weight",
             type=float,
             default=1.0,
@@ -220,6 +239,18 @@ class cfg():
             type=str,
             default="",
             help="comma-separated phase-wise IL top-k caps aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_adaptive_topk_scale_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise adaptive top-k scales aligned with il_fresh_epochs",
+        )
+        parser.add_argument(
+            "--il_adaptive_topk_min_schedule",
+            type=str,
+            default="",
+            help="comma-separated phase-wise adaptive top-k minima aligned with il_fresh_epochs",
         )
 
         # --------- MCLEA -----------

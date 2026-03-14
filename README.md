@@ -35,7 +35,7 @@
 | Transfer 链路搭建 | 建立 `source_train -> target_eval` 流程 | 模型是否具备可迁移能力 | 迁移实验已经从 smoke 走到 formal |
 | `ja_en` / `fr_en` 优化 | 反复调整自适应节奏、IL 刷新与轻量模块 | 跨语言迁移能否稳定增益 | `ja_en` 和 `fr_en` 最终都拿到了明显正增益 |
 | `FBDB15K` 优化 | 从调权重转向改伪种子质量 | 跨图谱噪声是不是主要瓶颈 | `v18` 证明更干净的伪种子是关键 |
-| `FBYG15K` 优化 | 从晚启 IL、静态过滤一路试到 staged fresh-IL 和 strict-source | 怎样在噪声较大的跨图谱场景里稳定提升 | `v24` 说明两阶段 fresh-IL 在严格口径下仍有效 |
+| `FBYG15K` 优化 | 从晚启 IL、静态过滤一路试到 staged fresh-IL、strict-source 与 adaptive top-k | 怎样在噪声较大的跨图谱场景里稳定提升 | `v24` 证明主线有效，`v25` 说明单纯 adaptive top-k 还不够 |
 | 主表收口 | 汇总 4 个目标任务的正式结果 | 最后到底有没有形成稳定结论 | 当前 4 个目标均为 `5-seed` 正增益 |
 
 ## 当前正式结果（2026-03-14）
@@ -71,7 +71,7 @@
   - 当前最重要的正式主结果表
 - `reports/transfer/transfer_adapt_error_bucket_summary.md`
   - 主结果之外的误差分桶分析
-- `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+- `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
   - 截至目前最新的阶段收口报告
 
 以下内容开始进入“技术版说明”，会更偏向实验、脚本与结果口径。
@@ -191,7 +191,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -204,8 +204,8 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
-  - `FBYG15K` 的 staged fresh-IL 路线在 strict formal-source 口径下再次验证成功，当前主表版本切换为 `v24b`。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 可继续沿 `v24b` 做 phase-2 adaptive top-k 或阶段间一致性约束。
+  - `FBYG15K` 的 `v25` 已验证 adaptive top-k 机制确实生效，但最优 pilot `v25c (+0.00250)` 仍未超过当前主表 `v24b (+0.00280)`，因此主表保持 `v24b`。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 更适合沿 `v24b` 尝试 `phase-wise consistency constraints`，而不是继续单独扫 adaptive top-k。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -819,3 +819,37 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 当前 `FBYG15K` 结果已更适合作为论文正式主表版本
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+
+## 39. 阶段更新（2026-03-14）：FBYG15K v25 adaptive top-k pilot 完成，主表保持 v24
+
+- 目标：在 `v24b` 的 strict-source staged fresh-IL 基础上，验证 `phase-2 adaptive top-k` 是否能进一步超过当前主表版本。
+- 新增代码能力：
+  - `baselines/MEAformer/config.py`
+  - `baselines/MEAformer/model/MEAformer.py`
+  - `baselines/MEAformer/main.py`
+  - `scripts/run_meaformer.py`
+  - 支持 `il_adaptive_topk` 及其分阶段 `scale/min` 调度
+- 新增自动化：
+  - `scripts/run_transfer_adapt_v25_fbyg_iter_queue.py`
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v25a_strictsrc_staged_adaptivetopk_s100.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v25b_strictsrc_staged_adaptivetopk_s125.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v25c_strictsrc_staged_adaptivetopk_s100_min300.yaml`
+- `v25` pilot（2-seed, vs baseline）：
+  - `v25a = +0.00200`
+  - `v25b = +0.00200`
+  - `v25c = +0.00250`
+- 自动决策：
+  - `best_variant_pilot = v25c`
+  - `reference_v24_full5 = +0.00280`
+  - `improve_over_ref = -0.00030`
+  - 未达到扩展阈值，不扩展到 `5-seed`
+- 关键诊断：
+  - adaptive top-k 在日志中已明确生效，`phase 1` 的 `effective_topk` 会跟随 `phase 0` 的 `pre_topk` 自动变化；
+  - 但 `phase 1` 新增链接真值率仍偏低，说明当前瓶颈更像是第二阶段候选一致性，而不只是注入上限数值。
+- 结论：
+  - `FBYG15K` 当前主表版本保持 `v24b_strictsrc_staged_fresh_il_top400_expand5`
+  - `v25` 作为一次有效的机制验证保留，但不切换主表
+  - 若继续优化，应优先尝试 `phase-wise consistency constraints`
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`

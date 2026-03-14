@@ -1555,3 +1555,52 @@
     - `reports/transfer/transfer_adapt_error_bucket_summary.md`
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+
+## 40. 2026-03-14 Transfer-Adapt v25 FBYG adaptive top-k pilot finalized (ASCII summary)
+- Goal:
+  - test whether `phase-2 adaptive top-k` can beat the current strict-source `v24b` main-table result on `FBYG15K`.
+- Code changes:
+  - `baselines/MEAformer/config.py`
+    - add `il_adaptive_topk`
+    - add `il_adaptive_topk_scale`
+    - add `il_adaptive_topk_min`
+    - add `il_adaptive_topk_scale_schedule`
+    - add `il_adaptive_topk_min_schedule`
+  - `baselines/MEAformer/model/MEAformer.py`
+    - record per-phase `pre_topk_count`
+    - compute phase-aware `effective_topk` from previous-phase candidate count
+    - store adaptive stats for logging and diagnostics
+  - `baselines/MEAformer/main.py`
+    - log `pre_topk`, `effective_topk`, `prev_pre_topk`, `adaptive scale/min`
+  - `scripts/run_meaformer.py`
+    - pass adaptive-topk args through the runner
+- Added automation:
+  - `scripts/run_transfer_adapt_v25_fbyg_iter_queue.py`
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v25a_strictsrc_staged_adaptivetopk_s100.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v25b_strictsrc_staged_adaptivetopk_s125.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v25c_strictsrc_staged_adaptivetopk_s100_min300.yaml`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v25a = +0.00200`
+  - `v25b = +0.00200`
+  - `v25c = +0.00250`
+- Decision:
+  - `best_variant_pilot = v25c`
+  - `reference_v24_full5 = +0.00280`
+  - `improve_over_ref = -0.00030`
+  - no `5-seed` expansion
+- Diagnostics:
+  - adaptive behavior is confirmed in logs rather than inferred:
+    - `v25a/s2026`: `prev_pre_topk=200 -> effective_topk=250`
+    - `v25b/s42`: `prev_pre_topk=233 -> effective_topk=291`
+    - `v25c/s42`: `prev_pre_topk=233 -> effective_topk=300`
+    - `v25c/s2026`: `prev_pre_topk=200 -> effective_topk=300`
+  - phase-0 high-precision injection remains useful, but phase-1 added links are still too noisy on some seeds
+  - this means the next bottleneck is more likely `phase-2 consistency / agreement quality`, not the fixed-vs-adaptive top-k cap itself
+- Main-table decision:
+  - keep `FBYG15K` main-table version unchanged: `v24b_strictsrc_staged_fresh_il_top400_expand5`
+- Next-step implication:
+  - stop searching adaptive-topk numbers in isolation
+  - if further optimization continues, move to `phase-wise consistency constraints`
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`

@@ -57,6 +57,7 @@ class MEAformer(nn.Module):
         self.idx_double = torch.cat([self.idx_one, self.idx_one]).cuda()
         self.last_num = 1000000000000
         self.last_il_filter_stats = {}
+        self.il_phase_history = {}
         # self.idx_one = np.ones(self.args.batch_size, dtype=np.int64)
 
     def _to_cuda_batch(self, batch, device):
@@ -273,6 +274,7 @@ class MEAformer(nn.Module):
     def _empty_il_filter_stats(self):
         return {
             "raw_count": 0,
+            "pre_topk_count": 0,
             "kept_count": 0,
             "threshold": 0.0,
             "q_threshold": 0.0,
@@ -283,7 +285,12 @@ class MEAformer(nn.Module):
             "quality_quantile": float(getattr(self.args, "il_quality_quantile", 0.0)),
             "quality_q_threshold": 0.0,
             "topk_max": int(getattr(self.args, "il_topk_max", 0)),
+            "effective_topk": int(getattr(self.args, "il_topk_max", 0)),
             "topk_applied": 0,
+            "adaptive_topk_applied": 0,
+            "adaptive_scale": float(getattr(self.args, "il_adaptive_topk_scale", 1.0)),
+            "adaptive_min": int(getattr(self.args, "il_adaptive_topk_min", 0)),
+            "adaptive_source_pre_topk": 0,
             "phase_index": -1,
             "fresh_epoch": 0,
         }
@@ -377,6 +384,23 @@ class MEAformer(nn.Module):
                     int,
                 )
             ),
+            "adaptive_topk": int(getattr(self.args, "il_adaptive_topk", 0)),
+            "adaptive_scale": float(
+                self._scheduled_il_value(
+                    "il_adaptive_topk_scale",
+                    getattr(self.args, "il_adaptive_topk_scale", 1.0),
+                    phase_index,
+                    float,
+                )
+            ),
+            "adaptive_min": int(
+                self._scheduled_il_value(
+                    "il_adaptive_topk_min",
+                    getattr(self.args, "il_adaptive_topk_min", 0),
+                    phase_index,
+                    int,
+                )
+            ),
         }
 
     def _filter_links_by_confidence(self, candidates, filter_cfg=None):
@@ -411,9 +435,29 @@ class MEAformer(nn.Module):
             kept.append(cand)
 
         kept.sort(key=lambda x: (x["quality"], x["confidence"], x["margin"]), reverse=True)
+        pre_topk_count = len(kept)
         topk_applied = 0
-        if topk_max > 0 and len(kept) > topk_max:
-            kept = kept[:topk_max]
+        adaptive_topk_applied = 0
+        adaptive_scale = float(filter_cfg.get("adaptive_scale", getattr(self.args, "il_adaptive_topk_scale", 1.0)))
+        adaptive_min = max(0, int(filter_cfg.get("adaptive_min", getattr(self.args, "il_adaptive_topk_min", 0))))
+        adaptive_source_pre_topk = 0
+        effective_topk = topk_max
+        phase_index = int(filter_cfg.get("phase_index", -1))
+        adaptive_enabled = int(filter_cfg.get("adaptive_topk", getattr(self.args, "il_adaptive_topk", 0))) == 1
+        if topk_max > 0 and adaptive_enabled and phase_index > 0:
+            prev_stats = self.il_phase_history.get(phase_index - 1, {})
+            adaptive_source_pre_topk = int(prev_stats.get("pre_topk_count", 0))
+            if adaptive_source_pre_topk > 0:
+                adaptive_cap = int(round(adaptive_source_pre_topk * adaptive_scale))
+                if adaptive_min > 0:
+                    adaptive_cap = max(adaptive_cap, adaptive_min)
+                if adaptive_cap > 0:
+                    effective_topk = min(topk_max, adaptive_cap)
+                    if effective_topk != topk_max:
+                        adaptive_topk_applied = 1
+
+        if effective_topk > 0 and len(kept) > effective_topk:
+            kept = kept[:effective_topk]
             topk_applied = 1
 
         keep_min = int(filter_cfg.get("keep_min", getattr(self.args, "il_confidence_keep_min", 0)))
@@ -421,13 +465,14 @@ class MEAformer(nn.Module):
         if keep_min > 0 and len(kept) < keep_min and len(candidates) > 0:
             ranked = sorted(candidates, key=lambda x: (x["quality"], x["confidence"], x["margin"]), reverse=True)
             fallback_cap = min(keep_min, len(ranked))
-            if topk_max > 0:
-                fallback_cap = min(fallback_cap, topk_max)
+            if effective_topk > 0:
+                fallback_cap = min(fallback_cap, effective_topk)
             kept = ranked[:fallback_cap]
             fallback_used = 1
 
-        self.last_il_filter_stats = {
+        stats = {
             "raw_count": len(candidates),
+            "pre_topk_count": int(pre_topk_count),
             "kept_count": len(kept),
             "threshold": float(threshold),
             "q_threshold": float(q_thr),
@@ -438,10 +483,18 @@ class MEAformer(nn.Module):
             "quality_quantile": float(quality_q),
             "quality_q_threshold": float(quality_q_thr),
             "topk_max": int(topk_max),
+            "effective_topk": int(effective_topk),
             "topk_applied": int(topk_applied),
-            "phase_index": int(filter_cfg.get("phase_index", -1)),
+            "adaptive_topk_applied": int(adaptive_topk_applied),
+            "adaptive_scale": float(adaptive_scale),
+            "adaptive_min": int(adaptive_min),
+            "adaptive_source_pre_topk": int(adaptive_source_pre_topk),
+            "phase_index": phase_index,
             "fresh_epoch": int(filter_cfg.get("fresh_epoch", 0)),
         }
+        if phase_index >= 0:
+            self.il_phase_history[phase_index] = dict(stats)
+        self.last_il_filter_stats = stats
         return [cand["pair"] for cand in kept]
 
     def Iter_new_links(self, epoch, left_non_train, final_emb, right_non_train, new_links=None):

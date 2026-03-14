@@ -271,7 +271,14 @@ class Runner:
                         f" [quality margin_min={stats.get('margin_min', 0.0):.4f}, "
                         f"q={stats.get('quality_quantile', 0.0):.2f}, "
                         f"q_thr={stats.get('quality_q_threshold', 0.0):.4f}, "
-                        f"topk={stats.get('topk_max', 0)}, topk_applied={stats.get('topk_applied', 0)}]"
+                        f"topk={stats.get('topk_max', 0)}, effective_topk={stats.get('effective_topk', stats.get('topk_max', 0))}, "
+                        f"pre_topk={stats.get('pre_topk_count', 0)}, topk_applied={stats.get('topk_applied', 0)}]"
+                    )
+                if int(stats.get("adaptive_topk_applied", 0)) > 0:
+                    msg += (
+                        f" [adaptive scale={stats.get('adaptive_scale', 1.0):.2f}, "
+                        f"min={stats.get('adaptive_min', 0)}, "
+                        f"prev_pre_topk={stats.get('adaptive_source_pre_topk', 0)}]"
                     )
                 self.logger.info(msg)
             if (self.epoch + 1) % (self.args.semi_learn_step * 5) == 0:
