@@ -204,6 +204,9 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 效率补证（当前先完成 wall-clock）：
   - `reports/transfer/transfer_efficiency_summary.md`
   - `reports/transfer/transfer_efficiency_summary.csv`
+- GPU 峰值显存最小正式补测（辅助支撑）：
+  - `reports/transfer/transfer_gpu_peak_minimal_summary.md`
+  - `reports/transfer/transfer_gpu_peak_minimal_summary.csv`
 - 项目闭环评估与边界说明：
   - `reports/notes/taskbook_gap_assessment_20260315.md`
   - `reports/notes/mainline_traceability_matrix_20260315.md`
@@ -222,11 +225,11 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 证据链补强（2026-03-14 已新增）：
   - 显著性：4 个目标域在 `avg MRR` 上均为 `5/5 seed` 正增益，paired bootstrap `95% CI` 下界均大于 0，one-sided sign test / Wilcoxon 均为 `p=0.03125`。
   - 案例：已补出 `8` 个案例，覆盖 `ja_en` 失败边界案例与 `FBDB15K/FBYG15K` 成功纠错案例。
-  - 效率：已可从 formal `log.txt` 统一汇总 wall-clock；GPU 峰值显存仍需一次最小代价补测。
+  - 效率：已可从 formal `log.txt` 统一汇总 wall-clock；GPU 峰值显存最小正式补测也已补出，但仍只属于辅助支撑。
 - 项目接管判断（2026-03-15）：
   - 任务书 / 开题报告主线已基本闭环，当前优先工作是材料规范化与可追溯整理，而不是继续追加主线 rerun。
   - `H3` 相关脚本、结果与目录已从当前仓库移除，后续仅在主线完全收口后再单独重启。
-  - GPU 峰值显存当前只有脚本入口与失败 / dry-run 尝试，尚无可入文正式汇总；后续需按修正后的最小补测脚本重跑。
+  - GPU 峰值显存当前已补出代表性最小正式结果，但只能按“辅助支撑补测”保守使用。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
   - `FBYG15K` 的 `v25` 已验证 adaptive top-k 机制确实生效，但最优 pilot `v25c (+0.00250)` 仍未超过当前主表 `v24b (+0.00280)`，因此主表保持 `v24b`。
@@ -932,3 +935,18 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 后来者进入 `reports/transfer/` 与 `runs/transfer/` 后不再需要先读大量历史探索文件；
   - 主线正式结果与探索性材料的边界更清楚；
   - 为后续最小 GPU 补测保留了更干净的导航结构。
+
+## 44. 阶段更新（2026-03-15）：GPU 峰值显存最小正式补测完成
+
+- 本轮动作：
+  - 完成 `ja_en / FBYG15K × baseline / method` 的代表性 GPU 峰值显存最小正式补测；
+  - 生成正式汇总文件：
+    - `reports/transfer/transfer_gpu_peak_minimal_summary.md`
+    - `reports/transfer/transfer_gpu_peak_minimal_summary.csv`
+    - `reports/transfer/transfer_gpu_peak_minimal_per_run.csv`
+  - 为补测 run 新增目录说明：
+    - `runs/experiments/gpu_peak_minimal/README.md`
+- 当前边界：
+  - 该补测只覆盖 `seed=42` 与代表性目标域，不替代正式 `5-seed` wall-clock 结果；
+  - GPU 数值来自 PyTorch allocator peak，在 Windows `WDDM` 下应作为同环境相对参考；
+  - `FBYG15K` method 因原配置 `il_start=5`，最小有效补测为 `epoch=6`，因此时间列不宜与 `epoch=3` baseline 直接并列解释。

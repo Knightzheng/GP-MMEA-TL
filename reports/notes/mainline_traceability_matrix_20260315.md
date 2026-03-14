@@ -12,7 +12,7 @@
 
 - 主线已围绕“统一迁移实验链路 + 4 个目标域 5-seed 正增益 + 目标域自适应 / 伪标签质量控制具有积极作用”闭环。
 - `H3` 相关内容已从当前仓库移除，不纳入本总表。
-- GPU 峰值显存仍属于辅助支撑，尚无正式结果表，只能写成待补最小正式补测。
+- GPU 峰值显存仍属于辅助支撑，但当前已补出代表性最小正式结果。
 
 ## 2. 任务书 / 开题要求对齐矩阵
 
@@ -28,7 +28,7 @@
 | 结果记录与分析：系统分析不同目标域性能变化 | 已完成 | `reports/transfer/transfer_adapt_error_bucket_summary.md`, `reports/transfer/transfer_stage_update_20260309_main_table_bucket.md` | `scripts/make_transfer_main_and_bucket_report.py` | 依赖 4 目标域正式结果目录 | 已可支撑任务书中“分析不同迁移场景”的要求 |
 | 稳定性与显著性 | 已完成 | `reports/transfer/transfer_adapt_significance_summary.md`, `reports/transfer/transfer_adapt_significance_writeup.md` | `scripts/analyze_transfer_significance.py` | 基于 4 个目标域 `5-seed` 正式结果汇总生成 | 当前可写“4/4 目标域 5/5 seed 正增益 + CI 下界大于 0” |
 | 案例分析 | 已完成 | `reports/transfer/transfer_case_analysis_examples.md`, `reports/transfer/transfer_case_analysis_examples.csv` | `scripts/build_transfer_case_analysis.py` | 基于正式目标域日志生成 | 当前样本量足以入文，但仍可在主线完成后继续扩展示例数量 |
-| 效率分析 | 已完成 wall-clock 版本 | `reports/transfer/transfer_efficiency_summary.md`, `reports/transfer/transfer_efficiency_summary.csv` | `scripts/summarize_transfer_efficiency.py` | 基于正式 `log.txt` 聚合 | 当前只有 wall-clock，GPU 峰值显存仍待补正式结果 |
+| 效率分析 | 已完成 wall-clock 版本，并补出最小 GPU 辅助结果 | `reports/transfer/transfer_efficiency_summary.md`, `reports/transfer/transfer_efficiency_summary.csv`, `reports/transfer/transfer_gpu_peak_minimal_summary.md` | `scripts/summarize_transfer_efficiency.py`, `scripts/summarize_gpu_peak_minimal.py` | 基于正式 `log.txt` 聚合与最小正式 GPU 补测生成 | GPU 结果当前只覆盖代表性目标域与 `seed=42`，不能替代完整 wall-clock 主表 |
 | 过程记录、可复现、可追溯 | 已完成并仍在增强 | `README.md`, `PROCESS_LOG.md`, `PROJECT_OPERATION_RECORD.md`, `reports/notes/thread_sync_shared.md` | 项目级记录文件持续同步 | run 级 `config/log/run_card/artifact_manifest` 已保留在正式目录中 | 当前最值得继续优化的是导航集中度与主线入口清晰度 |
 
 ## 3. 主线正式结果与运行入口矩阵
@@ -61,9 +61,10 @@
 
 ## 4. 当前仍存在的主线外缺口
 
-1. GPU 峰值显存仍没有正式结果表。
+1. GPU 峰值显存已补出最小正式结果。
    - 相关入口：`scripts/run_gpu_peak_minimal.py`, `scripts/summarize_gpu_peak_minimal.py`
-   - 当前只能写成“最小正式补测待执行”。
+   - 当前结果文件：`reports/transfer/transfer_gpu_peak_minimal_summary.md`
+   - 但它仍只覆盖 `seed=42` 与代表性目标域，因此只能写成辅助支撑补测。
 2. README / reports / runs 导航仍可进一步收口。
    - 当前已经能找到，但还不够“一眼看清”。
 3. 历史探索性材料较多。
@@ -74,7 +75,7 @@
 1. 任务书与开题报告要求的主线项目任务已经具备明确的正式支撑链。
 2. 当前最值得继续做的优化，不是再补新的主线实验，而是：
    - 继续把 README / reports / runs 的导航收口到本总表周围；
-   - 在辅助项中仅补最小代价的 GPU 正式结果。
+   - 仅在必要时继续做更小范围的辅助支撑整理。
 3. 论文线程现阶段最应吸收的是：
    - 本文件中的“任务要求 -> 正式证据 -> 脚本入口 -> run 目录”映射；
    - 而不是再等待新的主线 rerun。

@@ -14,6 +14,8 @@
    - 当前可直接入文的代表性案例。
 5. `transfer_efficiency_summary.md`
    - 当前已完成的 wall-clock 效率补证。
+6. `transfer_gpu_peak_minimal_summary.md`
+   - 当前已完成的最小正式 GPU 峰值显存补测。
 
 ## 2. 4 个目标域的正式对比文件
 
@@ -38,6 +40,8 @@
   - 案例分析对应的结构化数据。
 - `transfer_efficiency_summary.csv`
   - 效率分析对应的结构化数据。
+- `transfer_gpu_peak_minimal_summary.csv`
+  - GPU 峰值显存最小正式补测的结构化数据。
 
 ## 4. 阶段报告的正确使用方式
 
@@ -53,6 +57,6 @@
 ## 5. 当前边界
 
 1. 本目录当前不再包含 `H3` 相关材料。
-2. GPU 峰值显存不在本目录给出正式结果，当前只能参考项目级记录中的“待补最小正式补测”口径。
+2. GPU 峰值显存当前已经补出最小正式结果，但仍只属于辅助支撑，不得写成主线完成前提。
 3. 若只需要项目主线闭环证据，请优先回到：
    - `../notes/mainline_traceability_matrix_20260315.md`

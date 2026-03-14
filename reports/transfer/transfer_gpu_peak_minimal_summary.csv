@@ -1,0 +1,5 @@
+target,variant,seed,epoch,avg_hits@1,avg_hits@10,avg_mrr,gpu_peak_allocated_mb,gpu_peak_reserved_mb,elapsed_minutes
+FBYG15K,baseline,42,3,0.0339,0.0856,0.0540,5832.93,9774.00,5.70
+FBYG15K,method,42,6,0.0365,0.0990,0.0600,5833.29,9804.00,11.25
+ja_en,baseline,42,3,0.3433,0.5135,0.4020,7494.68,8932.00,11.73
+ja_en,method,42,3,0.3433,0.5135,0.4020,7496.18,8972.00,10.42

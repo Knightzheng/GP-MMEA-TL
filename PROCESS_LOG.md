@@ -1711,3 +1711,24 @@
 - current effect:
   - entering `reports/transfer/` or `runs/transfer/` now leads directly to official mainline entry points
   - historical exploration files remain preserved, but are no longer mixed with the official reading path
+
+## 2026-03-15 Stage 3 GPU Peak Minimal Formal Supplement
+
+- execution:
+  - run `python scripts/run_gpu_peak_minimal.py`
+  - summarize with `python scripts/summarize_gpu_peak_minimal.py`
+- retained formal runs:
+  - `ja_en baseline`
+  - `ja_en method`
+  - `FBYG15K baseline`
+  - `FBYG15K method`
+- generated artifacts:
+  - `reports/transfer/transfer_gpu_peak_minimal_per_run.csv`
+  - `reports/transfer/transfer_gpu_peak_minimal_summary.csv`
+  - `reports/transfer/transfer_gpu_peak_minimal_summary.md`
+  - `runs/experiments/gpu_peak_minimal/README.md`
+- cleanup:
+  - remove dry-run directories under `runs/experiments/gpu_peak_minimal/`
+  - remove `runs/system/gpu_peak_minimal_tmp/`
+- usage boundary:
+  - this is a supplementary peak-memory check under representative settings, not a replacement for formal 5-seed wall-clock evidence

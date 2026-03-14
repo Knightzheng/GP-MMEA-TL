@@ -594,3 +594,35 @@
    - GPU 峰值显存仍然没有正式结果表。
 7. 可直接交给论文线程吸收的总结文字：
    - 本轮项目优化线程已继续完成阶段2的整理：在项目级主线追溯总表基础上，又为 `reports/transfer/` 和 `runs/transfer/` 分别建立了结果文件导航与正式 run 导航，进一步把主线正式材料与历史探索材料区分开来。基于这一轮收口，论文线程后续可以更稳定地围绕正式主表、显著性、案例、效率和正式 run 留痕组织正文与附录，而不必再从探索性 `v*` 材料中自行筛选主线证据。
+
+### 6.10 阶段3同步（2026-03-15，GPU 峰值显存最小正式补测已完成）
+
+1. 本轮已完成阶段3：GPU 峰值显存最小正式补测。
+2. 实际完成的补测范围：
+   - `ja_en`：`baseline / method`
+   - `FBYG15K`：`baseline / method`
+   - 统一 `seed=42`
+3. 新增或更新文件：
+   - `reports/transfer/transfer_gpu_peak_minimal_per_run.csv`
+   - `reports/transfer/transfer_gpu_peak_minimal_summary.csv`
+   - `reports/transfer/transfer_gpu_peak_minimal_summary.md`
+   - `runs/experiments/gpu_peak_minimal/README.md`
+   - `README.md`
+   - `reports/README.md`
+   - `runs/README.md`
+   - `reports/transfer/README.md`
+   - `runs/transfer/README.md`
+   - `reports/notes/mainline_traceability_matrix_20260315.md`
+4. 当前结果可支持的保守表述：
+   - 在当前 Windows / PyTorch 环境下，项目已经补出代表性目标域上的 allocator-level GPU peak memory 参考值；
+   - 该结果可作为 wall-clock 之外的辅助补证。
+5. 当前仍不宜夸大的部分：
+   - 这不是 `5-seed` 正式显存统计；
+   - 这不是所有目标域的统一显存评测；
+   - `FBYG15K` method 因原配置 `il_start=5`，最小有效补测采用 `epoch=6`，因此时间列不能与 `epoch=3` baseline 直接并列解释；
+   - Windows `WDDM` 下的 `allocated/reserved` 更适合做同环境相对参考，不应写成精确物理占用。
+6. 面向论文的回填建议：
+   - 若论文线程要吸收该部分，建议把它放在辅助支撑或补充实验位置；
+   - 写法应强调“代表性最小补测”和“相同环境下的相对参考”。
+7. 可直接交给论文线程吸收的总结文字：
+   - 本轮项目优化线程已完成 GPU 峰值显存的最小正式补测，并补出 `ja_en` 与 `FBYG15K` 两个代表性目标域在 `baseline / method` 下的 PyTorch allocator 峰值显存汇总表。该结果可作为 wall-clock 之外的辅助补证，但仍应保守表述为代表性场景下的最小显存补测，而不能替代正式 `5-seed` 主实验统计或写成所有目标域上的严格统一显存结论。

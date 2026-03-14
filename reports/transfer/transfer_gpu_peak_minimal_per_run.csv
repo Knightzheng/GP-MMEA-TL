@@ -1,0 +1,5 @@
+target,variant,config_variant,seed,epoch,run_id,avg_hits@1,avg_hits@10,avg_mrr,gpu_peak_allocated_mb,gpu_peak_reserved_mb,elapsed_minutes
+FBYG15K,baseline,fbyg15k_baseline,42,3,20260315-035536-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-gpupeak-FBYG15K-norm-s42,0.0339,0.0856,0.0540,5832.93,9774.00,5.70
+FBYG15K,method,fbyg15k_method,42,6,20260315-040122-TMMEA-DA-transfer-adapt-v24b-target-fbyg15k-transfer-tgt-gpupeak-FBYG15K-norm-s42,0.0365,0.0990,0.0600,5833.29,9804.00,11.25
+ja_en,baseline,ja_en_baseline,42,3,20260315-033319-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-gpupeak-DBP15K-ja_en-s42,0.3433,0.5135,0.4020,7494.68,8932.00,11.73
+ja_en,method,ja_en_method,42,3,20260315-034506-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-gpupeak-DBP15K-ja_en-s42,0.3433,0.5135,0.4020,7496.18,8972.00,10.42

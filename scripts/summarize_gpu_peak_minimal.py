@@ -131,6 +131,16 @@ def main():
             )
 
     rows.sort(key=lambda row: (row["target"], row["variant"]))
+    target_epoch_notes = []
+    target_to_epochs = {}
+    for row in rows:
+        target_to_epochs.setdefault(row["target"], set()).add(row["epoch"])
+    for target, epochs in sorted(target_to_epochs.items()):
+        if len(epochs) > 1:
+            epoch_list = ", ".join(sorted(epochs, key=lambda item: int(item)))
+            target_epoch_notes.append(
+                f"- `{target}` uses mixed effective epochs in this minimal supplement (`epoch={epoch_list}`), so runtime should not be interpreted as a same-budget comparison."
+            )
 
     per_run_path = out_dir / "transfer_gpu_peak_minimal_per_run.csv"
     with per_run_path.open("w", encoding="utf-8", newline="") as handle:
@@ -194,12 +204,19 @@ def main():
         "- scope: `seed=42`, representative targets `ja_en` and `FBYG15K`, 1-epoch target-adapt reruns with the same batch size and model structure as the formal configs",
         "- note: `elapsed_minutes` here reflects the 1-epoch补测 runtime, not the formal 5-seed full-chain wall-clock already reported in the thesis",
         "- note: GPU peak numbers come from `torch.cuda.max_memory_allocated / reserved`; under Windows `WDDM`, these allocator-level peaks may differ from `nvidia-smi` instantaneous physical usage, so they are better used for relative comparison within the same environment",
-        "",
-        "## Paper-Ready Table",
-        "",
-        "| Target | Variant | Seed | Epoch | avg Hits@1 | avg Hits@10 | avg MRR | GPU Peak Alloc (MB, PyTorch) | GPU Peak Reserv (MB, PyTorch) | 1-epoch Time (min) |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
+    if target_epoch_notes:
+        md_lines.append("- note: some variants require a higher effective epoch than the requested minimum in order to remain valid under their original `il_start` settings")
+        md_lines.extend(target_epoch_notes)
+    md_lines.extend(
+        [
+            "",
+            "## Paper-Ready Table",
+            "",
+            "| Target | Variant | Seed | Epoch | avg Hits@1 | avg Hits@10 | avg MRR | GPU Peak Alloc (MB, PyTorch) | GPU Peak Reserv (MB, PyTorch) | 1-epoch Time (min) |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
     if not rows:
         md_lines.append("| - | - | - | - | - | - | - | - | - | - |")
     for row in rows:

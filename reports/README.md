@@ -6,6 +6,7 @@
 - epoch10/: epoch10 pilot/tuning compare and decisions
 - transfer/: source->target transfer artifacts and run cards
   - transfer/README.md: current official transfer result entry points and how to treat historical exploration files
+  - transfer_gpu_peak_minimal_summary.md/.csv: supplementary minimal GPU-peak-memory measurements for representative target-adapt settings
 - midterm/: midterm draft/submission documents
 - planning/: next-stage plans and auto decisions
 - notes/: technical notes and overnight summaries

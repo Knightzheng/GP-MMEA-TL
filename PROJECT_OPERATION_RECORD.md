@@ -1222,3 +1222,24 @@
 1. 降低后来者进入 `transfer/` 目录后的理解成本。
 2. 避免把探索性 `v*` 文件误当作当前正式主表证据。
 3. 为阶段3 的 GPU 最小正式补测留出更干净的项目导航结构。
+
+## 28. 2026-03-15 追加记录（阶段3：GPU 峰值显存最小正式补测）
+
+本次追加操作：
+
+1. 运行 `scripts/run_gpu_peak_minimal.py`，完成代表性目标域 `ja_en / FBYG15K × baseline / method` 的最小正式补测。
+2. 运行 `scripts/summarize_gpu_peak_minimal.py`，生成：
+   - `reports/transfer/transfer_gpu_peak_minimal_per_run.csv`
+   - `reports/transfer/transfer_gpu_peak_minimal_summary.csv`
+   - `reports/transfer/transfer_gpu_peak_minimal_summary.md`
+3. 新增：
+   - `runs/experiments/gpu_peak_minimal/README.md`
+4. 清理：
+   - 删除 dry-run 目录；
+   - 删除 `runs/system/gpu_peak_minimal_tmp/` 临时配置目录。
+
+本次追加的直接作用：
+
+1. 当前项目终于具备了可入项目记录的最小正式 GPU 峰值显存结果。
+2. 该补测补齐了此前一直悬空的辅助支撑项，但没有把它抬高为主线完成前提。
+3. 后续论文线程若要引用该部分，应采用“代表性场景下的辅助显存补测”这一保守口径。
