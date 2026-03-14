@@ -206,6 +206,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/transfer/transfer_efficiency_summary.csv`
 - 项目闭环评估与边界说明：
   - `reports/notes/taskbook_gap_assessment_20260315.md`
+  - `reports/notes/mainline_traceability_matrix_20260315.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -906,3 +907,15 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 仓库聚焦于主线材料、正式 run 与可复现脚本；
   - `H3` 不再占用当前项目导航、结果目录与代码入口；
   - 论文线程不应继续从当前仓库读取或引用旧的 `H3` 留痕。
+
+## 42. 阶段更新（2026-03-15）：主线复现与追溯总表建立
+
+- 本轮动作：
+  - 新增项目级主线追溯总表：
+    - `reports/notes/mainline_traceability_matrix_20260315.md`
+  - 将任务书 / 开题报告要求与正式结果、脚本入口、run 目录建立一一映射；
+  - 明确当前主线外剩余缺口只剩“导航收口”和“GPU 最小正式补测”。
+- 当前作用：
+  - 后来者现在可以从一份文件直接定位主线正式证据；
+  - 论文线程可以直接吸收“要求 -> 证据 -> 脚本 -> run”的闭环关系；
+  - 后续 README / reports / runs 的继续收口有了统一锚点。

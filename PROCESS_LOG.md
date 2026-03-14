@@ -1680,3 +1680,19 @@
   - update `runs/README.md`
   - update `PROJECT_OPERATION_RECORD.md`
   - update `reports/notes/thread_sync_shared.md`
+
+## 2026-03-15 Stage 1 Mainline Traceability Matrix
+
+- goal:
+  - build one project-level map from taskbook/proposal requirements to formal results, scripts, and run directories
+- new artifact:
+  - `reports/notes/mainline_traceability_matrix_20260315.md`
+- synchronized docs:
+  - `README.md`
+  - `reports/README.md`
+  - `PROCESS_LOG.md`
+  - `PROJECT_OPERATION_RECORD.md`
+  - `reports/notes/thread_sync_shared.md`
+- current judgment:
+  - mainline evidence is already sufficient; the most valuable next work is navigation tightening rather than more mainline reruns
+  - the only remaining auxiliary gap worth a minimal formal补测 is GPU peak memory

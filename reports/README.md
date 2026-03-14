@@ -10,6 +10,7 @@
 - notes/: technical notes and overnight summaries
 - notes/thread_sync_shared.md: shared handoff board between thesis-writing thread and project-optimization thread
 - notes/taskbook_gap_assessment_20260315.md: taskbook/proposal/mainline closure assessment and current gap audit
+- notes/mainline_traceability_matrix_20260315.md: taskbook/proposal requirements mapped to formal results, scripts, and run directories
 - compare/: cross-method compare tables
 - tmp/: temporary intermediate outputs
 - misc/: uncategorized artifacts
