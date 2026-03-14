@@ -1133,3 +1133,36 @@
 - `reports/thesis/本科毕业论文初稿_v1.md`
 - `reports/notes/thread_sync_shared.md`
 - `PROCESS_LOG.md`
+
+## 25. 2026-03-14 追加记录（自动任务上下文文件补充）
+
+本次追加操作：
+
+1. 识别到自动任务会开启新的线程，默认不继承当前论文写作会话的完整背景。
+2. 为避免自动任务在新线程中偏离当前协作边界，新增一份自包含上下文文件：
+   - `reports/notes/thesis_automation_context.md`
+3. 在该文件中明确固化：
+   - 自动任务只监视共享文件、不直接修改论文
+   - 当前线程分工
+   - 自动任务每次运行时必须先读取的文件
+   - 自动任务只能做提醒、不能代替论文线程写正文
+4. 同步在以下文件中增加入口或规则说明：
+   - `reports/README.md`
+   - `reports/notes/thread_sync_shared.md`
+   - `PROCESS_LOG.md`
+5. 进一步明确：
+   - 自动任务负责监视项目优化线程是否更新共享文件
+   - 论文修改仍由当前“论文初稿写作线程”专属负责
+
+本次追加的直接作用：
+
+- 让自动任务与论文线程的职责边界彻底分离；
+- 避免自动任务在新线程里直接改写论文正文；
+- 保证后续仍由论文线程基于共享文件最新进展来完成正式论文修改。
+
+对应文件：
+
+- `reports/notes/thesis_automation_context.md`
+- `reports/README.md`
+- `reports/notes/thread_sync_shared.md`
+- `PROCESS_LOG.md`

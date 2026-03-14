@@ -1687,3 +1687,24 @@
   - still waiting on optimization thread:
     - formal `H3` missing-modality results
     - formal GPU peak-memory summary
+
+## 2026-03-14 Automation-Context Update
+
+- motivation:
+  - automation opens a new thread and does not automatically inherit the full thesis-writing conversation context
+  - a self-contained file is needed so the automation can monitor shared-file updates with the correct boundary
+- added file:
+  - `reports/notes/thesis_automation_context.md`
+- purpose:
+  - define that automation is monitor-only
+  - tell automation which files to read first
+  - prevent automation from directly modifying the thesis draft
+- synced pointers:
+  - `reports/README.md`
+  - `reports/notes/thread_sync_shared.md`
+- current rule:
+  - any automation or new thread that monitors shared-file updates should read:
+    1. `reports/notes/thesis_automation_context.md`
+    2. `reports/notes/thread_sync_shared.md`
+    3. `reports/thesis/本科毕业论文初稿_v1.md`
+  - thesis modification remains the exclusive responsibility of the thesis-writing thread
