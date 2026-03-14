@@ -1641,3 +1641,31 @@
   - note:
     - wall-clock is now recoverable from current formal logs
     - peak GPU memory still needs an extra minimal-cost measurement
+
+## 2026-03-15 Mainline Closure Check + Robustness Sync
+
+- takeover scope:
+  - re-read taskbook / requirements / thesis draft / shared sync board / process logs / transfer reports / epoch3 ablation / robustness artifacts / key scripts
+- new assessment artifact:
+  - `reports/notes/taskbook_gap_assessment_20260315.md`
+- current judgment:
+  - taskbook / proposal mainline is now considered basically closed
+  - the remaining high-value work is documentation sync, traceability cleanup, and restrained auxiliary support positioning
+- H3 status update:
+  - `reports/robustness/h3_missing_modality_minimal_summary.md` is no longer only an empty skeleton
+  - a minimal `zh_en`, `seed=42`, `drop_rate={0.0,0.6}` single-seed pilot exists
+  - this can support only a cautious auxiliary observation, not a formal H3 confirmation
+- GPU status update:
+  - current `gpu_peak_minimal` attempts are still not formal evidence
+  - one actual rerun hit `AssertionError: self.args.il_start < self.args.epoch`
+  - dry-run / failed attempts should not be cited as completed results
+- script fix:
+  - `scripts/run_gpu_peak_minimal.py`
+    - auto-raise the minimal rerun epoch when a transfer config uses `il` and `il_start >= epoch`
+    - goal: prevent generating obviously invalid minimal configs in the next补测 round
+- navigation sync:
+  - update `README.md`
+  - update `reports/README.md`
+  - update `runs/README.md`
+  - update `PROJECT_OPERATION_RECORD.md`
+  - update `reports/notes/thread_sync_shared.md`

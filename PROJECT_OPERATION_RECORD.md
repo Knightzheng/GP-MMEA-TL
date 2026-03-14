@@ -1104,3 +1104,65 @@
   - `H3` 的缺失率压力测试是否值得做最小版；
   - `FBYG15K` 是否进入 `phase-wise consistency constraints`；
   - 额外 baseline 是否真的值得投入。
+
+## 24. 2026-03-15 追加记录（项目主线闭环检查与辅助支撑状态重整）
+
+本次追加操作：
+
+1. 按“项目优化线程”定位重新接管当前仓库，通读任务书、需求冻结、共享交接、论文初稿、过程记录、阶段报告、主结果文件、鲁棒性材料和关键脚本。
+2. 新增项目级差距评估文件：
+   - `reports/notes/taskbook_gap_assessment_20260315.md`
+3. 明确给出当前判断：
+   - 任务书 / 开题报告主线已经基本闭环；
+   - 当前最高优先级不再是继续追加主线 rerun，而是把主线材料同步清楚、保守写清辅助项边界。
+4. 将以下内容补入项目导航与目录说明：
+   - `reports/robustness/`
+   - `reports/robustness/h3_missing_modality_minimal_summary.md`
+   - `reports/notes/taskbook_gap_assessment_20260315.md`
+   - `runs/experiments/h3_missing_modality_minimal/`
+   - `runs/experiments/gpu_peak_minimal/`（注明当前仍未形成正式可用结果）
+5. 核对 `H3` 当前真实状态：
+   - 已存在 `zh_en`
+   - 已存在 `seed=42`
+   - 已存在 `drop_rate={0.0, 0.6}`
+   - 已存在 `v1_full / wo_missing_gate` 的最小单 seed summary
+   - 但仍未包含 baseline / 多 seed / 多目标域，不能作为 H3 正式验证
+6. 核对 GPU 峰值显存当前真实状态：
+   - 代码能力与脚本入口已接入
+   - 当前仓库中仍以 dry-run 和失败尝试为主
+   - 一次实际尝试出现 `AssertionError: self.args.il_start < self.args.epoch`
+   - 因此当前仍没有可直接入文的正式 GPU 峰值汇总表
+7. 修正 GPU 最小补测脚本：
+   - `scripts/run_gpu_peak_minimal.py`
+   - 当 transfer config 使用 `il` 且 `epoch <= il_start` 时，自动把最小 rerun epoch 抬到 `il_start + 1`
+   - 目的不是夸大“GPU 已完成”，而是避免后续继续生成无效最小补测配置
+
+关键判断：
+
+1. 主线闭环：
+   - `baseline 复现`
+   - `统一迁移链路`
+   - `4 目标 5-seed 正式主表`
+   - `核心消融`
+   - `显著性 / 案例 / wall-clock`
+   - `过程记录`
+   以上均已具备论文与答辩所需的基本支撑。
+2. 主线剩余缺口主要在材料组织，不在实验结果本身。
+3. `H3 / GPU / 扩展案例 / 额外 baseline` 统一下调为辅助支撑项，不得再被写成任务书主线完成标志。
+
+本次追加的直接作用：
+
+1. 让后来者能更清楚地区分“主线已完成”与“辅助项仍待补强”。
+2. 避免论文线程继续把 GPU 峰值显存误读为“已经有正式结果”。
+3. 将 `H3` 当前最小单 seed pilot 的真实边界写清楚，防止其被过度外推。
+
+新增 / 更新文件：
+
+- `reports/notes/taskbook_gap_assessment_20260315.md`
+- `README.md`
+- `reports/README.md`
+- `runs/README.md`
+- `PROCESS_LOG.md`
+- `PROJECT_OPERATION_RECORD.md`
+- `reports/notes/thread_sync_shared.md`
+- `scripts/run_gpu_peak_minimal.py`

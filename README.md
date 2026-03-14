@@ -63,6 +63,8 @@
 
 - `README.md`
   - 首页导览，适合先建立整体认识
+- `reports/notes/taskbook_gap_assessment_20260315.md`
+  - 任务书 / 开题报告 / 当前项目现状的闭环检查与差距判断
 - `PROJECT_OPERATION_RECORD.md`
   - 面向论文与答辩的全流程记录，说明每个阶段为什么做、做了什么、结果怎样
 - `PROCESS_LOG.md`
@@ -192,6 +194,20 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
 - 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
+- 显著性与置信区间补强：
+  - `reports/transfer/transfer_adapt_significance_summary.md`
+  - `reports/transfer/transfer_adapt_significance_summary.csv`
+  - `reports/transfer/transfer_adapt_significance_writeup.md`
+- 案例级成功/失败分析：
+  - `reports/transfer/transfer_case_analysis_examples.md`
+  - `reports/transfer/transfer_case_analysis_examples.csv`
+- 效率补证（当前先完成 wall-clock）：
+  - `reports/transfer/transfer_efficiency_summary.md`
+  - `reports/transfer/transfer_efficiency_summary.csv`
+- 鲁棒性 / 辅助支撑：
+  - `reports/robustness/robustness_stage_update_20260314_h3_gpu_setup.md`
+  - `reports/robustness/h3_missing_modality_minimal_summary.md`
+  - `reports/notes/taskbook_gap_assessment_20260315.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -202,6 +218,14 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
   - `FBYG15K`：`delta_avg_mrr_mean = +0.00280`（v24b strict-source staged fresh_il top400, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
+- 证据链补强（2026-03-14 已新增）：
+  - 显著性：4 个目标域在 `avg MRR` 上均为 `5/5 seed` 正增益，paired bootstrap `95% CI` 下界均大于 0，one-sided sign test / Wilcoxon 均为 `p=0.03125`。
+  - 案例：已补出 `8` 个案例，覆盖 `ja_en` 失败边界案例与 `FBDB15K/FBYG15K` 成功纠错案例。
+  - 效率：已可从 formal `log.txt` 统一汇总 wall-clock；GPU 峰值显存仍需一次最小代价补测。
+- 项目接管判断（2026-03-15）：
+  - 任务书 / 开题报告主线已基本闭环，当前优先工作是材料规范化与可追溯整理，而不是继续追加主线 rerun。
+  - `H3` 当前已有 `zh_en` 上 `seed=42` 的最小单 seed pilot，只能作为辅助观察，不能写成正式 H3 证明。
+  - GPU 峰值显存当前只有脚本入口与失败 / dry-run 尝试，尚无可入文正式汇总；后续需按修正后的最小补测脚本重跑。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
   - `FBYG15K` 的 `v25` 已验证 adaptive top-k 机制确实生效，但最优 pilot `v25c (+0.00250)` 仍未超过当前主表 `v24b (+0.00280)`，因此主表保持 `v24b`。
@@ -853,3 +877,25 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 若继续优化，应优先尝试 `phase-wise consistency constraints`
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
+
+## 40. 阶段更新（2026-03-15）：项目主线闭环检查与辅助支撑同步
+
+- 本轮动作：
+  - 完成任务书 / 开题报告 / 当前项目现状的全局接管与差距评估；
+  - 新增主线闭环评估文件：
+    - `reports/notes/taskbook_gap_assessment_20260315.md`
+  - 将 `robustness/` 与 `H3` 最小版材料同步进项目导航；
+  - 校验 `GPU peak minimal` 现状，确认当前仓库中尚无可直接入文的正式显存汇总表；
+  - 修正 `scripts/run_gpu_peak_minimal.py`，避免继续生成 `epoch <= il_start` 的无效最小补测配置。
+- 当前判断：
+  - 主线：已闭环。
+  - 仍需继续做的，是“主线材料规范化 + 辅助支撑项保守补强”。
+- 辅助项边界：
+  - `H3`：当前只有 `zh_en` 单 seed severe-drop pilot，可作补充观察，不可写成正式稳定结论。
+  - GPU 峰值显存：当前没有正式结果，不能写成已完成，只能写成“脚本已修正、补测待执行”。
+- 推荐后来者阅读顺序：
+  - `reports/notes/taskbook_gap_assessment_20260315.md`
+  - `reports/transfer/transfer_adapt_main_results_4target.md`
+  - `reports/transfer/transfer_adapt_significance_summary.md`
+  - `reports/epoch3/epoch3_ablation_zh_en_multiseed.md`
+  - `reports/robustness/h3_missing_modality_minimal_summary.md`

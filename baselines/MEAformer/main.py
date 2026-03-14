@@ -593,6 +593,17 @@ class Runner:
         return save_path
 
 
+def log_gpu_peak(logger, gpu_index):
+    if logger is None or not torch.cuda.is_available():
+        return
+    device = torch.device(f"cuda:{gpu_index}")
+    allocated_mb = torch.cuda.max_memory_allocated(device) / (1024 ** 2)
+    reserved_mb = torch.cuda.max_memory_reserved(device) / (1024 ** 2)
+    logger.info(
+        f"[gpu_peak] allocated_mb={allocated_mb:.2f} reserved_mb={reserved_mb:.2f}"
+    )
+
+
 if __name__ == '__main__':
     cfg = cfg()
     cfg.get_args()
@@ -620,11 +631,15 @@ if __name__ == '__main__':
     # print("print c to continue...")
     # -----  Begin ----------
     torch.cuda.set_device(cfgs.gpu)
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats(cfgs.gpu)
     runner = Runner(cfgs, writer, logger, rank)
     if cfgs.only_test:
         runner.test(last_epoch=False)
     else:
         runner.run()
+    if rank == 0:
+        log_gpu_peak(logger, cfgs.gpu)
 
     # -----  End ----------
     if not cfgs.no_tensorboard and not cfgs.only_test and rank == 0:

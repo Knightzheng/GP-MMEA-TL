@@ -73,7 +73,7 @@ def load_eva_data(logger, args):
         img_vec_path = osp.join(args.data_path, "pkls", args.data_split + "_GA_id_img_feature_dict.pkl")
 
     assert osp.exists(img_vec_path)
-    img_features, img_mask = load_img(logger, ENT_NUM, img_vec_path)
+    img_features, img_mask = load_img(logger, ENT_NUM, img_vec_path, args=args)
     logger.info(f"image feature shape:{img_features.shape}")
 
     if args.word_embedding == "glove":
@@ -593,7 +593,7 @@ def load_json_embd(path):
     return embd_dict
 
 
-def load_img(logger, e_num, path):
+def load_img(logger, e_num, path, args=None):
     img_dict = pickle.load(open(path, "rb"))
     # init unknown img vector with mean and std deviation of the known's
     imgs_np = np.array(list(img_dict.values()))
@@ -602,14 +602,40 @@ def load_img(logger, e_num, path):
     # img_embd = np.array([np.zeros_like(img_dict[0]) for i in range(e_num)]) # no image
     # img_embd = np.array([img_dict[i] if i in img_dict else np.zeros_like(img_dict[0]) for i in range(e_num)])
 
+    drop_rate = 0.0
+    drop_seed = -1
+    if args is not None:
+        drop_rate = float(getattr(args, "img_mask_drop_rate", 0.0))
+        drop_seed = int(getattr(args, "img_mask_drop_seed", -1))
+    if drop_rate < 0.0 or drop_rate >= 1.0:
+        raise ValueError(f"img_mask_drop_rate must be in [0, 1), got {drop_rate}")
+
+    drop_ids = set()
+    available_ids = [int(i) for i in img_dict.keys() if 0 <= int(i) < e_num]
+    if drop_rate > 0.0 and len(available_ids) > 0:
+        effective_seed = drop_seed if drop_seed >= 0 else int(getattr(args, "random_seed", 0))
+        drop_count = int(round(len(available_ids) * drop_rate))
+        if drop_count > 0:
+            rng = np.random.default_rng(effective_seed)
+            sampled = rng.choice(np.array(available_ids, dtype=np.int32), size=drop_count, replace=False)
+            drop_ids = set(int(x) for x in sampled.tolist())
+        logger.info(
+            f"image pressure drop: requested_rate={drop_rate:.2f}, "
+            f"drop_seed={effective_seed}, dropped={len(drop_ids)}/{len(available_ids)}"
+        )
+
     img_mask = np.zeros((e_num,), dtype=np.float32)
     img_embd = []
     for i in range(e_num):
-        if i in img_dict:
+        if i in img_dict and i not in drop_ids:
             img_embd.append(img_dict[i])
             img_mask[i] = 1.0
         else:
             img_embd.append(np.random.normal(mean, std, mean.shape[0]))
     img_embd = np.array(img_embd)
-    logger.info(f"{(100 * len(img_dict) / e_num):.2f}% entities have images")
+    effective_have_img = len(available_ids) - len(drop_ids)
+    logger.info(
+        f"{(100 * effective_have_img / e_num):.2f}% entities have images"
+        + (f" after pressure drop ({len(drop_ids)} removed)" if len(drop_ids) > 0 else "")
+    )
     return img_embd, img_mask

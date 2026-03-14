@@ -1,0 +1,5 @@
+dataset,baseline_mean_min,method_mean_min,delta_min,overhead_ratio,note
+ja_en,46.69,81.12,+34.43,1.74x,wall-clock only; GPU peak memory not fully logged
+FBDB15K,14.47,4.64,-9.83,0.32x,wall-clock only; GPU peak memory not fully logged
+fr_en,52.70,108.36,+55.66,2.06x,wall-clock only; GPU peak memory not fully logged
+FBYG15K,18.32,21.02,+2.71,1.15x,wall-clock only; GPU peak memory not fully logged
