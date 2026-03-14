@@ -1,5 +1,0 @@
-variant,drop_rate,seed,data_source,log_path,avg_hits@1,avg_hits@10,avg_mrr,gpu_peak_allocated_mb,gpu_peak_reserved_mb
-v1_full,0.00,42,existing_reference_same_config,runs\experiments\tmmeada\tmmeada_v1_best_epoch3\20260301-005700-TMMEA-DA-v1-best-epoch3-DBP15K-zh_en-s42\log.txt,0.6270,0.8961,0.7180,,
-v1_full,0.60,42,fresh_h3_rerun,runs\experiments\h3_missing_modality_minimal\v1_full\20260314-231232-TMMEA-DA-v1-best-epoch3-miss60-DBP15K-zh_en-s42\log.txt,0.4887,0.8288,0.6020,7266.98,8750.00
-wo_missing_gate,0.00,42,existing_reference_same_config,runs\experiments\tmmeada\tmmeada_v1_ablation_epoch3\20260302-101712-TMMEA-DA-v1-best-epoch3-wo-missing-DBP15K-zh_en-s42\log.txt,0.6270,0.8961,0.7180,,
-wo_missing_gate,0.60,42,fresh_h3_rerun,runs\experiments\h3_missing_modality_minimal\wo_missing_gate\20260315-000200-TMMEA-DA-v1-best-epoch3-wo-missing-miss60-DBP15K-zh_en-s42\log.txt,0.4887,0.8288,0.6020,7267.55,8750.00

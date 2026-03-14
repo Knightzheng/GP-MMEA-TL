@@ -183,10 +183,6 @@ def main():
         cmd.extend(["--use_missing_gate", str(m["use_missing_gate"])])
     if "missing_align_weight" in m:
         cmd.extend(["--missing_align_weight", str(m["missing_align_weight"])])
-    if "img_mask_drop_rate" in m:
-        cmd.extend(["--img_mask_drop_rate", str(m["img_mask_drop_rate"])])
-    if "img_mask_drop_seed" in m:
-        cmd.extend(["--img_mask_drop_seed", str(m["img_mask_drop_seed"])])
     if "aux_start_epoch" in m:
         cmd.extend(["--aux_start_epoch", str(m["aux_start_epoch"])])
     if "aux_ramp_epochs" in m:

@@ -1,3 +1,0 @@
-variant,drop_rate,seed,run_id,avg_hits@1,avg_hits@10,avg_mrr,gpu_peak_allocated_mb,gpu_peak_reserved_mb
-v1_full,0.60,42,20260314-231232-TMMEA-DA-v1-best-epoch3-miss60-DBP15K-zh_en-s42,0.4887,0.8288,0.6020,7266.98,8750.00
-wo_missing_gate,0.60,42,20260315-000200-TMMEA-DA-v1-best-epoch3-wo-missing-miss60-DBP15K-zh_en-s42,0.4887,0.8288,0.6020,7267.55,8750.00

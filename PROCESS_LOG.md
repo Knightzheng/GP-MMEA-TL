@@ -1663,6 +1663,17 @@
   - `scripts/run_gpu_peak_minimal.py`
     - auto-raise the minimal rerun epoch when a transfer config uses `il` and `il_start >= epoch`
     - goal: prevent generating obviously invalid minimal configs in the next补测 round
+
+## 2026-03-15 Deep Repo Cleanup + H3 Removal
+
+- cleanup scope:
+  - remove all tracked `H3` result summaries, pilot run directories, and runner/summarizer scripts
+  - remove the temporary missing-modality argument path from `MEAformer` and `scripts/run_meaformer.py`
+  - drop active README/run-layout pointers to `H3`
+- current positioning:
+  - `H3` is no longer part of the current repository mainline
+  - any historical `H3` note should be treated as obsolete for the present project state
+  - if the topic is resumed later, it should restart as a fresh post-mainline branch of work
 - navigation sync:
   - update `README.md`
   - update `reports/README.md`

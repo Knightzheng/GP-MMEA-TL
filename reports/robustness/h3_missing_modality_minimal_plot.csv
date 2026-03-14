@@ -1,5 +1,0 @@
-variant,drop_rate,avg_hits@1,avg_hits@10,avg_mrr
-v1_full,0.00,0.6270,0.8961,0.7180
-v1_full,0.60,0.4887,0.8288,0.6020
-wo_missing_gate,0.00,0.6270,0.8961,0.7180
-wo_missing_gate,0.60,0.4887,0.8288,0.6020

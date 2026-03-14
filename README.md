@@ -204,9 +204,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 效率补证（当前先完成 wall-clock）：
   - `reports/transfer/transfer_efficiency_summary.md`
   - `reports/transfer/transfer_efficiency_summary.csv`
-- 鲁棒性 / 辅助支撑：
-  - `reports/robustness/robustness_stage_update_20260314_h3_gpu_setup.md`
-  - `reports/robustness/h3_missing_modality_minimal_summary.md`
+- 项目闭环评估与边界说明：
   - `reports/notes/taskbook_gap_assessment_20260315.md`
 
 ## 8. 当前阶段结论（简要）
@@ -224,7 +222,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 效率：已可从 formal `log.txt` 统一汇总 wall-clock；GPU 峰值显存仍需一次最小代价补测。
 - 项目接管判断（2026-03-15）：
   - 任务书 / 开题报告主线已基本闭环，当前优先工作是材料规范化与可追溯整理，而不是继续追加主线 rerun。
-  - `H3` 当前已有 `zh_en` 上 `seed=42` 的最小单 seed pilot，只能作为辅助观察，不能写成正式 H3 证明。
+  - `H3` 相关脚本、结果与目录已从当前仓库移除，后续仅在主线完全收口后再单独重启。
   - GPU 峰值显存当前只有脚本入口与失败 / dry-run 尝试，尚无可入文正式汇总；后续需按修正后的最小补测脚本重跑。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
@@ -884,18 +882,27 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 完成任务书 / 开题报告 / 当前项目现状的全局接管与差距评估；
   - 新增主线闭环评估文件：
     - `reports/notes/taskbook_gap_assessment_20260315.md`
-  - 将 `robustness/` 与 `H3` 最小版材料同步进项目导航；
   - 校验 `GPU peak minimal` 现状，确认当前仓库中尚无可直接入文的正式显存汇总表；
   - 修正 `scripts/run_gpu_peak_minimal.py`，避免继续生成 `epoch <= il_start` 的无效最小补测配置。
 - 当前判断：
   - 主线：已闭环。
   - 仍需继续做的，是“主线材料规范化 + 辅助支撑项保守补强”。
 - 辅助项边界：
-  - `H3`：当前只有 `zh_en` 单 seed severe-drop pilot，可作补充观察，不可写成正式稳定结论。
+  - `H3`：当前仓库已主动移除相关脚本、结果与目录，不再作为现阶段项目组成部分。
   - GPU 峰值显存：当前没有正式结果，不能写成已完成，只能写成“脚本已修正、补测待执行”。
 - 推荐后来者阅读顺序：
   - `reports/notes/taskbook_gap_assessment_20260315.md`
   - `reports/transfer/transfer_adapt_main_results_4target.md`
   - `reports/transfer/transfer_adapt_significance_summary.md`
   - `reports/epoch3/epoch3_ablation_zh_en_multiseed.md`
-  - `reports/robustness/h3_missing_modality_minimal_summary.md`
+
+## 41. 阶段更新（2026-03-15）：深度仓库整理与 H3 延期
+
+- 本轮动作：
+  - 删除 `H3` 相关结果、脚本、运行目录与目录说明；
+  - 从 `MEAformer` 训练入口中移除人工图像缺失注入参数，避免后续误将其作为主线配置项；
+  - 在项目记录与共享同步板中明确：`H3` 已延期到主线完全结束后再重新尝试。
+- 当前状态：
+  - 仓库聚焦于主线材料、正式 run 与可复现脚本；
+  - `H3` 不再占用当前项目导航、结果目录与代码入口；
+  - 论文线程不应继续从当前仓库读取或引用旧的 `H3` 留痕。
