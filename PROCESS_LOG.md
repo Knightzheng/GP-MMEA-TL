@@ -1696,3 +1696,18 @@
 - current judgment:
   - mainline evidence is already sufficient; the most valuable next work is navigation tightening rather than more mainline reruns
   - the only remaining auxiliary gap worth a minimal formal补测 is GPU peak memory
+
+## 2026-03-15 Stage 2 Mainline Navigation Tightening
+
+- new navigation artifacts:
+  - `reports/transfer/README.md`
+  - `runs/transfer/README.md`
+- synchronization:
+  - update `README.md`
+  - update `reports/README.md`
+  - update `runs/README.md`
+  - update `PROJECT_OPERATION_RECORD.md`
+  - update `reports/notes/thread_sync_shared.md`
+- current effect:
+  - entering `reports/transfer/` or `runs/transfer/` now leads directly to official mainline entry points
+  - historical exploration files remain preserved, but are no longer mixed with the official reading path

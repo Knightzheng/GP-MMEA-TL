@@ -207,6 +207,8 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 项目闭环评估与边界说明：
   - `reports/notes/taskbook_gap_assessment_20260315.md`
   - `reports/notes/mainline_traceability_matrix_20260315.md`
+  - `reports/transfer/README.md`
+  - `runs/transfer/README.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -919,3 +921,14 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 后来者现在可以从一份文件直接定位主线正式证据；
   - 论文线程可以直接吸收“要求 -> 证据 -> 脚本 -> run”的闭环关系；
   - 后续 README / reports / runs 的继续收口有了统一锚点。
+
+## 43. 阶段更新（2026-03-15）：主线导航再收口
+
+- 本轮动作：
+  - 为 `reports/transfer/` 新增子目录 README，明确正式主表、辅助分析与历史探索文件的使用边界；
+  - 为 `runs/transfer/` 新增子目录 README，明确 4 个目标域正式 baseline / method run 目录；
+  - 将根 README、reports/README、runs/README 的主线导航进一步收口到“总表 + transfer 子目录 README”这一层。
+- 当前作用：
+  - 后来者进入 `reports/transfer/` 与 `runs/transfer/` 后不再需要先读大量历史探索文件；
+  - 主线正式结果与探索性材料的边界更清楚；
+  - 为后续最小 GPU 补测保留了更干净的导航结构。
