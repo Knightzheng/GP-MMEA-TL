@@ -1047,3 +1047,89 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
+
+## 23. 2026-03-14 追加记录（论文/答辩支撑材料开始收口）
+
+本次追加操作：
+
+1. 明确将当前线程定位为“优化线程”，不再以论文全文撰写为主，而是专门补强实验、证据链与答辩说服力。
+2. 新增显著性分析脚本：
+   - `scripts/analyze_transfer_significance.py`
+3. 基于当前统一 4 目标 `5-seed` 正式主表，输出显著性分析材料：
+   - `reports/transfer/transfer_adapt_significance_per_seed.csv`
+   - `reports/transfer/transfer_adapt_significance_summary.csv`
+   - `reports/transfer/transfer_adapt_significance_summary.md`
+   - `reports/transfer/transfer_adapt_significance_writeup.md`
+4. 新增案例分析脚本：
+   - `scripts/build_transfer_case_analysis.py`
+5. 利用当前已保留的 `pred.txt` 文件，直接抽取案例级成功/失败样本，而不额外重跑正式实验：
+   - `reports/transfer/transfer_case_analysis_examples.csv`
+   - `reports/transfer/transfer_case_analysis_examples.md`
+6. 新增效率汇总脚本：
+   - `scripts/summarize_transfer_efficiency.py`
+7. 基于当前 formal 日志补出 wall-clock 汇总：
+   - `reports/transfer/transfer_efficiency_per_run.csv`
+   - `reports/transfer/transfer_efficiency_summary.csv`
+   - `reports/transfer/transfer_efficiency_summary.md`
+8. 更新 `README.md` 与 `PROCESS_LOG.md` 中的支撑材料入口。
+
+关键结论：
+
+- 显著性部分：
+  - 当前结果组织形式最适合做“配对 seed 统计”，而不是把 5 个 seed 当成互相独立的大样本；
+  - 推荐口径：
+    - 主体：paired bootstrap `95% CI`
+    - 小样本显著性：exact one-sided sign test
+    - 辅助：exact one-sided Wilcoxon signed-rank test
+  - 当前 4 个目标域在 `avg MRR` 上均满足：
+    - `5/5 seed` 正增益
+    - bootstrap `95% CI` 下界 `> 0`
+    - sign test / Wilcoxon `p = 0.03125`
+- 案例部分：
+  - 已先补出 `6` 个代表性案例：
+    - `ja_en`：2 个失败/边界案例
+    - `FBDB15K`：2 个成功大幅纠错案例
+    - `FBYG15K`：2 个成功大幅纠错案例
+  - 这批案例的作用是：
+    - 证明跨图谱增益不仅存在于均值上，也体现在严重误排样本的 rank recovery 上；
+    - 同时保留 `ja_en` 的失败样本，避免把方法结论表述得过满。
+- 效率部分：
+  - 现有材料已足以汇总 wall-clock 时间；
+  - GPU 峰值显存尚未在全部正式 run 中统一记录，因此若论文需要完整“时间+显存”表，还需补做一次最小代价测量。
+
+当前判断：
+
+- 这批新增材料比继续做一轮轻量调参更直接服务于论文终稿与答辩；
+- 下一轮若继续优化，应优先考虑：
+  - `H3` 的缺失率压力测试是否值得做最小版；
+  - `FBYG15K` 是否进入 `phase-wise consistency constraints`；
+  - 额外 baseline 是否真的值得投入。
+
+## 24. 2026-03-14 追加记录（论文初稿继续收口与共享文件同步）
+
+本次追加操作：
+
+1. 继续按“论文初稿写作线程”推进，不在本线程中重跑正式实验。
+2. 在 `reports/thesis/本科毕业论文初稿_v1.md` 中补齐论文尾部结构：
+   - 参考文献初版
+   - 致谢草稿
+   - 附录骨架
+3. 保持第四章与第五章的结论边界不变：
+   - 不把 `H3` 缺失模态压力测试写成已完成正式结果；
+   - 不把 GPU 峰值显存写成已完成统一测量；
+   - 继续将其保留为待补证据或局限性说明。
+4. 读取并处理线程共享文件 `reports/notes/thread_sync_shared.md` 中线程A的最新回填。
+5. 在共享文件中追加论文线程本轮进展与新的明确需求，要求线程A优先把 `H3/GPU` 从“基础能力已接入”推进到“最小版正式结果已产出”。
+6. 同步更新 `PROCESS_LOG.md`，保证论文写作动作与实验优化动作都可追溯。
+
+本次追加的直接作用：
+
+- 使论文工作稿从“主体章节较完整”进一步推进到“包含摘要、正文、图表、参考文献、致谢、附录骨架的完整初稿形态”；
+- 保证论文结论与项目优化线程的真实最新状态保持一致，避免把尚未完成的补强实验误写成既有结果；
+- 将下一步最关键的证据需求进一步收束到 `H3` 正式结果与 GPU 峰值显存补测，便于两个线程并行协作。
+
+对应文件：
+
+- `reports/thesis/本科毕业论文初稿_v1.md`
+- `reports/notes/thread_sync_shared.md`
+- `PROCESS_LOG.md`

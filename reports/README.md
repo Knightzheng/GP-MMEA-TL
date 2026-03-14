@@ -8,6 +8,7 @@
 - midterm/: midterm draft/submission documents
 - planning/: next-stage plans and auto decisions
 - notes/: technical notes and overnight summaries
+- notes/thread_sync_shared.md: shared handoff board between thesis-writing thread and project-optimization thread
 - compare/: cross-method compare tables
 - tmp/: temporary intermediate outputs
 - misc/: uncategorized artifacts

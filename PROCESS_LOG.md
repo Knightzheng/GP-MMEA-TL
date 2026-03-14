@@ -1604,3 +1604,86 @@
   - if further optimization continues, move to `phase-wise consistency constraints`
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260314_fbyg_v25_adaptive_topk_pilot.md`
+
+## 2026-03-14 Support-Material Update
+
+- thread role:
+  - move this thread to an optimization / evidence-strengthening track for thesis defense
+  - deprioritize full-paper drafting in this thread
+- significance support added:
+  - script:
+    - `scripts/analyze_transfer_significance.py`
+  - outputs:
+    - `reports/transfer/transfer_adapt_significance_per_seed.csv`
+    - `reports/transfer/transfer_adapt_significance_summary.csv`
+    - `reports/transfer/transfer_adapt_significance_summary.md`
+    - `reports/transfer/transfer_adapt_significance_writeup.md`
+  - current outcome:
+    - all 4 current formal targets show `5/5` positive paired seed deltas on `avg MRR`
+    - bootstrap `95% CI` lower bounds are all above `0`
+    - exact one-sided sign test / Wilcoxon both give `p=0.03125`
+- case-analysis support added:
+  - script:
+    - `scripts/build_transfer_case_analysis.py`
+  - outputs:
+    - `reports/transfer/transfer_case_analysis_examples.csv`
+    - `reports/transfer/transfer_case_analysis_examples.md`
+  - coverage:
+    - `ja_en` failure / boundary cases
+    - `FBDB15K`, `FBYG15K` success / large-rank-recovery cases
+- efficiency support added:
+  - script:
+    - `scripts/summarize_transfer_efficiency.py`
+  - outputs:
+    - `reports/transfer/transfer_efficiency_per_run.csv`
+    - `reports/transfer/transfer_efficiency_summary.csv`
+    - `reports/transfer/transfer_efficiency_summary.md`
+  - note:
+    - wall-clock is now recoverable from current formal logs
+    - peak GPU memory still needs an extra minimal-cost measurement
+
+## 2026-03-14 Thesis-Writing Thread Update
+
+- thread role:
+  - keep this thread focused on thesis drafting / evidence absorption
+  - do not rerun formal experiments in this thread
+- thesis draft updates completed:
+  - updated `reports/thesis/本科毕业论文初稿_v1.md`
+  - added English abstract aligned with the current main claim
+  - integrated thesis figures:
+    - `reports/thesis/figures/fig1_1_technical_route.png`
+    - `reports/thesis/figures/fig3_1_method_framework.png`
+    - `reports/thesis/figures/fig4_1_delta_ci.png`
+    - `reports/thesis/figures/fig4_2_scenario_gain.png`
+    - `reports/thesis/figures/fig4_3_stage_paths.png`
+    - `reports/thesis/figures/fig4_4_case_rank_recovery.png`
+  - added figure generation script:
+    - `reports/thesis/figures/generate_thesis_figures.py`
+  - appended end-matter draft:
+    - references
+    - acknowledgements draft
+    - appendix skeleton
+- shared-sync handling:
+  - read `reports/notes/thread_sync_shared.md`
+  - confirmed thread-A update `4.8`:
+    - `H3` missing-modality injection and GPU peak-memory logging are wired in
+    - only dry-run / capability validation exists so far
+    - no formal `H3` or GPU measurement results are available yet
+  - therefore thesis writing kept the current cautious wording:
+    - do not rewrite `H3` as completed evidence
+    - do not rewrite GPU memory as already measured
+- traceability updates completed:
+  - updated `reports/notes/thread_sync_shared.md` with new thesis-thread requests
+  - synchronized this work into `PROJECT_OPERATION_RECORD.md`
+- current thesis status:
+  - stable:
+    - Chinese/English abstracts
+    - Chapters 1-5 main body
+    - statistical significance section
+    - case-analysis section
+    - wall-clock efficiency section
+    - discussion / limitations
+    - end matter draft
+  - still waiting on optimization thread:
+    - formal `H3` missing-modality results
+    - formal GPU peak-memory summary
