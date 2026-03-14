@@ -1,0 +1,28 @@
+{
+  "timestamp": "20260314-081158",
+  "tag": "tmmeada_transfer_adapt_v24_fbyg_v24b_s7",
+  "source": {
+    "config": "configs\\transfer\\meaformer_source_zh_en_epoch10.yaml",
+    "tmp_config": "runs\\system\\transfer_tmp\\20260314-081158_tmmeada_transfer_adapt_v24_fbyg_v24b_s7\\source_meaformer_source_zh_en_epoch10.yaml",
+    "stage": "transfer/transfer_adapt_v24_fbyg_pilot_v24b/source_train",
+    "data_choice": "DBP15K",
+    "data_split": "zh_en",
+    "seed": 7,
+    "exp_id": "transfer_src_zh_en_epoch10_tmmeada_transfer_adapt_v24_fbyg_v24b_s7_src_s7",
+    "model_name_save": "transfer_src_zh_en_epoch10_tmmeada_transfer_adapt_v24_fbyg_v24b_s7_src_s7_",
+    "resolved_checkpoint": "data\\mmkg\\MEAformer\\save\\MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s7_src_s7_.pkl",
+    "resolved_model_name_save": "MEAformer_DBP15K_zh_en_transfer_src_zh_en_epoch10_baseline_transfer_formal_s7_src_s7_"
+  },
+  "targets": [
+    {
+      "config": "configs\\transfer_adapt\\tmmeada_target_fbyg15k_v24b_strictsrc_staged_fresh_il_top400.yaml",
+      "tmp_config": "runs\\system\\transfer_tmp\\20260314-081158_tmmeada_transfer_adapt_v24_fbyg_v24b_s7\\target_tmmeada_target_fbyg15k_v24b_strictsrc_staged_fresh_il_top400.yaml",
+      "stage": "transfer/transfer_adapt_v24_fbyg_pilot_v24b/target_eval",
+      "data_choice": "FBYG15K",
+      "data_split": "norm",
+      "seed": 7,
+      "exp_id": "tmmeada_transfer_adapt_v24b_tgt_FBYG15K_strictsrc_staged_fresh_il_top400_tmmeada_transfer_adapt_v24_fbyg_v24b_s7_from_DBP15K_zh_en_s7",
+      "command": "D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe scripts/run_meaformer.py --config runs\\system\\transfer_tmp\\20260314-081158_tmmeada_transfer_adapt_v24_fbyg_v24b_s7\\target_tmmeada_target_fbyg15k_v24b_strictsrc_staged_fresh_il_top400.yaml --stage transfer/transfer_adapt_v24_fbyg_pilot_v24b/target_eval --python D:\\Anaconda_envs\\envs\\bysj-meaformer\\python.exe"
+    }
+  ]
+}

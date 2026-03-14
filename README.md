@@ -117,7 +117,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 中期实验草稿：`reports/midterm/midterm_results_draft.md`
 - 中期实验章节：`reports/midterm/midterm_experiment_section.md`
 - 方法全数据集汇总：`reports/tmmeada/tmmeada_dbp15k_multilang.md`
-- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`
+- 迁移阶段报告（最新）：`reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
 
 ## 8. 当前阶段结论（简要）
 
@@ -126,12 +126,12 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `ja_en`：`delta_avg_mrr_mean = +0.01210`（v15 refresh4 da0025, 5-seed）
   - `FBDB15K`：`delta_avg_mrr_mean = +0.00830`（v18c bipartite late_il skiprel, 5-seed）
   - `fr_en`：`delta_avg_mrr_mean = +0.01210`（v14b, 5-seed）
-  - `FBYG15K`：`delta_avg_mrr_mean = +0.00270`（v23b staged fresh_il top400, 5-seed）
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00280`（v24b strict-source staged fresh_il top400, 5-seed）
 - 置信度说明：`ja_en/FBDB15K/fr_en/FBYG15K` 当前均为 `5-seed` 正式口径。
 - 方法优化最新判断：
   - `FBDB15K` 的 `P1` 伪种子质量改造已验证成功，当前主表版本切换为 `v18c`；
-  - `FBYG15K` 的 staged fresh-IL 路线已验证成功，当前主表版本切换为 `v23b`；`v22` 的静态质量过滤结论被保留为负结果证据。
-- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 可继续沿 staged fresh-IL 做自适应 top-k 或阶段间一致性约束。
+  - `FBYG15K` 的 staged fresh-IL 路线在 strict formal-source 口径下再次验证成功，当前主表版本切换为 `v24b`。
+- 下一步：基于当前统一的 4 目标 `5-seed` 主表整理终稿主结果章节；若继续做方法优化，`FBYG15K` 可继续沿 `v24b` 做 phase-2 adaptive top-k 或阶段间一致性约束。
 
 ## 9. 阶段更新（2026-03-01）：v1 权重搜索跟进
 
@@ -707,3 +707,41 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 若继续优化，应继续沿 staged fresh-IL 做自适应 top-k 或阶段间约束，而不是回到静态 filter/cap 搜索
 - 阶段报告：
   - `reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`
+
+## 38. 阶段更新（2026-03-14）：FBYG15K v24 strict-source staged fresh-IL full5 完成
+
+- 目标：先修复 `source checkpoint` 口径不一致问题，再在 strict formal-source 条件下重跑当前最优 staged fresh-IL 路线。
+- 新增基础设施：
+  - `scripts/ensure_transfer_source_formal.py`
+  - `scripts/transfer_adapt_utils.py`
+  - 补齐 `seed=2026/7/123` 的 exact `zh_en baseline source formal` checkpoint
+  - 默认 source resolver 改为只接受 exact formal-source
+- 新增自动化：
+  - `scripts/run_transfer_adapt_v24_fbyg_iter_queue.py`
+- 新增配置：
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v24a_strictsrc_staged_fresh_il_top250.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v24b_strictsrc_staged_fresh_il_top400.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v24c_strictsrc_staged_fresh_il_epoch8_top250.yaml`
+- `v24` pilot（2-seed, vs baseline）：
+  - `v24a = +0.00200`
+  - `v24b = +0.00300`
+  - `v24c = +0.00200`
+- 自动决策：
+  - `best_variant_pilot = v24b`
+  - `improve_over_v23_ref = +0.00030`
+  - 自动扩展到 `5-seed`
+- `v24b` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00197`
+  - `delta_avg_hits@10_mean = +0.00462`
+  - `delta_avg_mrr_mean = +0.00280`
+  - `delta_avg_mr_mean = -42.81030`
+- 关键诊断：
+  - 全部 5 个 seed 都明确加载 exact `baseline_transfer_formal` source model；
+  - staged fresh-IL 的两阶段注入模式仍然稳定保留；
+  - 说明 `FBYG15K` 的正增益在 strict-source 口径下依然成立。
+- 结论：
+  - `FBYG15K` 主表版本切换为 `v24b_strictsrc_staged_fresh_il_top400_expand5`
+  - `5-seed delta_avg_mrr_mean` 从 `+0.00270` 提升到 `+0.00280`
+  - 当前 `FBYG15K` 结果已更适合作为论文正式主表版本
+- 阶段报告：
+  - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`

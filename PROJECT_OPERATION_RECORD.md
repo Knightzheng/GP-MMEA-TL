@@ -868,3 +868,60 @@
 新增阶段报告：
 
 - `reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`
+
+## 21. 2026-03-14 追加记录（FBYG15K v24 strict-source staged fresh-IL full5，主表切换）
+
+本次追加操作：
+
+1. 先暂停继续追加 `FBYG` 新技巧，优先修复 `source checkpoint` 口径不一致问题。
+2. 确认只有 `seed=42/3407` 存在 exact `zh_en baseline transfer formal` source checkpoint，而 `2026/7/123` 缺失。
+3. 新增 `scripts/ensure_transfer_source_formal.py`，用于自动补齐 exact source formal checkpoint。
+4. 补齐以下 baseline source formal：
+   - `seed=2026`
+   - `seed=7`
+   - `seed=123`
+5. 修改 `scripts/transfer_adapt_utils.py`：
+   - `resolve_source_model_name` 默认只接受 exact formal-source
+   - 不再静默回退到旧的 `transfer_adapt` checkpoint
+6. 在此基础上新增 `FBYG15K v24` 三个 strict-source staged fresh-IL 变体与自动脚本：
+   - `tmmeada_target_fbyg15k_v24a_strictsrc_staged_fresh_il_top250`
+   - `tmmeada_target_fbyg15k_v24b_strictsrc_staged_fresh_il_top400`
+   - `tmmeada_target_fbyg15k_v24c_strictsrc_staged_fresh_il_epoch8_top250`
+   - `scripts/run_transfer_adapt_v24_fbyg_iter_queue.py`
+7. 完成 `2-seed pilot -> 自动选优 -> 5-seed expand` 全流程。
+8. 刷新 `scripts/make_transfer_main_and_bucket_report.py` 的 `FBYG15K` 主表入口，将主结果切换到 `v24b full5`。
+9. 更新 `README.md`、`PROCESS_LOG.md`、主结果表与最新阶段报告链接。
+
+关键结果：
+
+- 当前旧参考主表版本：`FBYG15K v23b_staged_fresh_il_top400_expand5`
+  - `5-seed delta_avg_mrr_mean = +0.00270`
+- `v24` pilot（`2-seed`, vs baseline）：
+  - `v24a = +0.00200`
+  - `v24b = +0.00300`
+  - `v24c = +0.00200`
+- 自动决策：
+  - `best_variant_pilot = v24b`
+  - `improve_over_current_ref = +0.00030`
+  - 达到扩展阈值后自动扩展到 `5-seed`
+- `v24b` 正式 `5-seed`（vs baseline）：
+  - `delta_avg_hits@1_mean = +0.00197`
+  - `delta_avg_hits@10_mean = +0.00462`
+  - `delta_avg_mrr_mean = +0.00280`
+  - `delta_avg_mr_mean = -42.81030`
+
+关键诊断：
+
+- 本轮最大的价值首先是“把 source 口径清洗干净”，其次才是数值再抬高一点；
+- `v24b` 的全部 5 个 seed 都明确加载了 exact `baseline_transfer_formal` source model；
+- staged fresh-IL 的正增益在 strict-source 条件下仍然成立，说明 `FBYG15K` 当前主结论具备更强的可复现性与可解释性。
+
+本次追加的直接作用：
+
+- 将 `FBYG15K` 主表版本从 `v23b` 切换为 `v24b`；
+- 把 `FBYG15K` 的 `5-seed delta_avg_mrr_mean` 从 `+0.00270` 提升到 `+0.00280`；
+- 同时把 `FBYG15K` 当前主结果提升为 strict formal-source 口径的正式结果。
+
+新增阶段报告：
+
+- `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`

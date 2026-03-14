@@ -12,6 +12,7 @@ __pycache__/
 # Temporary run configs
 runs/system/multiseed_tmp/
 runs/system/transfer_tmp/
+runs/system/transfer_source_tmp/
 
 # Large raw datasets and extracted corpora (not pushed to GitHub)
 data/raw/

@@ -109,7 +109,7 @@ def rebuild_merged_target_eval(seeds, candidate_roots, merged_target_eval: Path,
     return selected, missing
 
 
-def resolve_source_model_name(seed: int, tmmeada: bool = False) -> str:
+def resolve_source_model_name(seed: int, tmmeada: bool = False, allow_nonformal_fallback: bool = False) -> str:
     save_dir = Path("data/mmkg/MEAformer/save")
     if not save_dir.exists():
         return ""
@@ -138,6 +138,8 @@ def resolve_source_model_name(seed: int, tmmeada: bool = False) -> str:
 
     if exact.exists():
         return exact.stem
+    if not allow_nonformal_fallback:
+        return ""
 
     seen = set()
     matches = []

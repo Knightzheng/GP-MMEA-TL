@@ -1,0 +1,6 @@
+run_id,data_choice,data_split,target,l2r_hits@1,l2r_hits@10,l2r_mrr,l2r_mr,r2l_hits@1,r2l_hits@10,r2l_mrr,r2l_mr,avg_hits@1,avg_hits@10,avg_mrr,avg_mr
+20260306-002756-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s42,FBYG15K,norm,FBYG15K,0.0357,0.0996,0.06,848.219,0.0361,0.0981,0.059,870.417,0.0359,0.09885,0.0595,859.318
+20260306-031137-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s3407,FBYG15K,norm,FBYG15K,0.0365,0.0945,0.058,970.684,0.0342,0.0871,0.055,983.033,0.03535,0.09079999999999999,0.0565,976.8585
+20260308-211722-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s2026,FBYG15K,norm,FBYG15K,0.0346,0.0923,0.056,997.031,0.0353,0.0895,0.056,1006.795,0.034949999999999995,0.0909,0.056,1001.913
+20260309-014831-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s7,FBYG15K,norm,FBYG15K,0.0358,0.0948,0.058,910.485,0.0339,0.093,0.056,922.257,0.03485,0.0939,0.057,916.371
+20260309-054817-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-FBYG15K-norm-s123,FBYG15K,norm,FBYG15K,0.0381,0.0999,0.061,859.323,0.0358,0.0972,0.059,878.168,0.03695,0.09855,0.06,868.7455

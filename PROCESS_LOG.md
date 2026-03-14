@@ -1505,3 +1505,53 @@
     - `reports/transfer/transfer_adapt_error_bucket_summary.md`
 - Final stage note:
   - `reports/transfer/transfer_stage_update_20260313_fbyg_v23_staged_fresh_il_full5.md`
+
+## 39. 2026-03-14 Transfer-Adapt v24 FBYG strict-source staged fresh-IL full5 finalized (ASCII summary)
+- Goal:
+  - clean up `source checkpoint` consistency first, then rerun the strongest staged fresh-IL route on `FBYG15K`.
+- Infrastructure changes:
+  - add `scripts/ensure_transfer_source_formal.py`
+  - tighten `scripts/transfer_adapt_utils.py`
+    - default resolver now accepts only exact `baseline_transfer_formal` source checkpoints
+    - stop silently falling back to old `transfer_adapt` checkpoints
+- Source formal cleanup:
+  - generated missing exact baseline source formal checkpoints for:
+    - `seed=2026`
+    - `seed=7`
+    - `seed=123`
+- Added automation:
+  - `scripts/run_transfer_adapt_v24_fbyg_iter_queue.py`
+- Added configs:
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v24a_strictsrc_staged_fresh_il_top250.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v24b_strictsrc_staged_fresh_il_top400.yaml`
+  - `configs/transfer_adapt/tmmeada_target_fbyg15k_v24c_strictsrc_staged_fresh_il_epoch8_top250.yaml`
+- Pilot results (delta_avg_mrr_mean vs matched baseline):
+  - `v24a = +0.00200`
+  - `v24b = +0.00300`
+  - `v24c = +0.00200`
+- Decision:
+  - `best_variant_pilot = v24b`
+  - `reference_v23_full5 = +0.00270`
+  - `improve_over_ref = +0.00030`
+  - auto-expanded to `5-seed`
+- Full-5 result (`v24b`, vs baseline):
+  - `delta_avg_hits@1_mean = +0.00197`
+  - `delta_avg_hits@10_mean = +0.00462`
+  - `delta_avg_mrr_mean = +0.00280`
+  - `delta_avg_mr_mean = -42.81030`
+- Diagnostics:
+  - all 5 seeds now explicitly load exact `baseline_transfer_formal` source checkpoints
+  - staged injection pattern remains stable:
+    - phase 0: `100` links
+    - phase 1: `400` links
+  - representative true-link ratios stay in the same useful range as `v23`
+  - the gain remains after source cleanup, so the `FBYG15K` conclusion is now cleaner and more reliable
+- Main-table update:
+  - switch `FBYG15K` row from `v23b_staged_fresh_il_top400_expand5` to `v24b_strictsrc_staged_fresh_il_top400_expand5`
+  - refresh:
+    - `reports/transfer/transfer_adapt_main_results_4target.csv`
+    - `reports/transfer/transfer_adapt_main_results_4target.md`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.csv`
+    - `reports/transfer/transfer_adapt_error_bucket_summary.md`
+- Final stage note:
+  - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
