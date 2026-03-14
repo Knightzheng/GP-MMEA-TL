@@ -2,6 +2,80 @@
 
 多模态实体对齐（MMEA）毕业设计实验仓库。当前阶段目标是建立统一、可复现的实验流水线，并在 `DBP15K` 与跨图谱数据上完成 baseline 复现、迁移实验（source->target）与 TMMEA-DA 的目标域自适应优化。
 
+## 外行导读
+
+这个项目想解决的问题是：同一个现实世界对象，可能在两个不同知识图谱里被写成两个不同条目。名字可能不同，语言可能不同，图片和属性也可能不完整。模型需要根据结构、属性、图像等多种信息，自动判断“这两个条目是不是其实指向同一个对象”。
+
+这个仓库记录的不是一次单独跑分，而是一整条研究链路：我先复现官方 baseline，再加入自己的方法模块，然后把方法做成可迁移的版本，最后对每个目标任务持续优化、比较和留痕。
+
+- 研究任务：多模态实体对齐（Multimodal Entity Alignment）。
+- 输入：两个知识图谱中的实体，以及它们的结构关系、属性、图像等多模态信息。
+- 输出：两个图谱中哪些实体其实是同一个真实对象。
+- 这项工作的难点不只是“对齐准不准”，还包括“能不能把在一个数据集上学到的能力迁移到另一个数据集上”。
+
+## 怎么理解文中的常见词
+
+| 术语 | 通俗解释 |
+|---|---|
+| `baseline` | 官方原始模型，用来做公平对照 |
+| `seed` | 随机种子。换不同 seed 重复跑，是为了避免“只碰巧跑好一次” |
+| `pilot` | 小规模试跑，通常先跑 1 个或 2 个 seed 看方向对不对 |
+| `full5` / `expand5` | 扩展到 5 个 seed 的正式结果 |
+| `source -> target` | 先在一个数据集上学，再迁移到另一个数据集上测试或自适应 |
+| `IL` | 迭代式伪标签或伪链接生成，模型先猜一批链接，再拿它们继续训练 |
+| `strict-source` | 强制每个 seed 只用严格对应的 source checkpoint，避免混用旧模型 |
+| `delta_avg_mrr_mean` | 方法相对 baseline 的平均提升值。大于 0 说明方法优于 baseline |
+
+## 项目路线概览
+
+| 阶段 | 主要在做什么 | 这一步想回答什么 | 目前结论 |
+|---|---|---|---|
+| Baseline 复现 | 把 `MEAformer` 在 5 个数据集上稳定跑通 | 没有可靠 baseline，后面所有改进都站不住 | baseline 已全部复现完成 |
+| TMMEA-DA MVP / v1 | 加入 `domain align`、`source_select`、`missing_gate` 等模块 | 自己的方法模块是否有潜力 | 早期模块在公平预算下大多与 baseline 接近 |
+| Transfer 链路搭建 | 建立 `source_train -> target_eval` 流程 | 模型是否具备可迁移能力 | 迁移实验已经从 smoke 走到 formal |
+| `ja_en` / `fr_en` 优化 | 反复调整自适应节奏、IL 刷新与轻量模块 | 跨语言迁移能否稳定增益 | `ja_en` 和 `fr_en` 最终都拿到了明显正增益 |
+| `FBDB15K` 优化 | 从调权重转向改伪种子质量 | 跨图谱噪声是不是主要瓶颈 | `v18` 证明更干净的伪种子是关键 |
+| `FBYG15K` 优化 | 从晚启 IL、静态过滤一路试到 staged fresh-IL 和 strict-source | 怎样在噪声较大的跨图谱场景里稳定提升 | `v24` 说明两阶段 fresh-IL 在严格口径下仍有效 |
+| 主表收口 | 汇总 4 个目标任务的正式结果 | 最后到底有没有形成稳定结论 | 当前 4 个目标均为 `5-seed` 正增益 |
+
+## 当前正式结果（2026-03-14）
+
+当前统一主表文件：
+- `reports/transfer/transfer_adapt_main_results_4target.md`
+- `reports/transfer/transfer_adapt_main_results_4target.csv`
+
+其中 `delta_avg_mrr_mean > 0` 表示相对 baseline 有提升。当前 4 个目标都已经是 `5-seed` 正式口径：
+
+| 目标 | 场景 | 当前主表版本 | `delta_avg_mrr_mean` | 通俗理解 |
+|---|---|---|---:|---|
+| `ja_en` | 跨语言 | `v15_refresh4_da0025_expand5` | `+0.01210` | 提升明显，说明迁移到日英任务是有效的 |
+| `FBDB15K` | 跨图谱 | `v18c_bipartite_late_il_skiprel_expand5` | `+0.00830` | 提升稳定，关键突破来自更干净的伪种子 |
+| `fr_en` | 跨语言 | `v14b_refresh4_da0025_expand5` | `+0.01210` | 从多轮失败里找到有效方向，最终提升明显 |
+| `FBYG15K` | 跨图谱 | `v24b_strictsrc_staged_fresh_il_top400_expand5` | `+0.00280` | 提升幅度较小，但已经在严格口径下验证稳定成立 |
+
+当前 4 目标平均提升：
+- `delta_avg_hits@1_mean = +0.006897`
+- `delta_avg_hits@10_mean = +0.012650`
+- `delta_avg_mrr_mean = +0.008825`
+- `delta_avg_mr_mean = -66.674325`
+
+## 最建议先看的文件
+
+- `README.md`
+  - 首页导览，适合先建立整体认识
+- `PROJECT_OPERATION_RECORD.md`
+  - 面向论文与答辩的全流程记录，说明每个阶段为什么做、做了什么、结果怎样
+- `PROCESS_LOG.md`
+  - 更细的原始过程日志，适合追查具体执行过程
+- `reports/transfer/transfer_adapt_main_results_4target.md`
+  - 当前最重要的正式主结果表
+- `reports/transfer/transfer_adapt_error_bucket_summary.md`
+  - 主结果之外的误差分桶分析
+- `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+  - 截至目前最新的阶段收口报告
+
+以下内容开始进入“技术版说明”，会更偏向实验、脚本与结果口径。
+
 ## 1. 任务定义
 
 - 任务：多模态实体对齐（Multimodal Entity Alignment）

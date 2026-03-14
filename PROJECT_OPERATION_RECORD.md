@@ -1,10 +1,65 @@
 ﻿# 项目全流程操作记录（完整版）
 
 - 项目：`GP-MMEA-TL`（多模态实体对齐迁移实验）
-- 记录范围：`2026-02-28` 至 `2026-03-09`
-- 当前分支：`sort`
-- 当前提交：`1ea10a0`
-- 记录时间：`2026-03-09`
+- 记录范围：`2026-02-28` 至 `2026-03-14`
+- 当前分支：`main`
+- 当前提交：`be524bc`
+- 记录时间：`2026-03-14`
+
+## 导读（给第一次看这个项目的人）
+
+这份文件不是简单的“实验日志堆叠”，而是整个毕业设计的过程总记录。它回答的是下面几个问题：
+
+1. 这个项目到底在研究什么。
+2. 我为什么要把实验拆成这么多阶段和版本。
+3. 每个阶段具体尝试了什么，哪些方向有效，哪些方向无效。
+4. 截至目前，项目已经形成了什么正式结论。
+
+如果用更容易理解的话来说，这个项目在做的是：给两个知识图谱里的实体“找同一个现实世界对象”。例如两个图谱里都在写同一部电影、同一个人物、同一个地点，但名称、语言、属性和图片不完全一样，模型需要自动把它们对应起来。
+
+我做的工作不是只跑一个模型分数，而是把整个研究链路逐步搭出来：
+
+- 先把官方 baseline 复现出来，确保对照组可靠。
+- 再把自己的方法模块加进去，判断有没有真实提升。
+- 然后把任务推进到 `source -> target` 迁移场景，研究模型能否从一个数据集迁移到另一个数据集。
+- 最后对不同目标任务持续做版本优化，并把结果整理成正式主表、阶段报告和可复现证据链。
+
+## 常见术语（外行版）
+
+| 术语 | 通俗解释 |
+|---|---|
+| `baseline` | 官方原始模型，作为公平对照组 |
+| `TMMEA-DA` | 我在 baseline 基础上扩展的方法原型 |
+| `seed` | 随机种子。换不同 seed 重复运行，是为了避免“只碰巧跑好一次” |
+| `pilot` | 小规模试跑，通常先跑 1 个或 2 个 seed，用来快速筛方向 |
+| `expand5` / `full5` | 把有希望的方案扩展到 5 个 seed，作为正式结果 |
+| `source -> target` | 先在一个数据集上学到可迁移知识，再迁移到另一个目标数据集 |
+| `IL` | 迭代式伪链接生成。模型先自己猜一批链接，再拿这些猜测继续训练 |
+| `伪种子` / `伪标签` | 模型自动生成、但不一定完全正确的训练信号 |
+| `strict-source` | 每个 seed 只允许使用严格对应的 source checkpoint，不混用旧模型 |
+| `delta_avg_mrr_mean` | 方法相对 baseline 的平均提升值。大于 0 就表示方法更好 |
+
+## 阶段总览（外行版）
+
+| 阶段 | 时间 | 主要尝试 | 想解决什么问题 | 阶段结论 |
+|---|---|---|---|---|
+| A. 初始化与规范 | 2026-02-28 | 建环境、定指标、统一实验留痕 | 没有规范就无法做后续可复现实验 | 建立了完整实验骨架 |
+| B. Baseline 复现 | 2026-02-28 | 跑通 `MEAformer`，覆盖 `DBP15K` 和跨图谱数据 | 没有可靠对照组，后续改进无法判断 | baseline 在 5 个目标数据集上复现完成 |
+| C. TMMEA-DA MVP / v1 | 2026-02-28 至 2026-03-02 | 加入 `domain align`、`source_select`、`missing_gate`，并做多 seed、消融、epoch3 比较 | 自己的方法模块是否真的有用 | 早期模块在公平预算下大多与 baseline 接近 |
+| D. 迁移实验链路 | 2026-03-03 至 2026-03-04 | 建立 `source_train -> target_eval` 流程 | 模型是否具备跨数据集迁移能力 | 迁移实验从 smoke 走到了 formal |
+| E. 跨语言持续优化 | 2026-03-05 至 2026-03-11 | 围绕 `ja_en`、`fr_en` 多轮迭代自适应策略 | 跨语言迁移能否形成稳定正增益 | `ja_en` 和 `fr_en` 最终都得到了明显正增益 |
+| F. `FBDB15K` 攻坚 | 2026-03-11 至 2026-03-12 | 从调权重转向改伪种子质量 | 跨图谱噪声是否才是主要瓶颈 | `v18` 证明更干净的伪种子是关键突破点 |
+| G. `FBYG15K` 攻坚 | 2026-03-12 至 2026-03-14 | 从晚启 IL、静态过滤一路试到 staged fresh-IL 和 strict-source | 怎样在高噪声跨图谱场景里稳定提升 | `v24` 证明 staged fresh-IL 在严格口径下仍有效 |
+| H. 主表与收口 | 持续进行 | 统一 4 目标主表、误差分桶、阶段报告 | 如何把结果整理成能直接写进论文的正式结论 | 当前 4 个目标均为 `5-seed` 正增益 |
+
+截至 `2026-03-14`，当前 4 目标统一主表已经全部是 `5-seed` 正式口径，分别为：
+
+- `ja_en`: `delta_avg_mrr_mean = +0.01210`
+- `FBDB15K`: `delta_avg_mrr_mean = +0.00830`
+- `fr_en`: `delta_avg_mrr_mean = +0.01210`
+- `FBYG15K`: `delta_avg_mrr_mean = +0.00280`
+
+下面从第 `1` 节开始进入更偏技术细节的完整留痕。
 
 ## 1. 记录目的
 
@@ -17,14 +72,14 @@
 
 ## 2. 仓库状态快照（写入本记录时）
 
-- 提交数：`41`（`git rev-list --count HEAD`）
-- 文件总数：`8465`
+- 提交数：`56`（`git rev-list --count HEAD`）
+- 文件总数：`12472`
 - 关键目录文件数：
-  - `scripts/`：`58` 个 `.py`（含 `__pycache__` 总文件 `126`）
-  - `configs/`：`93` 个配置文件
-  - `reports/`：`406` 个报告文件
-  - `runs/`：`1714` 个文件；命名为时间戳实验目录的 run 数量 `419`
-- 迁移阶段报告文件（`reports/transfer/`）：`303` 个
+  - `scripts/`：`76` 个 `.py`
+  - `configs/`：`123` 个配置文件
+  - `reports/`：`669` 个报告文件
+  - `runs/`：`3121` 个文件；命名为时间戳实验目录的 run 数量 `648`
+- 迁移阶段报告文件（`reports/transfer/`）：`566` 个
 
 ## 3. 全流程时间线（做了什么操作、做了什么处理）
 
@@ -406,15 +461,21 @@
 
 ## 6. 阶段结果快照（写入本记录时）
 
-- `fr_en`（v14 expand5）：
-  - 文件：`reports/transfer/transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv`
-  - 5-seed 结果：`delta_avg_mrr_mean = +0.0121`
-- `FBYG15K`（expand5）：
-  - 文件：`reports/transfer/transfer_adapt_fbyg_expand5_progress_compare_vs_baseline.csv`
-  - 5-seed 结果：`delta_avg_mrr_mean = +0.0011`
-- 完成状态文件：
-  - `reports/transfer/transfer_adapt_v14_fren_expand5_status.md`
-  - `reports/transfer/transfer_adapt_fbyg_expand5_status.md`
+- 当前最重要的统一主表：
+  - `reports/transfer/transfer_adapt_main_results_4target.md`
+  - `reports/transfer/transfer_adapt_main_results_4target.csv`
+- 当前 4 个目标任务均为 `5-seed` 正式结果，且相对 baseline 为正增益：
+  - `ja_en`：`delta_avg_mrr_mean = +0.01210`
+  - `FBDB15K`：`delta_avg_mrr_mean = +0.00830`
+  - `fr_en`：`delta_avg_mrr_mean = +0.01210`
+  - `FBYG15K`：`delta_avg_mrr_mean = +0.00280`
+- 当前 4 目标平均提升：
+  - `delta_avg_hits@1_mean = +0.006897`
+  - `delta_avg_hits@10_mean = +0.012650`
+  - `delta_avg_mrr_mean = +0.008825`
+  - `delta_avg_mr_mean = -66.674325`
+- 最新阶段收口报告：
+  - `reports/transfer/transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
 
 ## 7. 异常与恢复记录（关键）
 
@@ -425,15 +486,18 @@
 
 ## 8. 当前可直接用于报告的证据路径
 
-1. 方法改造说明：`baselines/MEAformer/config.py`, `baselines/MEAformer/model/MEAformer.py`, `baselines/MEAformer/main.py`
-2. 统一运行入口：`scripts/run_meaformer.py`
-3. 迁移阶段主证据：`reports/transfer/`
-4. 运行原始证据：`runs/transfer/`, `runs/experiments/`
-5. 中期素材：`reports/midterm/`
+1. 首页与项目总览：`README.md`
+2. 过程总记录：`PROJECT_OPERATION_RECORD.md`
+3. 方法改造说明：`baselines/MEAformer/config.py`, `baselines/MEAformer/model/MEAformer.py`, `baselines/MEAformer/main.py`
+4. 统一运行入口：`scripts/run_meaformer.py`
+5. 当前统一主结果表：`reports/transfer/transfer_adapt_main_results_4target.md`
+6. 迁移阶段主证据目录：`reports/transfer/`
+7. 运行原始证据：`runs/transfer/`, `runs/experiments/`
+8. 中期素材：`reports/midterm/`
 
 ## 9. 提交历史摘要（按时间顺序）
 
-以下为从项目启动到当前的提交主线（共 41 次）：
+以下为从项目启动到 `2026-03-09` 的首批主线提交（前 `41` 次）。`2026-03-11` 之后的新提交、对应实验与收口动作，已经在本文件后续“追加记录”中继续补充说明。
 
 1. `e971759` initialize baseline pipeline
 2. `5cd7487` tmmeada zh_en 5-seed
