@@ -1770,3 +1770,19 @@
   - `python -m py_compile scripts/verify_mainline_artifacts.py`
   - `python scripts/verify_mainline_artifacts.py`
   - current result: `38` checks, `0` failed
+
+## 2026-03-16 Thesis Final Integration Planning
+
+- read latest shared-thread state and re-evaluate what is still worth doing for thesis support
+- choose the highest-value next step:
+  - stop adding new experiments
+  - focus on a chapter-oriented final integration packet for the thesis
+- add:
+  - `reports/notes/thesis_final_integration_packet_20260316.md`
+- packet covers:
+  - recommended next-step judgment
+  - requirements for the project-optimization thread
+  - chapter-4 absorption path
+  - chapter-5 absorption path
+  - appendix/defense absorption path
+  - items no longer recommended for further investment

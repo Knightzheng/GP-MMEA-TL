@@ -69,6 +69,8 @@
   - 面向导师沟通、答辩或验收的一页式主线闭环说明
 - `reports/notes/mainline_artifact_integrity_20260315.md`
   - 自动校验当前主线正式文件、正式 run、案例 / GPU 补强文件与 H3 清理状态的完整性报告
+- `reports/notes/thesis_final_integration_packet_20260316.md`
+  - 面向论文终稿的章节整合方案、推荐吸收路径与当前不再建议继续投入的事项
 - `PROJECT_OPERATION_RECORD.md`
   - 面向论文与答辩的全流程记录，说明每个阶段为什么做、做了什么、结果怎样
 - `PROCESS_LOG.md`
@@ -221,6 +223,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/notes/mainline_traceability_matrix_20260315.md`
   - `reports/notes/mainline_closure_onepage_20260315.md`
   - `reports/notes/mainline_artifact_integrity_20260315.md`
+  - `reports/notes/thesis_final_integration_packet_20260316.md`
   - `reports/transfer/README.md`
   - `runs/transfer/README.md`
 
@@ -996,3 +999,16 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `python scripts/verify_mainline_artifacts.py`
 - 当前意义：
   - 后续可以不靠人工逐目录核对，就快速确认“当前主线仓库状态是否仍然干净且完整”。
+
+## 47. 阶段更新（2026-03-16）：论文终稿整合方案明确化
+
+- 本轮已完成：
+  - 新增终稿整合文件：
+    - `reports/notes/thesis_final_integration_packet_20260316.md`
+- 本轮核心判断：
+  - 当前进一步优化论文的最佳方向，不是继续做新实验，而是把已有主线结果、辅助补强与边界说明重新组织成“第四章 / 第五章 / 附录 / 答辩”四类吸收路径。
+- 当前建议：
+  - 第四章继续围绕主表、显著性、案例、效率与 GPU 辅助补证展开；
+  - 第五章继续围绕保守结论、比较边界和局限性收口；
+  - 附录与答辩优先使用主线追溯总表、一页式闭环说明和完整性校验报告；
+  - 不再重启 `H3`，也不再为了额外 baseline 重开高成本 rerun。
