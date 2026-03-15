@@ -65,6 +65,8 @@
   - 首页导览，适合先建立整体认识
 - `reports/notes/taskbook_gap_assessment_20260315.md`
   - 任务书 / 开题报告 / 当前项目现状的闭环检查与差距判断
+- `reports/notes/mainline_closure_onepage_20260315.md`
+  - 面向导师沟通、答辩或验收的一页式主线闭环说明
 - `PROJECT_OPERATION_RECORD.md`
   - 面向论文与答辩的全流程记录，说明每个阶段为什么做、做了什么、结果怎样
 - `PROCESS_LOG.md`
@@ -201,15 +203,21 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 案例级成功/失败分析：
   - `reports/transfer/transfer_case_analysis_examples.md`
   - `reports/transfer/transfer_case_analysis_examples.csv`
+  - `reports/transfer/transfer_case_analysis_thesis_sync_20260315.md`
 - 效率补证（当前先完成 wall-clock）：
   - `reports/transfer/transfer_efficiency_summary.md`
   - `reports/transfer/transfer_efficiency_summary.csv`
 - GPU 峰值显存最小正式补测（辅助支撑）：
   - `reports/transfer/transfer_gpu_peak_minimal_summary.md`
   - `reports/transfer/transfer_gpu_peak_minimal_summary.csv`
+  - `reports/transfer/transfer_gpu_peak_minimal_chart_ready.csv`
+  - `reports/transfer/transfer_gpu_peak_minimal_thesis_sync_20260315.md`
+- 额外 baseline 未继续补做时的论文 / 答辩口径：
+  - `reports/transfer/transfer_extra_baseline_limitation_writeup.md`
 - 项目闭环评估与边界说明：
   - `reports/notes/taskbook_gap_assessment_20260315.md`
   - `reports/notes/mainline_traceability_matrix_20260315.md`
+  - `reports/notes/mainline_closure_onepage_20260315.md`
   - `reports/transfer/README.md`
   - `runs/transfer/README.md`
 
@@ -950,3 +958,20 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 该补测只覆盖 `seed=42` 与代表性目标域，不替代正式 `5-seed` wall-clock 结果；
   - GPU 数值来自 PyTorch allocator peak，在 Windows `WDDM` 下应作为同环境相对参考；
   - `FBYG15K` method 因原配置 `il_start=5`，最小有效补测为 `epoch=6`，因此时间列不宜与 `epoch=3` baseline 直接并列解释。
+
+## 45. 阶段更新（2026-03-15）：论文线程 6.11 低成本补强同步
+
+- 本轮已完成：
+  - 新增一页式主线闭环说明：
+    - `reports/notes/mainline_closure_onepage_20260315.md`
+  - 明确同步案例分析当前已扩展到 `8` 个正式样本，不再重复重跑：
+    - `reports/transfer/transfer_case_analysis_thesis_sync_20260315.md`
+  - 产出更适合答辩出图的 GPU 峰值显存长表数据与论文口径：
+    - `reports/transfer/transfer_gpu_peak_minimal_chart_ready.csv`
+    - `reports/transfer/transfer_gpu_peak_minimal_thesis_sync_20260315.md`
+  - 更新额外 baseline 未继续补做时的论文 / 答辩可用局限性表述：
+    - `reports/transfer/transfer_extra_baseline_limitation_writeup.md`
+- 当前判断：
+  - 案例分析方面，论文线程希望补的 `+2` 个样本已经被现有正式文件覆盖，当前更需要的是同步吸收而不是继续扩样。
+  - GPU 峰值显存方面，当前最小正式补测已经足够承担辅助支撑角色，继续扩大补测的边际收益较低。
+  - 额外 baseline 方面，当前更稳妥的处理是明确写清“为什么不再继续补”和“论文里应如何保守表述”，而不是停留在未完成状态。

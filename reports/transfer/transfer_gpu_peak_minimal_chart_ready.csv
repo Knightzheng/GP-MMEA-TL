@@ -1,0 +1,9 @@
+target,variant,seed,epoch,metric,value_mb
+FBYG15K,baseline,42,3,allocated_mb,5832.93
+FBYG15K,baseline,42,3,reserved_mb,9774.00
+FBYG15K,method,42,6,allocated_mb,5833.29
+FBYG15K,method,42,6,reserved_mb,9804.00
+ja_en,baseline,42,3,allocated_mb,7494.68
+ja_en,baseline,42,3,reserved_mb,8932.00
+ja_en,method,42,3,allocated_mb,7496.18
+ja_en,method,42,3,reserved_mb,8972.00

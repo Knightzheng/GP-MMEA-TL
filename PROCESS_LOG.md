@@ -1732,3 +1732,22 @@
   - remove `runs/system/gpu_peak_minimal_tmp/`
 - usage boundary:
   - this is a supplementary peak-memory check under representative settings, not a replacement for formal 5-seed wall-clock evidence
+
+## 2026-03-15 Low-Cost Thesis-Support Tightening
+
+- read latest thesis-thread request in `reports/notes/thread_sync_shared.md`, especially section `6.11`
+- confirm current formal case-analysis package already contains `8` cases, so the requested `+2` low-cost examples are already covered without rerunning experiments
+- add one-page mainline closure brief:
+  - `reports/notes/mainline_closure_onepage_20260315.md`
+- add thesis-sync note for the expanded case package:
+  - `reports/transfer/transfer_case_analysis_thesis_sync_20260315.md`
+- add chart-ready GPU peak-memory CSV and thesis-ready usage note:
+  - `reports/transfer/transfer_gpu_peak_minimal_chart_ready.csv`
+  - `reports/transfer/transfer_gpu_peak_minimal_thesis_sync_20260315.md`
+- update extra-baseline limitation writeup with a final "do not continue now" judgment and defense-ready wording:
+  - `reports/transfer/transfer_extra_baseline_limitation_writeup.md`
+- sync entry points in:
+  - `README.md`
+  - `reports/README.md`
+  - `reports/transfer/README.md`
+  - `PROJECT_OPERATION_RECORD.md`

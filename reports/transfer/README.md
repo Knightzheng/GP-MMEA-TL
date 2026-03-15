@@ -12,10 +12,16 @@
    - 4 个目标域 `5-seed` 正增益的显著性与稳定性补强。
 4. `transfer_case_analysis_examples.md`
    - 当前可直接入文的代表性案例。
-5. `transfer_efficiency_summary.md`
+5. `transfer_case_analysis_thesis_sync_20260315.md`
+   - 说明当前案例文件已经扩展到 `8` 个正式样本，并明确对应论文线程 `6.11` 想补的那 `2` 个样本。
+6. `transfer_efficiency_summary.md`
    - 当前已完成的 wall-clock 效率补证。
-6. `transfer_gpu_peak_minimal_summary.md`
+7. `transfer_gpu_peak_minimal_summary.md`
    - 当前已完成的最小正式 GPU 峰值显存补测。
+8. `transfer_gpu_peak_minimal_thesis_sync_20260315.md`
+   - 当前 GPU 补测“还能不能继续补”的判断、论文可直接引用的分析文字与答辩口径。
+9. `transfer_extra_baseline_limitation_writeup.md`
+   - 若不继续补额外 baseline，正文与答辩可直接使用的局限性写法。
 
 ## 2. 4 个目标域的正式对比文件
 
@@ -42,6 +48,8 @@
   - 效率分析对应的结构化数据。
 - `transfer_gpu_peak_minimal_summary.csv`
   - GPU 峰值显存最小正式补测的结构化数据。
+- `transfer_gpu_peak_minimal_chart_ready.csv`
+  - 更适合绘制答辩柱状图的 GPU 峰值显存长表数据。
 
 ## 4. 阶段报告的正确使用方式
 
@@ -60,3 +68,4 @@
 2. GPU 峰值显存当前已经补出最小正式结果，但仍只属于辅助支撑，不得写成主线完成前提。
 3. 若只需要项目主线闭环证据，请优先回到：
    - `../notes/mainline_traceability_matrix_20260315.md`
+4. 案例分析当前已经扩展到 `8` 个正式样本；若论文正文仍只保留 `6` 个，可把新增 `2` 个样本放到附录或答辩材料中。

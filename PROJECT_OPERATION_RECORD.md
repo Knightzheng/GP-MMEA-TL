@@ -1243,3 +1243,47 @@
 1. 当前项目终于具备了可入项目记录的最小正式 GPU 峰值显存结果。
 2. 该补测补齐了此前一直悬空的辅助支撑项，但没有把它抬高为主线完成前提。
 3. 后续论文线程若要引用该部分，应采用“代表性场景下的辅助显存补测”这一保守口径。
+
+## 29. 2026-03-15 追加记录（面向论文线程 6.11 的低成本补强收口）
+
+本次追加操作：
+
+1. 重新核对共享文件 `reports/notes/thread_sync_shared.md` 中论文线程新增需求，重点吸收 `6.11` 小节。
+2. 确认当前正式案例文件已经扩展到 `8` 个样本，因此论文线程希望补的 `+2` 个样本实际上已经被现有正式结果覆盖，不需要再为此重跑实验。
+3. 新增一页式主线闭环说明：
+   - `reports/notes/mainline_closure_onepage_20260315.md`
+4. 新增案例分析对齐说明：
+   - `reports/transfer/transfer_case_analysis_thesis_sync_20260315.md`
+5. 为 GPU 峰值显存补测补充更适合答辩展示的数据与口径：
+   - `reports/transfer/transfer_gpu_peak_minimal_chart_ready.csv`
+   - `reports/transfer/transfer_gpu_peak_minimal_thesis_sync_20260315.md`
+6. 更新额外 baseline 局限性写法：
+   - `reports/transfer/transfer_extra_baseline_limitation_writeup.md`
+7. 同步更新项目导航与记录：
+   - `README.md`
+   - `reports/README.md`
+   - `reports/transfer/README.md`
+   - `PROCESS_LOG.md`
+   - `reports/notes/thread_sync_shared.md`
+
+关键判断：
+
+1. 案例分析：
+   - 当前最有价值的动作不是继续扩样，而是把已经形成的 `8` 个正式样本明确同步给论文线程。
+   - 新增的两例正好补上论文线程最希望看到的：
+     - `1` 个额外 `ja_en` 失败 / 边界失败样本；
+     - `1` 个额外跨图谱成功纠错样本。
+2. GPU 峰值显存：
+   - 当前最小正式补测已经足够承担辅助支撑角色。
+   - 继续补更多目标域或随机种子的边际收益较低，不值得在当前阶段继续扩大。
+   - 更高价值的动作是补一份可直接画图、可直接写入论文和答辩的整理材料。
+3. 额外 baseline：
+   - 当前不再继续补做。
+   - 原因不是其完全不重要，而是要想做公平对照，就必须为新骨干模型重建统一迁移协议与完整留痕链路，成本已经明显高于当前阶段收益。
+   - 因此，项目层面选择将结论边界明确保守收在 `MEAformer-based transfer setting` 内。
+
+本次追加的直接作用：
+
+1. 让论文线程可以直接吸收“案例已扩到 8 个”“GPU 已有图表友好数据”“额外 baseline 不再继续补做时的保守口径”。
+2. 避免后续再次为了低边际收益的辅助项去重跑大实验。
+3. 让导师审阅和答辩准备时，主线闭环与辅助支撑边界都能被更快说清楚。
