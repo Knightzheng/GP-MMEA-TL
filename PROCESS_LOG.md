@@ -1786,3 +1786,16 @@
   - chapter-5 absorption path
   - appendix/defense absorption path
   - items no longer recommended for further investment
+
+## 2026-03-16 Structure Navigation Tightening
+
+- add directory-level navigation files:
+  - `reports/notes/README.md`
+  - `scripts/README.md`
+  - `runs/experiments/README.md`
+- focus:
+  - distinguish current active mainline documents from historical notes
+  - distinguish current script entry points from historical queue/auto scripts
+  - clarify the role boundaries of `baseline/`, `tmmeada/`, and `gpu_peak_minimal/` under `runs/experiments/`
+- note:
+  - `__pycache__/` remains an ignored cache type and is not part of the intended project structure

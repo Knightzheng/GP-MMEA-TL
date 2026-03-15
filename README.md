@@ -71,6 +71,12 @@
   - 自动校验当前主线正式文件、正式 run、案例 / GPU 补强文件与 H3 清理状态的完整性报告
 - `reports/notes/thesis_final_integration_packet_20260316.md`
   - 面向论文终稿的章节整合方案、推荐吸收路径与当前不再建议继续投入的事项
+- `reports/notes/README.md`
+  - `reports/notes/` 目录级导航，帮助区分当前有效说明文件与历史笔记
+- `scripts/README.md`
+  - `scripts/` 目录级导航，区分正式入口、辅助整理脚本与历史探索脚本
+- `runs/experiments/README.md`
+  - `runs/experiments/` 目录级导航，帮助快速理解 baseline / tmmeada / gpu_peak_minimal 的职责边界
 - `PROJECT_OPERATION_RECORD.md`
   - 面向论文与答辩的全流程记录，说明每个阶段为什么做、做了什么、结果怎样
 - `PROCESS_LOG.md`
@@ -1012,3 +1018,18 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 第五章继续围绕保守结论、比较边界和局限性收口；
   - 附录与答辩优先使用主线追溯总表、一页式闭环说明和完整性校验报告；
   - 不再重启 `H3`，也不再为了额外 baseline 重开高成本 rerun。
+
+## 48. 阶段更新（2026-03-16）：目录结构导航进一步收口
+
+- 本轮已完成：
+  - 为 `reports/notes/` 新增目录 README：
+    - `reports/notes/README.md`
+  - 为 `scripts/` 新增目录 README：
+    - `scripts/README.md`
+  - 为 `runs/experiments/` 新增目录 README：
+    - `runs/experiments/README.md`
+- 补充说明：
+  - `__pycache__/` 仍属于已忽略缓存目录；本轮结构优化未改动正式结果路径。
+- 当前作用：
+  - 后来者现在不需要先读完整个 `scripts/` 或 `notes/` 目录，就能快速区分“当前正式入口”和“历史留痕”；
+  - `runs/experiments/` 的结构边界也更清楚，降低把辅助补测或历史方法目录误读为主线证据的风险。

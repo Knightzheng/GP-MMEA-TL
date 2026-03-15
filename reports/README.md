@@ -10,6 +10,7 @@
 - midterm/: midterm draft/submission documents
 - planning/: next-stage plans and auto decisions
 - notes/: technical notes and overnight summaries
+- notes/README.md: guide to current note files, active mainline documents, and historical-vs-current usage boundaries
 - notes/thread_sync_shared.md: shared handoff board between thesis-writing thread and project-optimization thread
 - notes/taskbook_gap_assessment_20260315.md: taskbook/proposal/mainline closure assessment and current gap audit
 - notes/mainline_traceability_matrix_20260315.md: taskbook/proposal requirements mapped to formal results, scripts, and run directories
