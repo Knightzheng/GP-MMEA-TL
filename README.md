@@ -67,6 +67,8 @@
   - 任务书 / 开题报告 / 当前项目现状的闭环检查与差距判断
 - `reports/notes/mainline_closure_onepage_20260315.md`
   - 面向导师沟通、答辩或验收的一页式主线闭环说明
+- `reports/notes/mainline_artifact_integrity_20260315.md`
+  - 自动校验当前主线正式文件、正式 run、案例 / GPU 补强文件与 H3 清理状态的完整性报告
 - `PROJECT_OPERATION_RECORD.md`
   - 面向论文与答辩的全流程记录，说明每个阶段为什么做、做了什么、结果怎样
 - `PROCESS_LOG.md`
@@ -218,6 +220,7 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - `reports/notes/taskbook_gap_assessment_20260315.md`
   - `reports/notes/mainline_traceability_matrix_20260315.md`
   - `reports/notes/mainline_closure_onepage_20260315.md`
+  - `reports/notes/mainline_artifact_integrity_20260315.md`
   - `reports/transfer/README.md`
   - `runs/transfer/README.md`
 
@@ -975,3 +978,21 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 案例分析方面，论文线程希望补的 `+2` 个样本已经被现有正式文件覆盖，当前更需要的是同步吸收而不是继续扩样。
   - GPU 峰值显存方面，当前最小正式补测已经足够承担辅助支撑角色，继续扩大补测的边际收益较低。
   - 额外 baseline 方面，当前更稳妥的处理是明确写清“为什么不再继续补”和“论文里应如何保守表述”，而不是停留在未完成状态。
+
+## 46. 阶段更新（2026-03-15）：主线材料完整性自动校验入口
+
+- 本轮已完成：
+  - 新增完整性校验脚本：
+    - `scripts/verify_mainline_artifacts.py`
+  - 自动生成当前仓库状态报告：
+    - `reports/notes/mainline_artifact_integrity_20260315.md`
+    - `reports/notes/mainline_artifact_integrity_20260315.csv`
+- 当前校验范围：
+  - 主线 README / notes / transfer 指南文件是否存在；
+  - 四个目标域正式 baseline / method run 是否各自保留 `5` 个 run 且具备 `log/config/run_card/artifact_manifest`；
+  - `8` 个案例样本与 GPU 图表友好数据是否齐全；
+  - H3 相关脚本、目录与结果是否仍保持移除状态。
+- 使用方式：
+  - `python scripts/verify_mainline_artifacts.py`
+- 当前意义：
+  - 后续可以不靠人工逐目录核对，就快速确认“当前主线仓库状态是否仍然干净且完整”。

@@ -1,0 +1,39 @@
+category,item,status,detail
+files,README.md,OK,present
+files,reports/README.md,OK,present
+files,reports/notes/taskbook_gap_assessment_20260315.md,OK,present
+files,reports/notes/mainline_traceability_matrix_20260315.md,OK,present
+files,reports/notes/mainline_closure_onepage_20260315.md,OK,present
+files,reports/transfer/README.md,OK,present
+files,runs/README.md,OK,present
+files,runs/transfer/README.md,OK,present
+files,reports/transfer/transfer_adapt_main_results_4target.md,OK,present
+files,reports/transfer/transfer_adapt_main_results_4target.csv,OK,present
+files,reports/transfer/transfer_adapt_significance_summary.md,OK,present
+files,reports/transfer/transfer_case_analysis_examples.md,OK,present
+files,reports/transfer/transfer_case_analysis_examples.csv,OK,present
+files,reports/transfer/transfer_case_analysis_thesis_sync_20260315.md,OK,present
+files,reports/transfer/transfer_efficiency_summary.md,OK,present
+files,reports/transfer/transfer_gpu_peak_minimal_summary.md,OK,present
+files,reports/transfer/transfer_gpu_peak_minimal_summary.csv,OK,present
+files,reports/transfer/transfer_gpu_peak_minimal_thesis_sync_20260315.md,OK,present
+files,reports/transfer/transfer_gpu_peak_minimal_chart_ready.csv,OK,present
+files,reports/transfer/transfer_extra_baseline_limitation_writeup.md,OK,present
+formal_runs,ja_en_baseline,OK,5 run dirs with required files
+formal_runs,ja_en_method,OK,5 run dirs with required files
+formal_runs,fr_en_baseline,OK,5 run dirs with required files
+formal_runs,fr_en_method,OK,5 run dirs with required files
+formal_runs,fbdb_baseline,OK,5 run dirs with required files
+formal_runs,fbdb_method,OK,5 run dirs with required files
+formal_runs,fbyg_baseline,OK,5 run dirs with required files
+formal_runs,fbyg_method,OK,5 run dirs with required files
+case_package,case_row_count,OK,8 rows
+case_package,dataset_breakdown,OK,"ja_en failures=3, crossgraph successes=5"
+case_package,thesis_requested_examples,OK,Fat Mike and JavaScript present
+gpu_package,gpu_chart_row_count,OK,8 rows
+gpu_package,gpu_chart_breakdown,OK,"targets=['FBYG15K', 'ja_en'], variants=['baseline', 'method'], metrics=['allocated_mb', 'reserved_mb']"
+gpu_runs,ja_en_baseline,OK,1 run dir ready: 20260315-033319-MEAformer-transfer-adapt-target-ja_en-transfer-tgt-gpupeak-DBP15K-ja_en-s42
+gpu_runs,ja_en_method,OK,1 run dir ready: 20260315-034506-TMMEA-DA-transfer-adapt-v15-target-ja_en-transfer-tgt-gpupeak-DBP15K-ja_en-s42
+gpu_runs,fbyg15k_baseline,OK,1 run dir ready: 20260315-035536-MEAformer-transfer-adapt-target-fbyg15k-transfer-tgt-gpupeak-FBYG15K-norm-s42
+gpu_runs,fbyg15k_method,OK,1 run dir ready: 20260315-040122-TMMEA-DA-transfer-adapt-v24b-target-fbyg15k-transfer-tgt-gpupeak-FBYG15K-norm-s42
+h3_cleanup,removed_artifacts,OK,expected H3 paths remain absent

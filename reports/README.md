@@ -14,6 +14,7 @@
 - notes/taskbook_gap_assessment_20260315.md: taskbook/proposal/mainline closure assessment and current gap audit
 - notes/mainline_traceability_matrix_20260315.md: taskbook/proposal requirements mapped to formal results, scripts, and run directories
 - notes/mainline_closure_onepage_20260315.md: one-page defense/acceptance summary of what is already complete in the mainline and what remains auxiliary
+- notes/mainline_artifact_integrity_20260315.md: auto-generated integrity check for current mainline artifacts, formal runs, case/GPU supplements, and H3-removal state
 - compare/: cross-method compare tables
 - tmp/: temporary intermediate outputs
 - misc/: uncategorized artifacts

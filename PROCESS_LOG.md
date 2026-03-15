@@ -1751,3 +1751,22 @@
   - `reports/README.md`
   - `reports/transfer/README.md`
   - `PROJECT_OPERATION_RECORD.md`
+
+## 2026-03-15 Mainline Artifact Integrity Automation
+
+- add verification script:
+  - `scripts/verify_mainline_artifacts.py`
+- script checks:
+  - current mainline entry-point files
+  - 4-target formal transfer baseline/method run roots
+  - required run-level files (`artifact_manifest.json`, `config.yaml`, `log.txt`, `run_card.md`)
+  - 8-case package presence and thesis-requested example coverage
+  - GPU chart-ready package presence
+  - current H3-removal state
+- generate reports:
+  - `reports/notes/mainline_artifact_integrity_20260315.md`
+  - `reports/notes/mainline_artifact_integrity_20260315.csv`
+- validation:
+  - `python -m py_compile scripts/verify_mainline_artifacts.py`
+  - `python scripts/verify_mainline_artifacts.py`
+  - current result: `38` checks, `0` failed
