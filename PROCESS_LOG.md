@@ -1838,3 +1838,18 @@
 - validation:
   - current report sections are above the required minimum length
   - current guidance-record package contains `10` entries
+
+## 2026-03-19 Midterm Template Rendering
+
+- add Word-template rendering script:
+  - `scripts/render_midterm_report_from_template.ps1`
+- use the school-issued `.doc` template through a local workspace copy to avoid download-directory protected-view issues
+- generate rendered outputs:
+  - `reports/midterm/rendered/midterm_report_student_20260319.docx`
+  - `reports/midterm/rendered/midterm_report_student_20260319.pdf`
+  - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.docx`
+  - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.pdf`
+- note:
+  - old `.doc` blank-body paragraphs could not be safely edited by direct range replacement; final rendering uses a mixed strategy:
+    - replace fixed label lines in place
+    - insert formatted body paragraphs after the template prompt lines

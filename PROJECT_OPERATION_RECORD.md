@@ -1426,3 +1426,28 @@
 1. 可以直接用于填写学校中期报告模板。
 2. 可以直接为毕设管理系统补录不少于 `9` 次的指导记录要求提供现成文本。
 3. 可以为教师审核中期报告时提供一版更完整的评语参考稿。
+
+## 35. 2026-03-19 追加记录（中期报告模板成品导出）
+
+本次追加操作：
+
+1. 在已有 Markdown 中期报告稿基础上，进一步完成与学校标准模板的对接。
+2. 新增模板渲染脚本：
+   - `scripts/render_midterm_report_from_template.ps1`
+3. 导出学生提交版成品：
+   - `reports/midterm/rendered/midterm_report_student_20260319.docx`
+   - `reports/midterm/rendered/midterm_report_student_20260319.pdf`
+4. 导出含指导教师意见参考版：
+   - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.docx`
+   - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.pdf`
+
+关键判断：
+
+1. 学校提供的旧版 `.doc` 模板在下载目录下直接通过 COM 打开时存在兼容性问题，因此改为先使用工作区本地副本进行渲染更稳妥。
+2. 该模板的叙述区空白段落不能统一用直接替换方式写入，否则会触发 Word 的“行结尾无效”错误，因此最终采用“固定字段原位替换 + 正文区在提示语后插入内容段”的策略完成生成。
+3. 模板成品目前已能直接打印或继续人工微调，但学生基础字段中的班级、联系电话、电子邮箱仍需按真实信息补全。
+
+本次追加的直接作用：
+
+1. 不再只有 Markdown 稿，而是有了可以直接提交/打印的模板版文档。
+2. 同时提供学生提交版与含教师意见参考版两个版本，便于不同使用场景切换。

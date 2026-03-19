@@ -1072,3 +1072,19 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 当前边界：
   - 中期报告稿件中的班级、联系电话、电子邮箱和指导教师姓名仍需按学生实际信息补全；
   - 该批文件服务于中期检查与系统录入，不替代后续论文终稿。
+
+## 51. 阶段更新（2026-03-19）：中期报告模板成品导出
+
+- 本轮完成：
+  - 基于学校 `.doc` 模板导出学生提交版成品：
+    - `reports/midterm/rendered/midterm_report_student_20260319.docx`
+    - `reports/midterm/rendered/midterm_report_student_20260319.pdf`
+  - 基于同一模板导出含教师意见参考版：
+    - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.docx`
+    - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.pdf`
+  - 新增模板渲染脚本：
+    - `scripts/render_midterm_report_from_template.ps1`
+- 当前说明：
+  - 模板文件来自学校下发的 `附件1：中期报告.doc`，实际生成时改用工作区本地副本以绕开下载目录保护视图与旧版 `.doc` 打开问题；
+  - 版式沿用原模板，正文内容按模板要求填入，输出了 `docx + pdf` 两个版本；
+  - 班级、联系电话、电子邮箱目前仍保留为待补字段。

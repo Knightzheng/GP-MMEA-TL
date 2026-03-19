@@ -1073,3 +1073,29 @@
 #### 6.18.4 可直接交给使用者的总结文字
 
 本轮已将中期检查所需的核心文稿整理完毕：包括按学校模板约束撰写的中期报告填写稿、可用于毕设系统录入的 `10` 次指导记录，以及指导教师中期评语参考稿。当前稿件已经满足“前一阶段总结不少于 400 字、下一阶段计划不少于 300 字、存在问题不少于 100 字、指导教师评语需实质化”的基本要求，后续只需结合学生真实基础信息补全个别字段后即可使用。
+
+### 6.19 线程A同步（2026-03-19，中期报告模板成品已导出）
+
+#### 6.19.1 本轮实际完成内容总览
+
+1. 已基于学校标准 `.doc` 模板导出中期报告学生提交版：
+   - `reports/midterm/rendered/midterm_report_student_20260319.docx`
+   - `reports/midterm/rendered/midterm_report_student_20260319.pdf`
+2. 已基于同一模板导出含指导教师意见参考版：
+   - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.docx`
+   - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.pdf`
+3. 已新增模板渲染脚本：
+   - `scripts/render_midterm_report_from_template.ps1`
+4. 已同步更新：
+   - `reports/midterm/README.md`
+   - `README.md`
+   - `reports/README.md`
+   - `PROCESS_LOG.md`
+   - `PROJECT_OPERATION_RECORD.md`
+
+#### 6.19.2 当前说明与边界
+
+1. 模板成品已按学校提供的标准模板生成，版式继承原始 `.doc` 模板。
+2. 渲染时改用工作区本地模板副本，以绕开下载目录保护视图与旧版 `.doc` 打开兼容问题。
+3. 班级、联系电话、电子邮箱当前仍是待补字段，不宜擅自代填。
+4. 这轮新增的是中期检查提交材料，不属于新的论文实验结果。
