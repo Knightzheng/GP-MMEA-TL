@@ -12,7 +12,8 @@
   - Source-train -> target-adapt -> target-eval artifacts and run-card-facing summaries.
   - See `transfer/README.md` for the current official transfer entry points.
 - `midterm/`
-  - Midterm draft and submission documents.
+  - Midterm draft, submission materials, guidance-record drafts, and teacher-comment reference.
+  - See `midterm/README.md` for the current recommended midterm entry points.
 - `planning/`
   - Next-stage plans and auto decisions.
 - `notes/`
@@ -51,6 +52,17 @@
   - Wall-clock efficiency summary.
 - `transfer/transfer_gpu_peak_minimal_summary.md`
   - Minimal formal GPU-peak-memory supplement.
+
+## Key Current Midterm Files
+
+- `midterm/midterm_report_filled_20260319.md`
+  - Filled midterm-report draft aligned to the school template requirements.
+- `midterm/guidance_records_10_20260319.md`
+  - Ten guidance-record entries ready for system submission.
+- `midterm/guidance_records_10_20260319.csv`
+  - Structured version of the guidance records.
+- `midterm/teacher_comment_draft_20260319.md`
+  - Reference wording for the supervisor's midterm comment.
 
 ## Current Boundary
 

@@ -1051,3 +1051,24 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
   - 这些材料是“终稿 / 答辩组织层面的增强”，不是新的正式实验结论；
   - `fr_en` 当前没有单独保留代表性案例，因此该目标域主要仍由正式 `5-seed` 主结果和显著性支撑；
   - GPU 仍只属于代表性最小正式补测，不上升为完整显存统计。
+
+## 50. 阶段更新（2026-03-19）：中期报告与指导记录材料整理
+
+- 本轮完成：
+  - 按学校中期报告模板与填写说明，整理中期报告填写稿：
+    - `reports/midterm/midterm_report_filled_20260319.md`
+  - 整理毕设系统可录入的 `10` 次指导记录：
+    - `reports/midterm/guidance_records_10_20260319.md`
+    - `reports/midterm/guidance_records_10_20260319.csv`
+  - 补充指导教师评语参考稿：
+    - `reports/midterm/teacher_comment_draft_20260319.md`
+  - 为中期材料新增目录导航：
+    - `reports/midterm/README.md`
+- 已核对的模板要求：
+  - 前一阶段工作总结不少于 `400` 字；
+  - 下一阶段工作计划不少于 `300` 字；
+  - 存在问题不少于 `100` 字；
+  - 指导教师意见需有完成情况评价、问题指出和改进建议。
+- 当前边界：
+  - 中期报告稿件中的班级、联系电话、电子邮箱和指导教师姓名仍需按学生实际信息补全；
+  - 该批文件服务于中期检查与系统录入，不替代后续论文终稿。

@@ -1818,3 +1818,23 @@
 - usage boundary:
   - suitable for appendix/defense and thesis-side absorption
   - not a new main-text experiment package
+
+## 2026-03-19 Midterm Report Writing Package
+
+- read the school midterm template and reference instructions from:
+  - `reports/midterm/source_docs/midterm_template.doc` (temporary local copy used for parsing; not intended for versioning)
+  - `reports/midterm/source_docs/midterm_reference.doc` (temporary local copy used for parsing; not intended for versioning)
+- confirm the template constraints:
+  - previous-stage summary >= `400` Chinese characters
+  - next-stage plan >= `300` Chinese characters
+  - existing problems >= `100` Chinese characters
+  - supervisor comment must be substantive
+- add:
+  - `reports/midterm/midterm_report_filled_20260319.md`
+  - `reports/midterm/guidance_records_10_20260319.md`
+  - `reports/midterm/guidance_records_10_20260319.csv`
+  - `reports/midterm/teacher_comment_draft_20260319.md`
+  - `reports/midterm/README.md`
+- validation:
+  - current report sections are above the required minimum length
+  - current guidance-record package contains `10` entries
