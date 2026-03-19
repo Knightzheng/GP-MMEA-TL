@@ -1158,3 +1158,32 @@
 1. 这轮新增的是“结构理解层”和“记录重写”，不是新的实验结论。
 2. 当前仓库已经具备按阶段阅读的能力，但真实目录并未做高风险整体搬迁。
 3. 如果后续真的要做物理重构，必须先系统清理所有硬编码路径与历史引用，再作为独立工程处理。
+
+### 6.21 线程A同步（2026-03-19，中期材料链路已清理并切换为最终提交版）
+
+#### 6.21.1 本轮实际完成内容总览
+
+1. 已删除上一线程遗留的中期自动稿与旧导出物：
+   - `reports/midterm/midterm_report_filled_20260319.md`
+   - `reports/midterm/guidance_records_10_20260319.*`
+   - `reports/midterm/teacher_comment_draft_20260319.md`
+   - `reports/midterm/rendered/midterm_report_student_20260319.*`
+   - `reports/midterm/rendered/midterm_report_teacher_ref_20260319.*`
+2. 已保留并确认新的中期正文稿：
+   - `reports/midterm/midterm_report_rewritten_20260319.md`
+3. 已保留并确认新的最终模板成品：
+   - `reports/midterm/final/中期报告_郑一夫_20226452_20260319.docx`
+   - `reports/midterm/final/中期报告_郑一夫_20226452_20260319.pdf`
+4. 已将模板目录收口为“仅存放学校模板原件与填写说明”：
+   - `reports/midterm/rendered/README.md`
+   - `reports/midterm/rendered/附件1：中期报告.doc`
+   - `reports/midterm/rendered/附件2：中期报告填写参考说明.doc`
+5. 已将模板渲染入口统一切换为：
+   - `scripts/render_midterm_report_template.py`
+
+#### 6.21.2 当前说明与边界
+
+1. 当前中期材料已经从“旧自动稿链路”切换为“开题材料 + 当前真实结果 + 学校模板”的链路。
+2. `rendered/` 目录现在只负责保存模板原件，不再保存导出成品。
+3. 最终可提交版本统一位于 `reports/midterm/final/`。
+4. 这轮新增的是中期检查提交材料整理，不属于新的论文实验结果。

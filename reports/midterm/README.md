@@ -1,38 +1,88 @@
-# Midterm Materials Guide
+# 中期报告资料说明
 
-## Current Files
+本目录已经清理掉上一线程自动生成的中期填写稿、教师评语稿、指导记录草稿，以及未经核实的成品导出文件。当前只保留可追溯的模板、历史笔记和项目真实结果，后续中期报告撰写必须以这些事实源为准，不能再直接复用旧自动稿。
 
-- `midterm_report_filled_20260319.md`
-  - 按学校中期报告模板字段整理的填写稿，包含前一阶段总结、下一阶段计划、存在问题，以及教师意见参考稿。
-- `guidance_records_10_20260319.md`
-  - 毕设系统可直接参考录入的 10 次指导记录表。
-- `guidance_records_10_20260319.csv`
-  - 上述指导记录的结构化版本。
-- `teacher_comment_draft_20260319.md`
-  - 指导教师中期检查评语参考稿。
-- `rendered/midterm_report_student_20260319.docx`
-  - 已按学校模板排版填充的学生提交版成品。
-- `rendered/midterm_report_student_20260319.pdf`
-  - 学生提交版的 PDF 预览导出。
-- `rendered/midterm_report_teacher_ref_20260319.docx`
-  - 含指导教师意见参考稿的模板成品。
-- `rendered/midterm_report_teacher_ref_20260319.pdf`
-  - 含指导教师意见参考稿的 PDF 预览导出。
-- `../../scripts/render_midterm_report_from_template.ps1`
-  - 基于 Word 模板自动生成中期报告成品的脚本。
+## 当前正式正文稿
+
+- `midterm_report_rewritten_20260319.md`
+  - 当前可继续修改的中期报告正文稿，已经按学校模板字段重写，并对齐开题报告与项目真实结果。
+
+## 当前模板成品
+
+- `final/中期报告_郑一夫_20226452_20260319.docx`
+  - 当前按学校模板生成的提交版 `docx`。
+- `final/中期报告_郑一夫_20226452_20260319.pdf`
+  - 由同一份 `docx` 导出的 PDF 版本。
+- `..\\..\\scripts\\render_midterm_report_template.py`
+  - 当前用于按学校模板生成最终 `docx` 的脚本入口。
+
+## 一、学校模板与硬性要求
+
+- 模板原件：`rendered/附件1：中期报告.doc`
+- 填写说明：`rendered/附件2：中期报告填写参考说明.doc`
+
+根据学校下发说明，当前已确认的硬性要求如下：
+
+1. “前一阶段工作总结”必须对照开题报告中的计划来写，且不少于 `400` 字。
+2. “下一阶段工作计划”必须写具体安排，且不少于 `300` 字。
+3. “存在问题”必须填写，且不少于 `100` 字。
+4. 指导教师意见不能只写“同意下一阶段工作计划”，而要评价完成情况、指出问题并给出改进建议。
+5. 开题报告中要求在中期提交的过程文档，也应按进度整理后提交给指导教师。
+
+## 二、本次撰写允许使用的事实源
+
+### 1. 任务与开题依据
+
+- `..\\..\\答辩材料\\多模态实体对齐模型可迁移能力研究-郑一夫-20226452.docx`
+- `..\\..\\答辩材料\\多模态实体对齐模型可迁移能力研究_任务书整理版.md`
+
+用于核对：
+
+- 研究题目、研究意义、研究内容和技术路线
+- 开题报告中的阶段安排
+- 中期阶段应该交付的工作范围
+
+### 2. 当前项目主线结果与过程证据
+
+- `..\\README.md`
+- `..\\..\\PROCESS_LOG.md`
+- `..\\..\\PROJECT_OPERATION_RECORD.md`
+- `..\\notes\\taskbook_gap_assessment_20260315.md`
+- `..\\notes\\mainline_traceability_matrix_20260315.md`
+- `..\\notes\\mainline_closure_onepage_20260315.md`
+- `..\\epoch3\\epoch3_compare_dbp15k.md`
+- `..\\epoch3\\epoch3_compare_crossgraph.md`
+- `..\\epoch3\\epoch3_ablation_zh_en_multiseed.md`
+- `..\\transfer\\transfer_adapt_main_results_4target.md`
+
+这些文件可以支撑中期报告里“已经完成了什么”“实验结果到哪一步”“与任务书是否对齐”等表述。
+
+## 三、目录内各文件的当前定位
+
+- `midterm_outline.md`
+  - 可作为新的中期报告结构提纲。
+- `midterm_report_rewritten_20260319.md`
+  - 当前正式正文稿，后续修改优先在此文件上进行。
+- `midterm_experiment_section.md`
+  - 可保留作早期实验章节笔记，但其中引用路径和阶段判断需要重新核对后才能入文。
+- `midterm_results_draft.md`
+  - 仅保留作早期结果速记，不可直接作为正式中期报告正文。
 - `midterm_report_submission.md`
-  - 早期中期报告草稿，现阶段优先以 `midterm_report_filled_20260319.md` 为准。
+  - 历史草稿，当前结果口径、姓名信息和阶段结论已经落后，不能直接提交或继续扩写。
 
-## Template Constraints Confirmed
+## 四、本轮清理结论
 
-- 前一阶段工作总结：不少于 `400` 字
-- 下一阶段工作计划：不少于 `300` 字
-- 存在问题：不少于 `100` 字
-- 指导教师意见：应评价完成情况、指出问题、给出改进建议，不能只写“同意下一阶段工作计划”
+以下内容已从当前工作区移除，不应再作为中期报告依据：
 
-## Current Usage Suggestion
+1. 自动生成的中期填写稿。
+2. 自动生成的教师意见参考稿。
+3. 自动整理的指导记录草稿。
+4. 自动导出的中期报告 `docx/pdf` 成品。
+5. 为绕开模板读取而复制出的临时模板副本。
 
-1. 先用 `midterm_report_filled_20260319.md` 填充学校模板。
-2. 再把 `guidance_records_10_20260319.md` 或 `guidance_records_10_20260319.csv` 按系统字段录入。
-3. 如老师需要参考，可提供 `teacher_comment_draft_20260319.md`。
-4. 如需直接打印或发送，可优先使用 `rendered/` 下的 `.docx` / `.pdf` 成品。
+## 五、后续使用原则
+
+1. 先以学校模板和开题报告校准字段与阶段要求。
+2. 再从项目真实结果文件中提炼可核实内容。
+3. 任何未在仓库结果、日志、阶段报告中出现的表述，都不能写入中期报告。
+4. 若需重新生成最终版本，必须基于当前正文稿和学校模板重新导出，不能恢复已删除的旧自动成品。
