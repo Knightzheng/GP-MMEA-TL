@@ -1,54 +1,60 @@
-# Notes Guide
+# Notes 目录导航
 
-## 1. Priority Reading Order
+`reports/notes/` 负责承接 `S6` 阶段的主线收口材料、论文/答辩浓缩材料，以及多线程共享记录。这里的文件不再按“日期先后”理解，而是按功能角色理解。
 
-If you only want the current mainline status and the most thesis-ready materials, start here:
+## 逻辑分组
+
+```text
+reports/notes/
+├─ 主线闭环判断
+│  ├─ taskbook_gap_assessment_20260315.md
+│  ├─ mainline_traceability_matrix_20260315.md
+│  ├─ mainline_closure_onepage_20260315.md
+│  └─ mainline_artifact_integrity_20260315.md
+├─ 论文/答辩浓缩材料
+│  ├─ thesis_final_integration_packet_20260316.md
+│  ├─ four_target_evidence_map_20260316.md
+│  └─ defense_qa_packet_20260316.md
+├─ 共享协作记录
+│  └─ thread_sync_shared.md
+└─ archive/
+   └─ 旧时间线记录与历史版本
+```
+
+## 推荐阅读顺序
 
 1. `taskbook_gap_assessment_20260315.md`
-   - Gap audit against the taskbook, proposal, and current repository state.
 2. `mainline_traceability_matrix_20260315.md`
-   - Requirement -> result -> script -> run-directory mapping for the mainline.
 3. `mainline_closure_onepage_20260315.md`
-   - One-page acceptance/defense summary of why the mainline is already closed.
 4. `mainline_artifact_integrity_20260315.md`
-   - Auto-generated integrity check for current formal artifacts.
 5. `thesis_final_integration_packet_20260316.md`
-   - Recommended chapter-oriented thesis-finalization path.
 6. `four_target_evidence_map_20260316.md`
-   - One-page map of what supports each of the four target-domain claims.
 7. `defense_qa_packet_20260316.md`
-   - Defense-ready wording for scope, GPU, cases, extra-baseline, and H3 questions.
 8. `thread_sync_shared.md`
-   - Shared handoff board between the thesis-writing thread and the project-optimization thread.
 
-## 2. File Roles
+## 每类文件回答什么问题
 
 - `taskbook_gap_assessment_20260315.*`
-  - Answers whether any mainline gap still remains relative to the taskbook/proposal.
+  - 任务书、开题报告与当前仓库状态是否还有主线缺口。
 - `mainline_traceability_matrix_20260315.*`
-  - Answers how the current mainline evidence maps from requirements to scripts and formal runs.
+  - 当前主线证据如何从要求映射到脚本、run 和结果文件。
 - `mainline_closure_onepage_20260315.*`
-  - Answers how to quickly explain that the project mainline is already closed.
+  - 如何快速说明“主线已经闭环”。
 - `mainline_artifact_integrity_20260315.*`
-  - Answers whether the current repository still keeps the formal mainline materials intact.
+  - 当前正式材料是否仍然完整存在。
 - `thesis_final_integration_packet_20260316.*`
-  - Answers what the best next thesis-side integration step should be.
+  - 论文终稿最适合如何吸收当前材料。
 - `four_target_evidence_map_20260316.*`
-  - Answers how each of the four target domains is currently supported by formal evidence.
+  - 四个目标域各自由哪些证据支撑。
 - `defense_qa_packet_20260316.*`
-  - Answers how to respond conservatively during defense follow-up questions.
+  - 答辩追问时如何保守回应边界问题。
 - `thread_sync_shared.md`
-  - Records cross-thread updates, requests, and handoff summaries.
+  - 线程之间的共享交接板。
+- `archive/`
+  - 旧的按时间滚动记录，不再充当主导航。
 
-## 3. Current Boundary
+## 当前边界
 
-1. Files in this folder describe the current repository state and should take priority over older historical notes.
-2. Historical notes are still useful as process records, but they should not override the current mainline wording.
-3. `H3` has been removed from the current repository mainline; any old `H3` note should be read as history, not as the current plan.
-
-## 4. Latest Additions
-
-- `four_target_evidence_map_20260316.md`
-  - Suitable for appendix/defense; not a new experiment result.
-- `defense_qa_packet_20260316.md`
-  - Suitable for defense preparation and thesis-thread absorption; not a new experiment result.
+1. 本目录中的文件主要服务“主线闭环说明、论文吸收与答辩复用”，不是新的实验结果目录。
+2. 若当前文件与历史笔记有冲突，以本目录中的主线闭环文件为准。
+3. `H3` 相关旧笔记只能按历史材料理解，不能视为当前主线计划。

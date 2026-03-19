@@ -1099,3 +1099,62 @@
 2. 渲染时改用工作区本地模板副本，以绕开下载目录保护视图与旧版 `.doc` 打开兼容问题。
 3. 班级、联系电话、电子邮箱当前仍是待补字段，不宜擅自代填。
 4. 这轮新增的是中期检查提交材料，不属于新的论文实验结果。
+
+### 6.20 线程A同步（2026-03-19，项目目录与记录体系改为按阶段组织）
+
+#### 6.20.1 本轮实际完成内容总览
+
+1. 已将项目目录导航从“按时间滚动追加说明”改为“按研究阶段组织”。
+2. 已新增统一阶段树文件：
+   - `PROJECT_STAGE_TREE.md`
+3. 已新增四个大分支的阶段视图入口：
+   - `reports/by_stage/README.md`
+   - `runs/by_stage/README.md`
+   - `scripts/by_stage/README.md`
+   - `configs/by_stage/README.md`
+4. 已重写以下根级或关键子目录 README，使其按阶段解释目录职责，而不是继续按时间或散乱文件名导航：
+   - `README.md`
+   - `reports/README.md`
+   - `runs/README.md`
+   - `scripts/README.md`
+   - `configs/README.md`
+   - `reports/notes/README.md`
+   - `reports/transfer/README.md`
+   - `runs/transfer/README.md`
+   - `runs/experiments/README.md`
+5. 已将顶层主记录文件改为按阶段组织：
+   - `PROCESS_LOG.md`
+   - `PROJECT_OPERATION_RECORD.md`
+6. 已将旧的时间线版本转入归档：
+   - `reports/notes/archive/PROCESS_LOG_chronological_pre_stage_reorg_20260319.md`
+   - `reports/notes/archive/PROJECT_OPERATION_RECORD_chronological_pre_stage_reorg_20260319.md`
+   - `reports/notes/archive/README.md`
+
+#### 6.20.2 本轮结构整理的核心判断
+
+1. 当前仓库真正的高风险点，不是“目录名字不够好看”，而是大量脚本、配置、run card、阶段报告和论文草稿已经硬编码引用现有真实路径。
+2. 因此，本轮没有直接物理搬动 `runs/`、`scripts/`、`configs/`、`reports/` 的真实产物目录，而是优先重建一层稳定的“阶段导航层”。
+3. 这意味着后续线程现在可以先按阶段理解项目，再回到真实目录处理具体文件，避免为了美观重构而破坏复现链路。
+
+#### 6.20.3 对其他线程的直接使用建议
+
+1. 若要快速理解项目全貌，先看：
+   - `PROJECT_STAGE_TREE.md`
+   - `PROJECT_OPERATION_RECORD.md`
+   - `PROCESS_LOG.md`
+2. 若要进入某个大分支，再看：
+   - `reports/by_stage/README.md`
+   - `runs/by_stage/README.md`
+   - `scripts/by_stage/README.md`
+   - `configs/by_stage/README.md`
+3. 若只关心正式主线，不要直接遍历全部 `v*` 或 `stage_update_*` 文件，应优先从：
+   - `reports/transfer/transfer_adapt_main_results_4target.md`
+   - `reports/transfer/transfer_adapt_significance_summary.md`
+   - `reports/notes/mainline_traceability_matrix_20260315.md`
+   进入。
+
+#### 6.20.4 当前仍不宜误解的部分
+
+1. 这轮新增的是“结构理解层”和“记录重写”，不是新的实验结论。
+2. 当前仓库已经具备按阶段阅读的能力，但真实目录并未做高风险整体搬迁。
+3. 如果后续真的要做物理重构，必须先系统清理所有硬编码路径与历史引用，再作为独立工程处理。

@@ -1,71 +1,66 @@
-# Reports Layout
+# Reports 目录导航
 
-- `baseline/`
-  - Baseline summary and aggregate outputs.
-- `tmmeada/`
-  - TMMEA-DA summaries, sweeps, and ablations.
-- `epoch3/`
-  - Epoch-3 pilot/formal compare artifacts.
-- `epoch10/`
-  - Epoch-10 pilot/tuning compare and decisions.
-- `transfer/`
-  - Source-train -> target-adapt -> target-eval artifacts and run-card-facing summaries.
-  - See `transfer/README.md` for the current official transfer entry points.
-- `midterm/`
-  - Midterm draft, submission materials, guidance-record drafts, and teacher-comment reference.
-  - See `midterm/README.md` for the current recommended midterm entry points.
-- `planning/`
-  - Next-stage plans and auto decisions.
-- `notes/`
-  - Current-state notes, mainline closure documents, thread sync, and thesis/defense integration materials.
+`reports/` 不再按“某天新增了什么文件”来理解，而是按项目阶段来理解。真实文件仍保留在原目录中，本 README 负责回答：
 
-## Key Current Note Files
+1. 哪个目录属于哪个阶段。
+2. 每个目录主要产出什么。
+3. 当前正式主线应该先看哪些文件。
+4. 历史探索和归档材料应该去哪里找。
 
-- `notes/thread_sync_shared.md`
-  - Shared handoff board between the thesis-writing thread and the project-optimization thread.
-- `notes/taskbook_gap_assessment_20260315.md`
-  - Taskbook/proposal/mainline closure assessment and gap audit.
-- `notes/mainline_traceability_matrix_20260315.md`
-  - Requirement-to-result-to-script-to-run mapping.
-- `notes/mainline_closure_onepage_20260315.md`
-  - One-page defense/acceptance summary of the mainline.
-- `notes/mainline_artifact_integrity_20260315.md`
-  - Auto-generated integrity check for formal runs, case/GPU supplements, and H3-removal state.
-- `notes/thesis_final_integration_packet_20260316.md`
-  - Chapter-oriented thesis finalization packet.
-- `notes/four_target_evidence_map_20260316.md`
-  - One-page per-target evidence map for appendix/defense use.
-- `notes/defense_qa_packet_20260316.md`
-  - Defense-ready wording pack for scope and boundary questions.
+## 逻辑阶段树
 
-## Key Current Transfer Files
+```text
+reports/
+├─ baseline/   S1 baseline 复现汇总
+├─ tmmeada/    S2 TMMEA-DA 受控开发
+├─ epoch3/     S2 epoch=3 正式对照与消融
+├─ compare/    S2 baseline vs method 汇总对照
+├─ epoch10/    S3 epoch10 pilot 与阶段判断
+├─ planning/   S3 下一阶段规划与自动决策
+├─ transfer/   S4-S6 transfer 主线、主表与补强材料
+├─ notes/      S6 主线收口、论文/答辩材料、共享记录
+├─ thesis/     S6 论文正文与写作同步材料
+├─ midterm/    S7 中期正文、模板适配与提交件
+├─ misc/       杂项历史材料
+└─ tmp/        临时中间文件，不应直接引用
+```
 
-- `transfer/transfer_adapt_main_results_4target.md`
-  - Formal 4-target main result summary.
-- `transfer/transfer_adapt_significance_summary.md`
-  - Significance and stability support for the 4-target `5-seed` package.
-- `transfer/transfer_case_analysis_examples.md`
-  - Current formal case-analysis examples.
-- `transfer/transfer_case_pattern_summary_20260316.md`
-  - Grouped success/failure patterns over the current 8 formal cases.
-- `transfer/transfer_efficiency_summary.md`
-  - Wall-clock efficiency summary.
-- `transfer/transfer_gpu_peak_minimal_summary.md`
-  - Minimal formal GPU-peak-memory supplement.
+## 按阶段查看
 
-## Key Current Midterm Files
+| 阶段 | 目录 | 说明 |
+| --- | --- | --- |
+| `S1` | `baseline/` | baseline 多 seed 汇总、均值方差、正式对照表 |
+| `S2` | `tmmeada/`, `epoch3/`, `compare/` | 方法开发、`epoch=3` 对照、消融、比较汇总 |
+| `S3` | `epoch10/`, `planning/` | `epoch10` pilot、v2 系列、继续/停止投入的决策材料 |
+| `S4-S5` | `transfer/` | bootstrap、各版本分支、目标域正式收口 |
+| `S6` | `notes/`, `thesis/` | 主线追溯、闭环说明、完整性校验、答辩/论文浓缩材料 |
+| `S7` | `midterm/` | 中期报告与学校模板适配产物 |
 
-- `midterm/midterm_report_filled_20260319.md`
-  - Filled midterm-report draft aligned to the school template requirements.
-- `midterm/guidance_records_10_20260319.md`
-  - Ten guidance-record entries ready for system submission.
-- `midterm/guidance_records_10_20260319.csv`
-  - Structured version of the guidance records.
-- `midterm/teacher_comment_draft_20260319.md`
-  - Reference wording for the supervisor's midterm comment.
+阶段总索引见 [reports/by_stage/README.md](/d:/code/codes/cursor/BYSJ_zyf/reports/by_stage/README.md)。
 
-## Current Boundary
+## 当前正式主线入口
 
-1. The current repository mainline does not include `H3`.
-2. GPU peak memory remains a supplementary minimal check, not a full all-target/all-seed memory study.
-3. Thesis/defense concentration files improve organization and reuse, but they are not new experimental conclusions.
+如果只关心当前正式主线，请优先看：
+
+1. [transfer_adapt_main_results_4target.md](/d:/code/codes/cursor/BYSJ_zyf/reports/transfer/transfer_adapt_main_results_4target.md)
+2. [transfer_adapt_significance_summary.md](/d:/code/codes/cursor/BYSJ_zyf/reports/transfer/transfer_adapt_significance_summary.md)
+3. [transfer_case_analysis_examples.md](/d:/code/codes/cursor/BYSJ_zyf/reports/transfer/transfer_case_analysis_examples.md)
+4. [transfer_efficiency_summary.md](/d:/code/codes/cursor/BYSJ_zyf/reports/transfer/transfer_efficiency_summary.md)
+5. [mainline_traceability_matrix_20260315.md](/d:/code/codes/cursor/BYSJ_zyf/reports/notes/mainline_traceability_matrix_20260315.md)
+6. [mainline_closure_onepage_20260315.md](/d:/code/codes/cursor/BYSJ_zyf/reports/notes/mainline_closure_onepage_20260315.md)
+7. [mainline_artifact_integrity_20260315.md](/d:/code/codes/cursor/BYSJ_zyf/reports/notes/mainline_artifact_integrity_20260315.md)
+
+## 历史与共享记录
+
+- [reports/notes/README.md](/d:/code/codes/cursor/BYSJ_zyf/reports/notes/README.md)
+  - 主线收口、论文/答辩材料与共享记录入口。
+- [reports/notes/thread_sync_shared.md](/d:/code/codes/cursor/BYSJ_zyf/reports/notes/thread_sync_shared.md)
+  - 线程共享交接板。
+- [reports/notes/archive/README.md](/d:/code/codes/cursor/BYSJ_zyf/reports/notes/archive/README.md)
+  - 已归档的旧时间线记录和历史版本。
+
+## 当前边界
+
+1. `transfer/` 下大量 `v*` 文件保留为历史过程留痕，不能默认视为当前正式证据。
+2. `tmp/` 和 `misc/` 更偏中间产物或杂项，不应直接作为论文主证据引用。
+3. 本目录已经改成“按阶段导航”，但真实文件路径仍保持原位。

@@ -1,73 +1,78 @@
-# Transfer Reports Guide
+# Transfer Reports 目录导航
 
-## 1. Official Mainline Entry Points
+`reports/transfer/` 是当前仓库最复杂的结果目录之一。这里同时保留了：
 
-If you only care about the current project mainline, start with these files:
+1. `S4` 阶段的 bootstrap / formal 早期材料。
+2. `S5` 阶段各目标域分支的版本演化记录。
+3. `S6` 阶段的正式主表、显著性、案例、效率与 GPU 补证。
+
+本 README 的目标是把这些材料按阶段重新组织，而不是继续按文件名时间线去猜。
+
+## 逻辑阶段树
+
+```text
+reports/transfer/
+├─ S4 transfer 主线搭建
+│  ├─ smoke / bootstrap / early formal 汇总
+│  └─ v3-v8 早期自适应阶段材料
+├─ S5-A JA / FR 分支优化
+│  ├─ transfer_adapt_*ja*
+│  └─ transfer_adapt_*fren*
+├─ S5-B FBDB15K 分支优化
+│  └─ transfer_adapt_*fbdb*
+├─ S5-C FBYG15K 分支优化
+│  └─ transfer_adapt_*fbyg*
+└─ S6 主线正式收口
+   ├─ transfer_adapt_main_results_4target.*
+   ├─ transfer_adapt_significance_*
+   ├─ transfer_case_*
+   ├─ transfer_efficiency_*
+   ├─ transfer_gpu_peak_minimal_*
+   └─ transfer_extra_baseline_limitation_writeup.md
+```
+
+## 当前正式主线入口
+
+如果只关心当前正式主线，请优先看：
 
 1. `transfer_adapt_main_results_4target.md`
-   - Formal 4-target summary table.
 2. `transfer_adapt_main_results_4target.csv`
-   - Structured data closest to the thesis main table.
 3. `transfer_adapt_significance_summary.md`
-   - Significance and stability support for the 4-target `5-seed` package.
 4. `transfer_case_analysis_examples.md`
-   - Current formal case-analysis examples.
-5. `transfer_case_analysis_thesis_sync_20260315.md`
-   - Notes how the case package already expanded from `6` to `8` formal samples.
-6. `transfer_case_pattern_summary_20260316.md`
-   - Grouped success/failure patterns built from the current `8` formal cases.
-7. `transfer_efficiency_summary.md`
-   - Wall-clock efficiency summary.
-8. `transfer_gpu_peak_minimal_summary.md`
-   - Minimal formal GPU-peak-memory supplement.
-9. `transfer_gpu_peak_minimal_thesis_sync_20260315.md`
-   - Thesis-ready wording and usage boundary for the GPU supplement.
-10. `transfer_extra_baseline_limitation_writeup.md`
-   - Conservative wording for why extra baselines were not expanded further.
+5. `transfer_case_pattern_summary_20260316.md`
+6. `transfer_efficiency_summary.md`
+7. `transfer_gpu_peak_minimal_summary.md`
+8. `transfer_extra_baseline_limitation_writeup.md`
 
-## 2. Formal Compare Files for the Four Targets
+## 四个目标域直接来源文件
 
-- `ja_en`
-  - `transfer_adapt_ja_v15_expand5_compare_vs_baseline.csv`
-- `fr_en`
-  - `transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv`
-- `FBDB15K`
-  - `transfer_adapt_v18_fbdb_v18c_expand5_compare_vs_baseline.csv`
-- `FBYG15K`
-  - `transfer_adapt_v24_fbyg_v24b_expand5_compare_vs_baseline.csv`
+| 目标域 | 当前正式 compare 文件 |
+| --- | --- |
+| `ja_en` | `transfer_adapt_ja_v15_expand5_compare_vs_baseline.csv` |
+| `fr_en` | `transfer_adapt_v14_fren_expand5_progress_compare_vs_baseline.csv` |
+| `FBDB15K` | `transfer_adapt_v18_fbdb_v18c_expand5_compare_vs_baseline.csv` |
+| `FBYG15K` | `transfer_adapt_v24_fbyg_v24b_expand5_compare_vs_baseline.csv` |
 
-These files are among the direct sources of `transfer_adapt_main_results_4target.*`.
+这些文件是 `transfer_adapt_main_results_4target.*` 的直接来源之一。
 
-## 3. Mainline Support Files
+## 如何阅读历史阶段文件
 
-- `transfer_adapt_significance_writeup.md`
-  - Thesis-ready significance wording.
-- `transfer_case_analysis_examples.csv`
-  - Structured data for the current case package.
-- `transfer_case_pattern_summary_20260316.csv`
-  - Structured data for the grouped case-pattern summary.
-- `transfer_efficiency_summary.csv`
-  - Structured data for wall-clock analysis.
-- `transfer_gpu_peak_minimal_summary.csv`
-  - Structured data for the minimal GPU supplement.
-- `transfer_gpu_peak_minimal_chart_ready.csv`
-  - Long-form chart-ready data for defense figures.
+本目录中保留了大量 `transfer_stage_update_*.md` 与 `transfer_adapt_v*.md/csv/json`，它们主要用于回溯版本演化。
 
-## 4. How to Read Historical Stage Files
+推荐入口：
 
-There are many `transfer_stage_update_*.md` and `transfer_adapt_v*.md/csv/json` files in this directory.
+1. `transfer_stage_update_20260311_ja_v15_final.md`
+   - 查看 `ja_en` 如何收口到 `v15`。
+2. `transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md`
+   - 查看 `FBDB15K` 为什么固定在 `v18c`。
+3. `transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md`
+   - 查看 `FBYG15K` 为什么固定在 `v24b`。
+4. 其他大多数 `v*` 文件
+   - 默认视为探索历史，而不是当前正式证据入口。
 
-Recommended usage:
+## 当前边界
 
-1. Use `transfer_stage_update_20260311_ja_v15_final.md` to trace how `ja_en` was finalized.
-2. Use `transfer_stage_update_20260312_v18_fbdb_bipartite_full5.md` to trace why `FBDB15K` was fixed at `v18c`.
-3. Use `transfer_stage_update_20260314_fbyg_v24_strict_source_full5.md` to trace why `FBYG15K` was fixed at `v24b`.
-4. Treat most other `v*` files as exploration history rather than direct final-evidence entry points.
-
-## 5. Current Boundary
-
-1. This folder no longer contains `H3` materials.
-2. GPU peak memory is already supplemented, but still only as an auxiliary minimal check.
-3. If you only need the mainline closure evidence chain, go back to `../notes/mainline_traceability_matrix_20260315.md`.
-4. The case-analysis package currently contains `8` formal samples. If the thesis main text keeps only `6`, the remaining `2` are best placed in appendix or defense materials.
-5. `transfer_case_pattern_summary_20260316.*` reorganizes existing cases only; it is not a new statistical experiment.
+1. 本目录当前不包含 `H3` 材料。
+2. GPU 峰值显存已经有补证，但仍只是辅助最小检查。
+3. `transfer_case_pattern_summary_20260316.*` 是对现有案例的重新组织，不是新的统计实验。
+4. 如果只需要主线闭环证据链，应回到 `../notes/mainline_traceability_matrix_20260315.md`。
