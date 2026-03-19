@@ -1799,3 +1799,22 @@
   - clarify the role boundaries of `baseline/`, `tmmeada/`, and `gpu_peak_minimal/` under `runs/experiments/`
 - note:
   - `__pycache__/` remains an ignored cache type and is not part of the intended project structure
+
+## 2026-03-16 Thesis/Defense Concentrated Packet
+
+- read latest shared-thread state in `reports/notes/thread_sync_shared.md`, especially section `6.16`
+- choose the highest-value next step:
+  - do not reopen experiments
+  - produce compact, thesis/defense-ready project artifacts from existing formal results
+- add:
+  - `reports/notes/four_target_evidence_map_20260316.md`
+  - `reports/notes/defense_qa_packet_20260316.md`
+  - `reports/transfer/transfer_case_pattern_summary_20260316.md`
+  - `reports/transfer/transfer_case_pattern_summary_20260316.csv`
+- focus:
+  - compress the 4-target evidence chain into a one-page map
+  - provide defense-ready wording for scope, baseline boundary, GPU, cases, and H3
+  - group the current 8 formal cases into recurring success/failure patterns without rerunning experiments
+- usage boundary:
+  - suitable for appendix/defense and thesis-side absorption
+  - not a new main-text experiment package

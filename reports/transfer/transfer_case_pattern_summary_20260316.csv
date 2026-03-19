@@ -1,0 +1,5 @@
+pattern_id,pattern_name,case_count,datasets,representative_indices,representative_entities,what_it_supports,what_it_does_not_support
+P1,cross_graph_large_rank_recovery,4,"FBDB15K;FBYG15K","2283;7880;4851;2903","Post-bop;The Pacific (miniseries);Saboteur (film);Amritsar","Cross-graph transfer can recover severely mis-ranked targets back to top-1 on hard samples","Does not prove every cross-graph sample will show the same recovery magnitude"
+P2,cross_graph_attribute_guided_recovery,1,FBDB15K,1959,JavaScript,"The gain can also appear on attribute-heavy entities, not only on the most obvious large-rank corrections","A single case cannot independently validate a specific module"
+P3,cross_lingual_neighbor_ambiguity,2,ja_en,"1201;9563","Windows 10 Mobile;Fat Mike","Cross-lingual fine-grained neighbor confusion still remains even when aggregate gain is positive","Does not overturn the aggregate improvement on ja_en"
+P4,cross_lingual_over_transfer_regression,1,ja_en,3275,"Inspiration is DEAD","The method may still over-transfer toward semantically close but wrong candidates in fine-grained music entities","Does not mean the transfer mechanism is generally harmful"

@@ -1,39 +1,54 @@
 # Notes Guide
 
-## 1. 当前优先阅读的文件
+## 1. Priority Reading Order
 
-如果只关心当前项目主线和论文终稿吸收，请优先阅读：
+If you only want the current mainline status and the most thesis-ready materials, start here:
 
 1. `taskbook_gap_assessment_20260315.md`
-   - 任务书 / 开题报告 / 当前项目现状的差距评估。
+   - Gap audit against the taskbook, proposal, and current repository state.
 2. `mainline_traceability_matrix_20260315.md`
-   - 主线要求、正式结果、脚本入口和 run 目录的映射总表。
+   - Requirement -> result -> script -> run-directory mapping for the mainline.
 3. `mainline_closure_onepage_20260315.md`
-   - 一页式主线闭环说明，适合答辩或导师沟通。
+   - One-page acceptance/defense summary of why the mainline is already closed.
 4. `mainline_artifact_integrity_20260315.md`
-   - 自动校验当前主线正式材料是否齐全的完整性报告。
+   - Auto-generated integrity check for current formal artifacts.
 5. `thesis_final_integration_packet_20260316.md`
-   - 当前最推荐的论文终稿整合路径。
-6. `thread_sync_shared.md`
-   - 论文线程与项目优化线程的共享同步板。
+   - Recommended chapter-oriented thesis-finalization path.
+6. `four_target_evidence_map_20260316.md`
+   - One-page map of what supports each of the four target-domain claims.
+7. `defense_qa_packet_20260316.md`
+   - Defense-ready wording for scope, GPU, cases, extra-baseline, and H3 questions.
+8. `thread_sync_shared.md`
+   - Shared handoff board between the thesis-writing thread and the project-optimization thread.
 
-## 2. 文件用途分层
+## 2. File Roles
 
 - `taskbook_gap_assessment_20260315.*`
-  - 负责回答“项目与任务书 / 开题之间还有没有主线差距”。
+  - Answers whether any mainline gap still remains relative to the taskbook/proposal.
 - `mainline_traceability_matrix_20260315.*`
-  - 负责回答“当前主线证据链如何从要求映射到结果与 run”。
+  - Answers how the current mainline evidence maps from requirements to scripts and formal runs.
 - `mainline_closure_onepage_20260315.*`
-  - 负责回答“答辩 / 验收时如何快速说明项目已经闭环”。
+  - Answers how to quickly explain that the project mainline is already closed.
 - `mainline_artifact_integrity_20260315.*`
-  - 负责回答“当前仓库中的主线正式材料是否还保持完整”。
+  - Answers whether the current repository still keeps the formal mainline materials intact.
 - `thesis_final_integration_packet_20260316.*`
-  - 负责回答“论文终稿下一步最值得怎么整合现有材料”。
+  - Answers what the best next thesis-side integration step should be.
+- `four_target_evidence_map_20260316.*`
+  - Answers how each of the four target domains is currently supported by formal evidence.
+- `defense_qa_packet_20260316.*`
+  - Answers how to respond conservatively during defense follow-up questions.
 - `thread_sync_shared.md`
-  - 负责保存线程间交接、需求变化和回填建议。
+  - Records cross-thread updates, requests, and handoff summaries.
 
-## 3. 当前边界
+## 3. Current Boundary
 
-1. 本目录中的主线说明文件代表当前仓库状态，应优先于更早的历史笔记使用。
-2. 历史阶段性总结仍可作为过程记录保留，但不应覆盖当前主线口径。
-3. `H3` 已从当前仓库主线中移除，因此若历史笔记中仍出现 `H3` 内容，应按历史记录理解，而不是按当前状态理解。
+1. Files in this folder describe the current repository state and should take priority over older historical notes.
+2. Historical notes are still useful as process records, but they should not override the current mainline wording.
+3. `H3` has been removed from the current repository mainline; any old `H3` note should be read as history, not as the current plan.
+
+## 4. Latest Additions
+
+- `four_target_evidence_map_20260316.md`
+  - Suitable for appendix/defense; not a new experiment result.
+- `defense_qa_packet_20260316.md`
+  - Suitable for defense preparation and thesis-thread absorption; not a new experiment result.

@@ -1033,3 +1033,21 @@ conda run -n bysj-main python scripts\make_tmmeada_baseline_compare_all.py
 - 当前作用：
   - 后来者现在不需要先读完整个 `scripts/` 或 `notes/` 目录，就能快速区分“当前正式入口”和“历史留痕”；
   - `runs/experiments/` 的结构边界也更清楚，降低把辅助补测或历史方法目录误读为主线证据的风险。
+
+## 49. 阶段更新（2026-03-16）：终稿 / 答辩浓缩材料包补齐
+
+- 本轮选择的优化方向：
+  - 按共享文件最新 `6.16` 要求，不再继续补高成本实验，而是优先补“论文终稿和答辩可直接吸收的浓缩材料”。
+- 本轮新增：
+  - `reports/notes/four_target_evidence_map_20260316.md`
+  - `reports/notes/defense_qa_packet_20260316.md`
+  - `reports/transfer/transfer_case_pattern_summary_20260316.md`
+  - `reports/transfer/transfer_case_pattern_summary_20260316.csv`
+- 本轮作用：
+  - 把四个目标域的主结果、显著性、案例、效率、GPU 辅助补证与保守边界压缩成一页式证据地图；
+  - 把常见答辩追问整理成可直接复述的项目口径；
+  - 把现有 `8` 个案例归并为几类常见成功 / 失败模式，方便附录或答辩使用。
+- 当前边界：
+  - 这些材料是“终稿 / 答辩组织层面的增强”，不是新的正式实验结论；
+  - `fr_en` 当前没有单独保留代表性案例，因此该目标域主要仍由正式 `5-seed` 主结果和显著性支撑；
+  - GPU 仍只属于代表性最小正式补测，不上升为完整显存统计。
